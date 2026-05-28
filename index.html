@@ -178,8 +178,24 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 .tf-btn{background:var(--bg3);border:1px solid var(--brd);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--txm);cursor:pointer;transition:all .15s;}
 .tf-btn:hover{border-color:var(--pri);color:var(--pri);}
 .tf-btn.on{background:var(--pri);border-color:var(--pri);color:#fff;}
-.hist-wrap{height:180px;position:relative;}
+.hist-wrap{height:200px;position:relative;}
 .period-table-wrap{margin-top:16px;overflow-x:auto;}
+
+/* ── RANGE SELECTOR BAR */
+.rs-outer{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sdw);margin-bottom:16px;}
+.rs-label{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
+.rs-label span{font-size:11px;font-weight:600;color:var(--pri);text-transform:none;letter-spacing:0;}
+.rs-bar{display:flex;gap:3px;align-items:stretch;user-select:none;}
+.rs-seg{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px 2px 5px;border-radius:6px;transition:background .1s,color .1s;}
+.rs-seg:hover .rs-lbl{color:var(--tx);}
+.rs-seg:hover .rs-tick{background:var(--pri);}
+.rs-tick{height:28px;width:100%;border-radius:4px;background:var(--bg3);transition:background .1s;}
+.rs-lbl{font-size:8.5px;font-weight:600;color:var(--txd);writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;line-height:1;}
+.rs-seg.rs-on  .rs-tick{background:var(--pri);}
+.rs-seg.rs-on  .rs-lbl{color:var(--pri);font-weight:800;}
+.rs-seg.rs-in  .rs-tick{background:var(--pril);}
+.rs-seg.rs-in  .rs-lbl{color:var(--pri);}
+.rs-shortcuts{display:flex;gap:6px;margin-top:10px;}
 
 /* ── CAMPAIGN CARDS */
 .camp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
@@ -502,14 +518,19 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 
   <!-- TENDENCIA HISTÓRICA -->
   <div class="sec">
-    <div class="sec-hdr">
-      <span class="sec-title">Tendencia por Período</span>
-      <div class="trend-filters">
-        <button class="tf-btn" onclick="setRange(3,this)">3 períodos</button>
-        <button class="tf-btn" onclick="setRange(6,this)">6 períodos</button>
-        <button class="tf-btn on" onclick="setRange(11,this)">11 períodos</button>
+    <div class="sec-hdr"><span class="sec-title">Tendencia por Período</span></div>
+
+    <!-- RANGE SELECTOR BAR -->
+    <div class="rs-outer">
+      <div class="rs-label">Rango de períodos seleccionado <span id="rsRangeLabel">—</span></div>
+      <div class="rs-bar" id="rsBar"></div>
+      <div class="rs-shortcuts">
+        <button class="tf-btn" onclick="rsQuick(3)">Últimos 3</button>
+        <button class="tf-btn" onclick="rsQuick(6)">Últimos 6</button>
+        <button class="tf-btn on" onclick="rsQuick(11)">Todo</button>
       </div>
     </div>
+
     <div class="grid2">
       <div class="card">
         <div style="margin-bottom:8px;font-size:12px;font-weight:600;color:var(--txm);">Inversión y CPR</div>
@@ -698,6 +719,7 @@ const BNS={pAL:20000,pAH:30000,hL:80000,hH:120000,cL:.008,cH:.01,avg:220000000};
 // ── CHART REFS
 let chartSpend = null, chartVolume = null;
 let currentRange = 11;
+let rsA = 0, rsB = 0, rsDrag = false, rsAnchor = 0;
 
 // ── SPARKLINES
 function mkSpark(id, data, color, fillColor, trId) {
@@ -801,30 +823,47 @@ function mkDonut(id, val, color) {
 }
 
 // ── HISTORICAL CHARTS
-function getRange(n) {
-  const labels = ALL_PER.slice(-n);
+function getRange(n, si) {
+  const start = si !== undefined ? si : ALL_PER.length - n;
+  const end   = start + n;
+  const labels = ALL_PER.slice(start, end);
   const d = {};
-  Object.keys(ALL_D).forEach(k => d[k] = ALL_D[k].slice(-n));
+  Object.keys(ALL_D).forEach(k => d[k] = ALL_D[k].slice(start, end));
   return { labels, d };
 }
 
-function mkHistCharts(n) {
-  const { labels, d } = getRange(n);
+const X_SCALE = {
+  grid: { color: '#F1F5F9' },
+  ticks: {
+    color: '#64748B',
+    font: { size: 9 },
+    maxRotation: 90,
+    minRotation: 45,
+    autoSkip: false
+  }
+};
+
+function mkHistCharts(n, si) {
+  const startIdx = si !== undefined ? si : (n !== undefined ? ALL_PER.length - n : rsA);
+  const count    = n  !== undefined ? n  : (rsB - rsA + 1);
+  const { labels, d } = getRange(count, startIdx);
+
   const spendCfg = {
     type: 'bar',
     data: {
       labels,
       datasets: [
-        { type: 'bar', label: 'Inversión $', data: d.spend, backgroundColor: 'rgba(12,35,64,.12)', borderColor: '#0C2340', borderWidth: 1.5, borderRadius: 4, yAxisID: 'yL' },
-        { type: 'line', label: 'CPR $', data: d.cpr, borderColor: '#475569', backgroundColor: 'transparent', tension: 0.4, pointRadius: 3, pointBackgroundColor: '#475569', borderWidth: 2, yAxisID: 'yR' }
+        { type: 'bar',  label: 'Inversión $', data: d.spend, backgroundColor: 'rgba(12,35,64,.12)', borderColor: '#0C2340', borderWidth: 1.5, borderRadius: 4, yAxisID: 'yL' },
+        { type: 'line', label: 'CPR $',       data: d.cpr,   borderColor: '#475569', backgroundColor: 'transparent', tension: 0.4, pointRadius: 3, pointBackgroundColor: '#475569', borderWidth: 2, yAxisID: 'yR' }
       ]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { position: 'top', labels: { font: { size: 11 }, padding: 10, boxWidth: 10 } } },
       scales: {
-        yL: { position: 'left', grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 }, callback: v => '$' + (v/1000).toFixed(0) + 'k' } },
-        yR: { position: 'right', grid: { display: false }, ticks: { color: '#4F46E5', font: { size: 10 }, callback: v => '$' + v } }
+        x:  X_SCALE,
+        yL: { position: 'left',  grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 }, callback: v => '$' + (v >= 1000 ? (v/1000).toFixed(0)+'k' : v) } },
+        yR: { position: 'right', grid: { display: false },    ticks: { color: '#475569', font: { size: 10 }, callback: v => '$' + v } }
       }
     }
   };
@@ -833,8 +872,8 @@ function mkHistCharts(n) {
     data: {
       labels,
       datasets: [
-        { label: 'Leads', data: d.leads, borderColor: '#1D4ED8', backgroundColor: 'rgba(29,78,216,.05)', fill: true, tension: 0.4, pointRadius: 3, borderWidth: 2, yAxisID: 'yL' },
-        { label: 'Appts', data: d.appts, borderColor: '#0369A1', backgroundColor: 'transparent', tension: 0.4, pointRadius: 3, borderWidth: 2, yAxisID: 'yL' },
+        { label: 'Leads', data: d.leads, borderColor: '#1D4ED8', backgroundColor: 'rgba(29,78,216,.05)', fill: true, tension: 0.4, pointRadius: 3, borderWidth: 2,   yAxisID: 'yL' },
+        { label: 'Appts', data: d.appts, borderColor: '#0369A1', backgroundColor: 'transparent',          tension: 0.4, pointRadius: 3, borderWidth: 2,               yAxisID: 'yL' },
         { label: 'Deals', data: d.deals, borderColor: '#475569', backgroundColor: 'rgba(71,85,105,.05)', fill: true, tension: 0.4, pointRadius: 3, borderWidth: 2.5, yAxisID: 'yR' }
       ]
     },
@@ -842,28 +881,99 @@ function mkHistCharts(n) {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { position: 'top', labels: { font: { size: 11 }, padding: 10, boxWidth: 10 } } },
       scales: {
-        yL: { position: 'left', grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 } } },
-        yR: { position: 'right', grid: { display: false }, ticks: { color: '#7C3AED', font: { size: 10 } } }
+        x:  X_SCALE,
+        yL: { position: 'left',  grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 } } },
+        yR: { position: 'right', grid: { display: false },    ticks: { color: '#475569', font: { size: 10 } } }
       }
     }
   };
-  if (chartSpend) { chartSpend.destroy(); }
-  if (chartVolume) { chartVolume.destroy(); }
-  chartSpend = new Chart(document.getElementById('histSpend'), spendCfg);
+  if (chartSpend)  chartSpend.destroy();
+  if (chartVolume) chartVolume.destroy();
+  chartSpend  = new Chart(document.getElementById('histSpend'),  spendCfg);
   chartVolume = new Chart(document.getElementById('histVolume'), volCfg);
-  mkPeriodTable(n);
+  mkPeriodTable(count, startIdx);
+}
+
+// ── RANGE SELECTOR BAR
+function buildRangeBar() {
+  rsA = 0; rsB = ALL_PER.length - 1;
+  const bar = document.getElementById('rsBar');
+  if (!bar) return;
+  bar.innerHTML = '';
+  ALL_PER.forEach((lbl, i) => {
+    const seg = document.createElement('div');
+    seg.className = 'rs-seg'; seg.dataset.i = i;
+    seg.innerHTML = `<div class="rs-tick"></div><div class="rs-lbl">${lbl}</div>`;
+    bar.appendChild(seg);
+  });
+  paintRangeBar();
+
+  bar.addEventListener('mousedown', e => {
+    const seg = e.target.closest('.rs-seg'); if (!seg) return;
+    rsDrag = true; rsAnchor = +seg.dataset.i;
+    rsA = rsB = rsAnchor; paintRangeBar(); e.preventDefault();
+  });
+  bar.addEventListener('mouseover', e => {
+    if (!rsDrag) return;
+    const seg = e.target.closest('.rs-seg'); if (!seg) return;
+    const i = +seg.dataset.i;
+    rsA = Math.min(rsAnchor, i); rsB = Math.max(rsAnchor, i); paintRangeBar();
+  });
+  document.addEventListener('mouseup', () => {
+    if (!rsDrag) return; rsDrag = false;
+    mkHistCharts(rsB - rsA + 1, rsA);
+    mkPeriodTable(rsB - rsA + 1, rsA);
+    document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('on'));
+  });
+
+  bar.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    const seg = document.elementFromPoint(t.clientX, t.clientY)?.closest('.rs-seg'); if (!seg) return;
+    rsDrag = true; rsAnchor = +seg.dataset.i; rsA = rsB = rsAnchor; paintRangeBar();
+  }, {passive:true});
+  bar.addEventListener('touchmove', e => {
+    if (!rsDrag) return;
+    const t = e.touches[0];
+    const seg = document.elementFromPoint(t.clientX, t.clientY)?.closest('.rs-seg'); if (!seg) return;
+    const i = +seg.dataset.i;
+    rsA = Math.min(rsAnchor, i); rsB = Math.max(rsAnchor, i); paintRangeBar();
+  }, {passive:true});
+  document.addEventListener('touchend', () => {
+    if (!rsDrag) return; rsDrag = false;
+    mkHistCharts(rsB - rsA + 1, rsA);
+    document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('on'));
+  });
+}
+
+function paintRangeBar() {
+  document.querySelectorAll('.rs-seg').forEach((s, i) => {
+    s.classList.toggle('rs-on', i === rsA || i === rsB);
+    s.classList.toggle('rs-in', i > rsA && i < rsB);
+  });
+  const lbl = document.getElementById('rsRangeLabel');
+  if (lbl) lbl.textContent = ALL_PER[rsA] + ' → ' + ALL_PER[rsB] + '  (' + (rsB - rsA + 1) + ' períodos)';
+}
+
+function rsQuick(n) {
+  rsA = ALL_PER.length - n; rsB = ALL_PER.length - 1;
+  paintRangeBar();
+  mkHistCharts(n, rsA);
+  document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('on'));
+  event.target.classList.add('on');
 }
 
 function setRange(n, btn) {
+  rsA = ALL_PER.length - n; rsB = ALL_PER.length - 1;
   currentRange = n;
   document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
+  paintRangeBar();
   mkHistCharts(n);
 }
 
 // ── PERIOD TABLE
-function mkPeriodTable(n) {
-  const { labels, d } = getRange(n);
+function mkPeriodTable(n, si) {
+  const { labels, d } = getRange(n, si);
   const tbody = document.getElementById('periodTableBody');
   tbody.innerHTML = '';
   labels.forEach((lbl, i) => {
@@ -1077,6 +1187,7 @@ function initAll() {
   const cancPct = APPTS_BREAKDOWN.total > 0 ? (APPTS_BREAKDOWN.cancelled / APPTS_BREAKDOWN.total * 100) : 33.3;
   mkDonut('donut1', confPct, '#0369A1');
   mkDonut('donut2', cancPct, '#DC2626');
+  buildRangeBar();
   mkHistCharts(11);
   mkCpdChart();
   mkRoasCards();
