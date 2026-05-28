@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPG Dashboard | E-Leads</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg:    #FFFFFF;
+  --bg2:   #F8FAFC;
+  --bg3:   #F1F5F9;
+  --brd:   #E2E8F0;
+  --tx:    #0F172A;
+  --txm:   #475569;
+  --txd:   #94A3B8;
+  --pri:   #1D4ED8;
+  --pril:  #DBEAFE;
+  --sky:   #0369A1;
+  --skyl:  #E0F2FE;
+  --grn:   #059669;
+  --grnl:  #D1FAE5;
+  --amb:   #0C2340;
+  --ambl:  #E8EDF5;
+  --vio:   #475569;
+  --viol:  #F1F5F9;
+  --red:   #DC2626;
+  --redl:  #FEE2E2;
+  --sdw:   0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --r:     10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;font-size:14px;line-height:1.5;}
+
+/* ── HEADER */
+.hdr{background:var(--bg);border-bottom:1px solid var(--brd);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.hdr-l{display:flex;align-items:center;gap:14px;}
+.logo{background:linear-gradient(135deg,#0C2340,#1D4ED8);color:#fff;padding:6px 14px;border-radius:8px;font-size:11px;font-weight:800;letter-spacing:1.5px;}
+.hdr-title{font-size:16px;font-weight:700;}
+.hdr-sub{font-size:11px;color:var(--txm);}
+.hdr-r{display:flex;align-items:center;gap:10px;}
+.badge{border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;}
+.badge-per{background:var(--bg3);border:1px solid var(--brd);color:var(--txm);}
+.badge-day{background:var(--pril);border:1px solid #C7D2FE;color:var(--pri);}
+.badge-mock{background:var(--bg3);border:1px solid var(--brd);color:var(--txm);font-size:10px;font-weight:700;}
+
+/* ── TABS */
+.tabs{background:var(--bg);border-bottom:1px solid var(--brd);padding:0 28px;display:flex;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--txm);padding:12px 18px;cursor:pointer;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;transition:all .15s;}
+.tab:hover{color:var(--tx);}
+.tab.on{color:var(--pri);border-bottom-color:var(--pri);font-weight:600;}
+
+/* ── PANES */
+.pane{display:none;padding:24px 28px;max-width:1440px;margin:0 auto;}
+.pane.on{display:block;}
+
+/* ── SECTIONS */
+.sec{margin-bottom:28px;}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.sec-title{font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.07em;}
+.sec-sub{font-size:11px;color:var(--txd);}
+
+/* ── CARD */
+.card{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:20px;box-shadow:var(--sdw);}
+
+/* ── KPI ROW */
+.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+.kpi{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sdw);position:relative;overflow:hidden;}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;}
+.kpi.c-amb::before{background:var(--amb);}
+.kpi.c-pri::before{background:var(--pri);}
+.kpi.c-sky::before{background:var(--sky);}
+.kpi.c-vio::before{background:var(--vio);}
+.kpi.c-grn::before{background:var(--grn);}
+.kpi-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
+.kpi-label{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;}
+.delta{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:700;padding:2px 7px;border-radius:12px;}
+.delta.up{background:var(--grnl);color:var(--grn);}
+.delta.dn{background:var(--redl);color:var(--red);}
+.kpi-val{font-size:26px;font-weight:800;color:var(--tx);line-height:1;margin-bottom:4px;}
+.kpi-proj{font-size:11px;color:var(--txd);}
+.kpi-prog{margin-top:10px;}
+.prog-track{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:2px;}
+.prog-fill.amb{background:var(--amb);}
+.prog-fill.pri{background:var(--pri);}
+.prog-fill.sky{background:var(--sky);}
+.prog-fill.grn{background:var(--grn);}
+.prog-fill.vio{background:var(--vio);}
+.prog-label{font-size:10px;color:var(--txd);margin-top:4px;}
+
+/* ── FUNNEL SPLIT (3 stages) */
+.funnel-split{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sdw);overflow:hidden;}
+.funnel-left{padding:20px 20px 20px 24px;border-right:1px solid var(--brd);}
+.funnel-right{padding:20px 24px 20px 20px;}
+.fn-col-title{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
+.fn-rows{display:flex;flex-direction:column;gap:10px;}
+.fn-row{height:80px;display:flex;align-items:center;}
+.fn-bar-wrap{width:100%;display:flex;justify-content:center;}
+.fn-bar{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-radius:8px;color:#fff;}
+.fn-bar-l{display:flex;flex-direction:column;gap:2px;}
+.fn-bar-stage{font-size:10px;font-weight:600;opacity:.85;}
+.fn-bar-num{font-size:22px;font-weight:800;line-height:1;}
+.fn-bar-r{text-align:right;}
+.fn-bar-pct{font-size:13px;font-weight:700;}
+.fn-bar-sub{font-size:9px;opacity:.75;margin-top:2px;}
+.fn-b1{background:linear-gradient(135deg,#1D4ED8,#2563EB);}
+.fn-b2{background:linear-gradient(135deg,#0369A1,#0891B2);}
+.fn-b3{background:linear-gradient(135deg,#334155,#475569);}
+.sp-rows{display:flex;flex-direction:column;gap:10px;}
+.sp-row{height:80px;display:flex;align-items:center;}
+.sp-card{flex:1;height:68px;background:var(--bg2);border:1px solid var(--brd);border-radius:8px;padding:6px 10px 4px;display:flex;flex-direction:column;}
+.sp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;}
+.sp-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.sp-label.pri{color:var(--pri);}
+.sp-label.sky{color:var(--sky);}
+.sp-label.grn{color:var(--sky);}
+.sp-label.vio{color:var(--vio);}
+.sp-trend{font-size:9px;font-weight:700;}
+.sp-trend.up{color:var(--grn);}
+.sp-trend.dn{color:var(--red);}
+.sp-canvas{flex:1;position:relative;min-height:0;}
+.sp-canvas canvas{position:absolute;top:0;left:0;width:100%!important;height:100%!important;}
+
+/* ── PACING SECTION (3 charts) */
+.pacing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.pacing-card{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:20px;box-shadow:var(--sdw);}
+.pacing-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.pacing-label{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;}
+.pacing-delta{font-size:12px;font-weight:700;padding:3px 9px;border-radius:12px;}
+.pacing-delta.up{background:var(--grnl);color:var(--grn);}
+.pacing-delta.dn{background:var(--redl);color:var(--red);}
+.pacing-nums{margin-bottom:14px;}
+.pacing-actual{font-size:32px;font-weight:800;line-height:1;}
+.pacing-sub{font-size:11px;color:var(--txm);margin-top:4px;}
+.pacing-bar-wrap{position:relative;height:10px;background:var(--bg3);border-radius:5px;overflow:visible;margin-bottom:8px;}
+.pacing-bar-fill{height:100%;border-radius:5px;transition:width .4s;}
+.pacing-marker{position:absolute;top:-3px;width:3px;height:16px;background:#94A3B8;border-radius:2px;transform:translateX(-50%);}
+.pacing-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--txd);}
+.pacing-chart-wrap{height:90px;position:relative;}
+
+/* ── 2-COL GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+
+/* ── TABLE */
+.tbl{width:100%;border-collapse:collapse;}
+.tbl th{text-align:left;padding:9px 14px;font-size:11px;font-weight:600;color:var(--txm);text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--brd);background:var(--bg2);}
+.tbl td{padding:9px 14px;font-size:13px;border-bottom:1px solid var(--brd);color:var(--tx);}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:var(--bg2);}
+.num{font-weight:700;font-variant-numeric:tabular-nums;}
+.dim{color:var(--txm);}
+.hi{color:var(--grn);font-weight:700;}
+.lo{color:var(--red);font-weight:700;}
+.md{color:var(--amb);font-weight:700;}
+
+/* ── RATE BOXES */
+.rate-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.rate-box{background:var(--bg2);border:1px solid var(--brd);border-radius:8px;padding:14px 16px;}
+.rate-val{font-size:22px;font-weight:800;color:var(--tx);line-height:1;}
+.rate-label{font-size:11px;color:var(--txm);margin-top:4px;}
+.rate-sub{font-size:10px;color:var(--txd);margin-top:3px;}
+.prog8{height:6px;background:var(--bg3);border-radius:3px;margin-top:8px;overflow:hidden;}
+.prog8-fill{height:100%;border-radius:3px;}
+
+/* ── DONUT */
+.donut-area{display:flex;gap:24px;align-items:flex-start;}
+.donut-wrap{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.donut-cw{width:130px;height:130px;position:relative;}
+.donut-cw canvas{width:100%!important;height:100%!important;}
+.donut-lbl{font-size:11px;font-weight:600;color:var(--txm);text-align:center;}
+
+/* ── LEAD STATUS */
+.lead-chart-wrap{height:240px;position:relative;}
+
+/* ── TREND SECTION */
+.trend-filters{display:flex;gap:8px;align-items:center;}
+.tf-btn{background:var(--bg3);border:1px solid var(--brd);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--txm);cursor:pointer;transition:all .15s;}
+.tf-btn:hover{border-color:var(--pri);color:var(--pri);}
+.tf-btn.on{background:var(--pri);border-color:var(--pri);color:#fff;}
+.hist-wrap{height:180px;position:relative;}
+.period-table-wrap{margin-top:16px;overflow-x:auto;}
+
+/* ── CAMPAIGN CARDS */
+.camp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.camp-card{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:16px;box-shadow:var(--sdw);}
+.camp-card-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.camp-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.dot-grn{background:var(--grn);}
+.dot-amb{background:var(--amb);}
+.dot-red{background:var(--red);}
+.camp-name{font-size:14px;font-weight:700;}
+.camp-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:auto;}
+.tag-grn{background:var(--grnl);color:var(--grn);}
+.tag-amb{background:var(--ambl);color:var(--amb);}
+.tag-red{background:var(--redl);color:var(--red);}
+.camp-desc{font-size:12px;color:var(--txm);line-height:1.5;}
+.camp-stats{display:flex;gap:16px;margin-top:10px;}
+.camp-stat-val{font-size:16px;font-weight:700;color:var(--tx);}
+.camp-stat-lbl{font-size:10px;color:var(--txd);}
+
+/* ── SETTER */
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;margin-bottom:20px;}
+.pd-item{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.pd-block{width:90px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:8px;gap:4px;border-radius:8px 8px 0 0;}
+.pd-1{height:96px;background:linear-gradient(160deg,#F59E0B,#EAB308);}
+.pd-2{height:72px;background:linear-gradient(160deg,#94A3B8,#CBD5E1);}
+.pd-3{height:58px;background:linear-gradient(160deg,#A16207,#CA8A04);}
+.pd-rank{font-size:18px;}
+.pd-name{font-size:12px;font-weight:600;color:var(--tx);}
+.pd-val{font-size:11px;color:var(--txm);}
+.av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.av-g{background:#059669;} .av-s{background:#0284C7;} .av-b{background:#7C3AED;} .av-p{background:#DB2777;} .av-t{background:#D97706;}
+.phase{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;}
+.ph-hero{background:#FEF3C7;color:#92400E;border:1px solid #FCD34D;}
+.ph-ldr{background:#DBEAFE;color:#1E40AF;border:1px solid #93C5FD;}
+.ph-rsc{background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5;}
+.ph-lsr{background:#F3F4F6;color:#4B5563;border:1px solid #D1D5DB;}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER -->
+<header class="hdr">
+  <div class="hdr-l">
+    <span class="logo">HPG</span>
+    <div>
+      <div class="hdr-title">E-Leads Dashboard</div>
+      <div class="hdr-sub">Marketing Operations</div>
+    </div>
+  </div>
+  <div class="hdr-r">
+    <span class="badge badge-per">16 mayo – 15 junio 2026</span>
+    <span class="badge badge-day">Día 12 / 30 · 40%</span>
+    <span class="badge badge-mock">MOCK DATA</span>
+  </div>
+</header>
+
+<!-- ── TABS -->
+<nav class="tabs">
+  <button class="tab on" onclick="sw('t1',this)">📊 Finanzas &amp; Funnel</button>
+  <button class="tab" onclick="sw('t2',this)">📣 Meta Ads</button>
+  <button class="tab" onclick="sw('t3',this)">👤 Setters</button>
+</nav>
+
+
+<!-- ══════════ TAB 1 — FINANZAS & FUNNEL ══════════ -->
+<div id="t1" class="pane on">
+
+  <!-- KPI ROW -->
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Resumen del Período</span><span class="sec-sub">16 mayo – 15 junio · Día 12/30 (40% completado)</span></div>
+    <div class="kpi-row">
+      <div class="kpi c-amb">
+        <div class="kpi-top"><span class="kpi-label">Inversión</span><span class="delta up">↑ +5.2%</span></div>
+        <div class="kpi-val">$3,200</div>
+        <div class="kpi-proj">Proy. $8,000 · Meta $7,500</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill amb" style="width:40%"></div></div><div class="prog-label">40% del período · CPR $10.26</div></div>
+      </div>
+      <div class="kpi c-pri">
+        <div class="kpi-top"><span class="kpi-label">Leads CRM</span><span class="delta up">↑ +4.3%</span></div>
+        <div class="kpi-val">312</div>
+        <div class="kpi-proj">Proy. 780 · Meta 750</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill pri" style="width:41.6%"></div></div><div class="prog-label">312 / 750 acumulado</div></div>
+      </div>
+      <div class="kpi c-sky">
+        <div class="kpi-top"><span class="kpi-label">Appts Confirmados</span><span class="delta up">↑ +5.6%</span></div>
+        <div class="kpi-val">38</div>
+        <div class="kpi-proj">Proy. 95 · Meta 90</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill sky" style="width:42.2%"></div></div><div class="prog-label">38 / 90 acumulado</div></div>
+      </div>
+      <div class="kpi c-vio">
+        <div class="kpi-top"><span class="kpi-label">Deals Cerrados</span><span class="delta up">↑ +11.1%</span></div>
+        <div class="kpi-val">4</div>
+        <div class="kpi-proj">Proy. 10 · Meta 9</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill vio" style="width:44.4%"></div></div><div class="prog-label">4 / 9 acumulado</div></div>
+      </div>
+      <div class="kpi c-vio">
+        <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta up">↑ Mejora</span></div>
+        <div class="kpi-val">$800</div>
+        <div class="kpi-proj">vs. $845 período anterior</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill vio" style="width:40%"></div></div><div class="prog-label">-5.3% vs anterior</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FUNNEL (3 etapas) + SPARKLINES -->
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Funnel de Conversión</span><span class="sec-sub">Datos período anterior (16 abr – 15 may)</span></div>
+    <div class="funnel-split">
+      <div class="funnel-left">
+        <div class="fn-col-title">Volumen por etapa</div>
+        <div class="fn-rows">
+          <div class="fn-row">
+            <div class="fn-bar-wrap">
+              <div class="fn-bar fn-b1" style="width:100%">
+                <div class="fn-bar-l"><span class="fn-bar-stage">Leads CRM</span><span class="fn-bar-num">748</span></div>
+                <div class="fn-bar-r"><div class="fn-bar-pct">100%</div><div class="fn-bar-sub">base</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="fn-row">
+            <div class="fn-bar-wrap">
+              <div class="fn-bar fn-b2" style="width:68%">
+                <div class="fn-bar-l"><span class="fn-bar-stage">Appts Confirmados</span><span class="fn-bar-num">60</span></div>
+                <div class="fn-bar-r"><div class="fn-bar-pct">8.0%</div><div class="fn-bar-sub">de leads</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="fn-row">
+            <div class="fn-bar-wrap">
+              <div class="fn-bar fn-b3" style="width:40%">
+                <div class="fn-bar-l"><span class="fn-bar-stage">Deals Cerrados</span><span class="fn-bar-num">9</span></div>
+                <div class="fn-bar-r"><div class="fn-bar-pct">15.0%</div><div class="fn-bar-sub">de appts</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="funnel-right">
+        <div class="fn-col-title">Tendencia 11 períodos</div>
+        <div class="sp-rows">
+          <div class="sp-row">
+            <div class="sp-card">
+              <div class="sp-top"><span class="sp-label pri">Leads CRM</span><span class="sp-trend" id="tr0"></span></div>
+              <div class="sp-canvas"><canvas id="sp0"></canvas></div>
+            </div>
+          </div>
+          <div class="sp-row">
+            <div class="sp-card">
+              <div class="sp-top"><span class="sp-label grn">Appts Confirmados</span><span class="sp-trend" id="tr1"></span></div>
+              <div class="sp-canvas"><canvas id="sp1"></canvas></div>
+            </div>
+          </div>
+          <div class="sp-row">
+            <div class="sp-card">
+              <div class="sp-top"><span class="sp-label vio">Deals Cerrados</span><span class="sp-trend" id="tr2"></span></div>
+              <div class="sp-canvas"><canvas id="sp2"></canvas></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACING vs META -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <span class="sec-title">Pacing vs Meta — Período Actual</span>
+      <span class="sec-sub">Día 12/30 · Se esperaba el 40% de la meta acumulado</span>
+    </div>
+    <div class="pacing-grid">
+
+      <!-- Leads pacing -->
+      <div class="pacing-card">
+        <div class="pacing-hdr">
+          <span class="pacing-label" style="color:var(--pri)">Leads CRM</span>
+          <span class="pacing-delta up" id="pdelta0">↑ +4%</span>
+        </div>
+        <div class="pacing-nums">
+          <div class="pacing-actual" style="color:var(--pri)" id="pval0">312</div>
+          <div class="pacing-sub">de <strong>300</strong> esperados · Meta: <strong>750</strong></div>
+        </div>
+        <div class="pacing-bar-wrap">
+          <div class="pacing-bar-fill" id="pfill0" style="height:100%;border-radius:5px;"></div>
+          <div class="pacing-marker" id="pmark0"></div>
+        </div>
+        <div style="height:10px;background:var(--bg3);border-radius:5px;margin-bottom:8px;overflow:visible;position:relative;">
+          <div id="pfill0b" style="height:100%;border-radius:5px;background:var(--pri);"></div>
+          <div id="pmark0b" style="position:absolute;top:-4px;width:2px;height:18px;background:#94A3B8;border-radius:1px;transform:translateX(-50%);"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);">
+          <span>0</span><span id="pexp0">Esp: 300</span><span>Meta: 750</span>
+        </div>
+        <div style="margin-top:12px;height:80px;position:relative;"><canvas id="pc0"></canvas></div>
+      </div>
+
+      <!-- Appointments pacing -->
+      <div class="pacing-card">
+        <div class="pacing-hdr">
+          <span class="pacing-label" style="color:var(--sky)">Appts Confirmados</span>
+          <span class="pacing-delta up" id="pdelta1">↑ +6%</span>
+        </div>
+        <div class="pacing-nums">
+          <div class="pacing-actual" style="color:var(--sky)" id="pval1">38</div>
+          <div class="pacing-sub">de <strong>36</strong> esperados · Meta: <strong>90</strong></div>
+        </div>
+        <div style="height:10px;background:var(--bg3);border-radius:5px;margin-bottom:8px;overflow:visible;position:relative;">
+          <div id="pfill1b" style="height:100%;border-radius:5px;background:var(--sky);"></div>
+          <div id="pmark1b" style="position:absolute;top:-4px;width:2px;height:18px;background:#94A3B8;border-radius:1px;transform:translateX(-50%);"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);">
+          <span>0</span><span id="pexp1">Esp: 36</span><span>Meta: 90</span>
+        </div>
+        <div style="margin-top:12px;height:80px;position:relative;"><canvas id="pc1"></canvas></div>
+      </div>
+
+      <!-- Deals pacing -->
+      <div class="pacing-card">
+        <div class="pacing-hdr">
+          <span class="pacing-label" style="color:var(--vio)">Deals Cerrados</span>
+          <span class="pacing-delta up" id="pdelta2">↑ +11%</span>
+        </div>
+        <div class="pacing-nums">
+          <div class="pacing-actual" style="color:var(--vio)" id="pval2">4</div>
+          <div class="pacing-sub">de <strong>3.6</strong> esperados · Meta: <strong>9</strong></div>
+        </div>
+        <div style="height:10px;background:var(--bg3);border-radius:5px;margin-bottom:8px;overflow:visible;position:relative;">
+          <div id="pfill2b" style="height:100%;border-radius:5px;background:var(--vio);"></div>
+          <div id="pmark2b" style="position:absolute;top:-4px;width:2px;height:18px;background:#94A3B8;border-radius:1px;transform:translateX(-50%);"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);">
+          <span>0</span><span id="pexp2">Esp: 4</span><span>Meta: 9</span>
+        </div>
+        <div style="margin-top:12px;height:80px;position:relative;"><canvas id="pc2"></canvas></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TASAS DE CONVERSIÓN DEL FUNNEL -->
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Tasas de Conversión del Funnel</span></div>
+    <div class="grid2">
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>Etapa</th><th>Costo USD</th><th>∆ vs anterior</th></tr></thead>
+          <tbody>
+            <tr><td>Resultado Meta</td><td class="num">$8.99</td><td class="hi">sin cambio</td></tr>
+            <tr><td>Contacto CRM</td><td class="num">$10.17</td><td class="md">-0.1%</td></tr>
+            <tr><td>Appt Confirmado</td><td class="num">$126.75</td><td class="lo">+3.4%</td></tr>
+            <tr><td><strong>Deal Cerrado</strong></td><td class="num"><strong>$844.98</strong></td><td class="hi">-5.8%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div style="margin-bottom:12px;font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;">Tasas de conversión</div>
+        <div class="rate-grid">
+          <div class="rate-box">
+            <div class="rate-val" style="color:var(--pri)">88.4%</div>
+            <div class="rate-label">Meta → CRM</div>
+            <div class="prog8"><div class="prog8-fill" style="width:88%;background:var(--pri)"></div></div>
+          </div>
+          <div class="rate-box">
+            <div class="rate-val" style="color:var(--sky)">8.0%</div>
+            <div class="rate-label">CRM → Appt Confirmado</div>
+            <div class="rate-sub">La tasa más baja del funnel</div>
+            <div class="prog8"><div class="prog8-fill" style="width:8%;background:var(--sky)"></div></div>
+          </div>
+          <div class="rate-box">
+            <div class="rate-val" style="color:var(--vio)">15.0%</div>
+            <div class="rate-label">Appt Confirmado → Deal</div>
+            <div class="prog8"><div class="prog8-fill" style="width:15%;background:var(--vio)"></div></div>
+          </div>
+          <div class="rate-box">
+            <div class="rate-val" style="color:var(--txm)">1.20%</div>
+            <div class="rate-label">CRM → Deal (total)</div>
+            <div class="prog8"><div class="prog8-fill" style="width:1.2%;background:var(--txm)"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DISTRIBUCIÓN DE LEADS -->
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Distribución de Leads por Status</span><span class="sec-sub">Período anterior · 755 contactos</span></div>
+    <div class="card"><div class="lead-chart-wrap"><canvas id="leadStatusChart"></canvas></div></div>
+  </div>
+
+  <!-- APPOINTMENTS BREAKDOWN -->
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Appointments: Composición por Etapa</span><span class="sec-sub">90 totales · 60 confirmados / efectivos · 30 cancelados</span></div>
+    <div class="grid2">
+      <div class="card">
+        <div class="donut-area">
+          <div class="donut-wrap">
+            <div class="donut-cw"><canvas id="donut1"></canvas></div>
+            <div class="donut-lbl">Efectivos<br>66.7%</div>
+          </div>
+          <div class="donut-wrap">
+            <div class="donut-cw"><canvas id="donut2"></canvas></div>
+            <div class="donut-lbl">Cancelados<br>33.3%</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="margin-bottom:12px;font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;">Pipeline Stage</div>
+        <table class="tbl">
+          <thead><tr><th>Stage</th><th>Cantidad</th><th>% del total</th></tr></thead>
+          <tbody>
+            <tr><td>✅ Completed</td><td class="num hi">40</td><td class="dim">44.4%</td></tr>
+            <tr><td>❌ Canceled</td><td class="num lo">30</td><td class="dim">33.3%</td></tr>
+            <tr><td>🔄 Still Working</td><td class="num">13</td><td class="dim">14.4%</td></tr>
+            <tr><td>💰 Sale</td><td class="num hi">6</td><td class="dim">6.7%</td></tr>
+            <tr><td>📅 Scheduled</td><td class="num">1</td><td class="dim">1.1%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TENDENCIA HISTÓRICA -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <span class="sec-title">Tendencia por Período</span>
+      <div class="trend-filters">
+        <button class="tf-btn" onclick="setRange(3,this)">3 períodos</button>
+        <button class="tf-btn" onclick="setRange(6,this)">6 períodos</button>
+        <button class="tf-btn on" onclick="setRange(11,this)">11 períodos</button>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div style="margin-bottom:8px;font-size:12px;font-weight:600;color:var(--txm);">Inversión y CPR</div>
+        <div class="hist-wrap"><canvas id="histSpend"></canvas></div>
+      </div>
+      <div class="card">
+        <div style="margin-bottom:8px;font-size:12px;font-weight:600;color:var(--txm);">Leads · Appts · Deals</div>
+        <div class="hist-wrap"><canvas id="histVolume"></canvas></div>
+      </div>
+    </div>
+    <!-- Tabla por período -->
+    <div class="card" style="margin-top:16px;">
+      <div style="margin-bottom:12px;font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;">Detalle por período</div>
+      <div style="overflow-x:auto;">
+        <table class="tbl" id="periodTable">
+          <thead><tr><th>Período</th><th>Inversión</th><th>Leads</th><th>Appts</th><th>Deals</th><th>CPR</th><th>Lead→Appt</th><th>Appt→Deal</th></tr></thead>
+          <tbody id="periodTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /t1 -->
+
+
+<!-- ══════════ TAB 2 — META ADS ══════════ -->
+<div id="t2" class="pane">
+
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Métricas Meta Ads — Período anterior (16 abr – 15 may)</span></div>
+    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+      <div class="kpi c-amb">
+        <div class="kpi-top"><span class="kpi-label">Inversión Total</span><span class="delta up">↑ +7.1%</span></div>
+        <div class="kpi-val">$7,605</div>
+        <div class="kpi-proj">vs. $7,100 período anterior</div>
+      </div>
+      <div class="kpi c-pri">
+        <div class="kpi-top"><span class="kpi-label">Resultados Meta</span><span class="delta dn">↓ -11.6%</span></div>
+        <div class="kpi-val">846</div>
+        <div class="kpi-proj">CPR $8.99 · vs $8.50 anterior</div>
+      </div>
+      <div class="kpi c-sky">
+        <div class="kpi-top"><span class="kpi-label">ROAS Estimado</span><span class="delta up">↑ +20.3%</span></div>
+        <div class="kpi-val">14.2x</div>
+        <div class="kpi-proj">vs. 11.8x período anterior · $12k ref/deal</div>
+      </div>
+      <div class="kpi c-vio">
+        <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta up">↑ Mejora -5%</span></div>
+        <div class="kpi-val">$845</div>
+        <div class="kpi-proj">vs. $890 período anterior</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Rendimiento por Campaña</span></div>
+    <div class="card">
+      <table class="tbl">
+        <thead>
+          <tr><th>Línea</th><th>Spend</th><th>Resultados</th><th>CRM</th><th>Appts</th><th>Eff.</th><th>Deals</th><th>CPR</th><th>Eff→Deal</th></tr>
+        </thead>
+        <tbody id="campTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr">
+      <span class="sec-title">Eficiencia por Campaña</span>
+      <span class="sec-sub">ROAS estimado a $12,000 USD por deal · solo campañas con deals activos</span>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div style="margin-bottom:8px;font-size:12px;font-weight:600;color:var(--txm);">Costo por Deal — ranking</div>
+        <div style="height:210px;position:relative;"><canvas id="cpdChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div style="margin-bottom:12px;font-size:12px;font-weight:600;color:var(--txm);">ROAS Estimado por Campaña</div>
+        <div id="roasCards" style="display:flex;flex-direction:column;gap:8px;"></div>
+        <div style="margin-top:14px;padding:10px 12px;background:var(--bg3);border-radius:7px;font-size:11px;color:var(--txm);">
+          ROAS &gt;10x <span style="color:var(--pri);font-weight:700;">●</span> &nbsp;
+          ROAS 5–10x <span style="color:var(--sky);font-weight:700;">●</span> &nbsp;
+          ROAS &lt;5x o sin deals <span style="color:var(--vio);font-weight:700;">●</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Tendencia Histórica — CPD y ROAS Estimado</span><span class="sec-sub">11 períodos · precio referencia $12,000 USD/deal</span></div>
+    <div class="card"><div style="height:210px;position:relative;"><canvas id="metaChart"></canvas></div></div>
+  </div>
+
+</div><!-- /t2 -->
+
+
+<!-- ══════════ TAB 3 — SETTERS ══════════ -->
+<div id="t3" class="pane">
+
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Top 3 del Período</span></div>
+    <div class="card"><div class="podium" id="podium"></div></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Rendimiento Individual</span></div>
+    <div class="card">
+      <table class="tbl">
+        <thead>
+          <tr><th>Setter</th><th>Leads</th><th>Appts</th><th>Deals</th><th>Conv. %</th><th>Fase</th><th>Bono Est. (COP)</th><th>Hacia E-Hero</th></tr>
+        </thead>
+        <tbody id="setterTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Plan de Comisiones</span></div>
+    <div class="card">
+      <table class="tbl">
+        <thead><tr><th>Fase</th><th>Appts</th><th>Deals req.</th><th>Bono/Appt</th><th>Hot Sale</th><th>Cold Sale</th></tr></thead>
+        <tbody>
+          <tr><td><span class="phase ph-lsr">E-LOSER</span></td><td>—</td><td class="lo">0 deals</td><td>$0</td><td>$0</td><td>0%</td></tr>
+          <tr><td><span class="phase ph-rsc">RESCUE-E1</span></td><td>&lt;10</td><td class="lo">sin umbral</td><td>$0</td><td>$0</td><td>0%</td></tr>
+          <tr><td><span class="phase ph-ldr">E-LEADER</span></td><td>10-19</td><td>≥1</td><td class="num">COP 20,000</td><td class="num">COP 80,000</td><td>0.8%</td></tr>
+          <tr><td><span class="phase ph-hero">E-HERO ⭐</span></td><td>≥20</td><td>≥1</td><td class="num hi">COP 30,000</td><td class="num hi">COP 120,000</td><td>1.0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /t3 -->
+
+
+<script>
+// ── TAB SWITCH
+function sw(id, btn) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+}
+
+// ── DATA (11 complete periods: Jun-Jul 2025 → Apr-May 2026)
+const ALL_PER = ['Jun-Jul','Jul-Ago','Ago-Sep','Sep-Oct','Oct-Nov','Nov-Dic','Dic-Ene','Ene-Feb','Feb-Mar','Mar-Abr','Abr-May'];
+const ALL_D = {
+  leads:  [318,338,358,386,415,445,496,614,716,755,748],
+  appts:  [18,20,22,23,26,27,31,40,47,51,60],   // confirmed only
+  deals:  [2,3,3,3,4,4,5,6,7,7,9],
+  spend:  [3800,4200,4500,5000,5200,5800,6100,7200,6800,7100,7605],
+  cpr:    [11.9,12.4,12.5,12.9,12.5,13.0,12.3,11.7,9.5,9.4,10.2]
+};
+
+// Current pacing data
+const PACING = [
+  { label:'Leads CRM',       actual:312, expected:300, goal:750, color:'#1D4ED8' },
+  { label:'Appts Confirmados',actual:38, expected:36,  goal:90,  color:'#0369A1' },
+  { label:'Deals Cerrados',  actual:4,   expected:3.6, goal:9,   color:'#475569' }
+];
+
+const CAMPAIGNS = [
+  {name:'Sugerencias', spend:3385,res:442,crm:351,appts:40,eff:29,deals:6,cpr:7.66,st:'grn'},
+  {name:'Retargeting', spend:1401,res:165,crm:144,appts:16,eff:11,deals:0,cpr:8.49,st:'amb'},
+  {name:'Detallado',   spend:1330,res:111,crm:73, appts:14,eff:9, deals:1,cpr:11.98,st:'amb'},
+  {name:'Windows FF',  spend:512, res:56, crm:26, appts:6, eff:4, deals:2,cpr:9.14, st:'grn'},
+  {name:'ENG Fríos',   spend:537, res:50, crm:46, appts:11,eff:5, deals:0,cpr:10.73,st:'red'},
+  {name:'CA Core',     spend:440, res:22, crm:108,appts:3, eff:2, deals:0,cpr:20.01,st:'red'},
+];
+
+const SETTERS = [
+  {name:'Isabel',   init:'I',av:'av-g',leads:228,appts:22,deals:3,hot:2,cold:1},
+  {name:'Silvia',   init:'S',av:'av-s',leads:215,appts:18,deals:2,hot:2,cold:0},
+  {name:'Oliver',   init:'O',av:'av-b',leads:198,appts:15,deals:2,hot:1,cold:1},
+  {name:'Emmanuel', init:'E',av:'av-p',leads:180,appts:8, deals:1,hot:0,cold:1},
+  {name:'Mary',     init:'M',av:'av-t',leads:73, appts:5, deals:0,hot:0,cold:0},
+];
+const BNS={pAL:20000,pAH:30000,hL:80000,hH:120000,cL:.008,cH:.01,avg:220000000};
+
+// ── CHART REFS
+let chartSpend = null, chartVolume = null;
+let currentRange = 11;
+
+// ── SPARKLINES
+function mkSpark(id, data, color, fillColor, trId) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return;
+  new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels: ALL_PER,
+      datasets: [{ data, borderColor: color, backgroundColor: fillColor, fill: true, tension: 0.4, pointRadius: 0, borderWidth: 2 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: { legend: { display: false }, tooltip: { enabled: false } },
+      scales: { x: { display: false }, y: { display: false } }
+    }
+  });
+  const tr = document.getElementById(trId);
+  if (tr) {
+    const pct = Math.round((data[data.length-1] - data[0]) / data[0] * 100);
+    tr.textContent = (pct >= 0 ? '↑ +' : '↓ ') + Math.abs(pct) + '%';
+    tr.className = 'sp-trend ' + (pct >= 0 ? 'up' : 'dn');
+  }
+}
+
+// ── PACING BARS + CHARTS
+function mkPacing() {
+  PACING.forEach((p, i) => {
+    const pct = p.actual / p.goal;
+    const expPct = p.expected / p.goal;
+    const ahead = p.actual >= p.expected;
+    const diff = Math.round((p.actual - p.expected) / p.expected * 100);
+
+    // Bar fill
+    const fill = document.getElementById('pfill' + i + 'b');
+    if (fill) { fill.style.width = Math.min(100, pct * 100).toFixed(1) + '%'; fill.style.background = ahead ? p.color : '#DC2626'; }
+    // Expected marker
+    const mark = document.getElementById('pmark' + i + 'b');
+    if (mark) mark.style.left = (expPct * 100).toFixed(1) + '%';
+    // Delta badge
+    const del = document.getElementById('pdelta' + i);
+    if (del) { del.textContent = (ahead ? '↑ +' : '↓ ') + Math.abs(diff) + '%'; del.className = 'pacing-delta ' + (ahead ? 'up' : 'dn'); }
+
+    // Mini bar chart: [Expected, Actual, Goal]
+    const canvas = document.getElementById('pc' + i);
+    if (!canvas) return;
+    new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: ['Esperado', 'Actual', 'Meta'],
+        datasets: [{
+          data: [p.expected, p.actual, p.goal],
+          backgroundColor: ['rgba(148,163,184,.4)', ahead ? p.color : '#DC2626', 'rgba(148,163,184,.2)'],
+          borderColor: ['#94A3B8', ahead ? p.color : '#DC2626', '#CBD5E1'],
+          borderWidth: [1.5, 2, 1.5],
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false,
+        plugins: { legend: { display: false },
+          tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y } }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { font: { size: 9 }, color: '#94A3B8' } },
+          y: { display: false }
+        }
+      }
+    });
+  });
+}
+
+// ── LEAD STATUS
+function mkLeadStatus() {
+  const labels = ['Call Later TODAY','Unreachable','Follow-Up Needed','Out of Range','Not Qualified','Do Not Call','Duplicate','Other Co. Sold'];
+  const values = [265,120,114,82,56,48,38,22];
+  const colors = ['#1D4ED8','#DC2626','#0369A1','#3B82F6','#64748B','#334155','#94A3B8','#CBD5E1'];
+  new Chart(document.getElementById('leadStatusChart'), {
+    type: 'bar',
+    data: { labels, datasets: [{ data: values, backgroundColor: colors, borderRadius: 4 }] },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.x + ' (' + Math.round(ctx.parsed.x/755*100) + '%)' } }
+      },
+      scales: {
+        x: { grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 11 } } },
+        y: { grid: { display: false }, ticks: { color: '#0F172A', font: { size: 12 } } }
+      }
+    }
+  });
+}
+
+// ── DONUTS
+function mkDonut(id, val, color) {
+  new Chart(document.getElementById(id), {
+    type: 'doughnut',
+    data: { datasets: [{ data: [val, 100-val], backgroundColor: [color, '#F1F5F9'], borderWidth: 0 }] },
+    options: { cutout: '76%', responsive: true, maintainAspectRatio: false, animation: false, plugins: { legend: { display: false }, tooltip: { enabled: false } } }
+  });
+}
+
+// ── HISTORICAL CHARTS
+function getRange(n) {
+  const labels = ALL_PER.slice(-n);
+  const d = {};
+  Object.keys(ALL_D).forEach(k => d[k] = ALL_D[k].slice(-n));
+  return { labels, d };
+}
+
+function mkHistCharts(n) {
+  const { labels, d } = getRange(n);
+  const spendCfg = {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        { type: 'bar', label: 'Inversión $', data: d.spend, backgroundColor: 'rgba(12,35,64,.12)', borderColor: '#0C2340', borderWidth: 1.5, borderRadius: 4, yAxisID: 'yL' },
+        { type: 'line', label: 'CPR $', data: d.cpr, borderColor: '#475569', backgroundColor: 'transparent', tension: 0.4, pointRadius: 3, pointBackgroundColor: '#475569', borderWidth: 2, yAxisID: 'yR' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { font: { size: 11 }, padding: 10, boxWidth: 10 } } },
+      scales: {
+        yL: { position: 'left', grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 }, callback: v => '$' + (v/1000).toFixed(0) + 'k' } },
+        yR: { position: 'right', grid: { display: false }, ticks: { color: '#4F46E5', font: { size: 10 }, callback: v => '$' + v } }
+      }
+    }
+  };
+  const volCfg = {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Leads', data: d.leads, borderColor: '#1D4ED8', backgroundColor: 'rgba(29,78,216,.05)', fill: true, tension: 0.4, pointRadius: 3, borderWidth: 2, yAxisID: 'yL' },
+        { label: 'Appts', data: d.appts, borderColor: '#0369A1', backgroundColor: 'transparent', tension: 0.4, pointRadius: 3, borderWidth: 2, yAxisID: 'yL' },
+        { label: 'Deals', data: d.deals, borderColor: '#475569', backgroundColor: 'rgba(71,85,105,.05)', fill: true, tension: 0.4, pointRadius: 3, borderWidth: 2.5, yAxisID: 'yR' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { font: { size: 11 }, padding: 10, boxWidth: 10 } } },
+      scales: {
+        yL: { position: 'left', grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 } } },
+        yR: { position: 'right', grid: { display: false }, ticks: { color: '#7C3AED', font: { size: 10 } } }
+      }
+    }
+  };
+  if (chartSpend) { chartSpend.destroy(); }
+  if (chartVolume) { chartVolume.destroy(); }
+  chartSpend = new Chart(document.getElementById('histSpend'), spendCfg);
+  chartVolume = new Chart(document.getElementById('histVolume'), volCfg);
+  mkPeriodTable(n);
+}
+
+function setRange(n, btn) {
+  currentRange = n;
+  document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  mkHistCharts(n);
+}
+
+// ── PERIOD TABLE
+function mkPeriodTable(n) {
+  const { labels, d } = getRange(n);
+  const tbody = document.getElementById('periodTableBody');
+  tbody.innerHTML = '';
+  labels.forEach((lbl, i) => {
+    const la = d.appts[i], ll = d.leads[i], ld = d.deals[i];
+    const laR = ll > 0 ? (la/ll*100).toFixed(1) : '0.0';
+    const ldR = la > 0 ? (ld/la*100).toFixed(1) : '0.0';
+    tbody.innerHTML += `<tr>
+      <td><strong>${lbl}</strong></td>
+      <td class="num">$${d.spend[i].toLocaleString()}</td>
+      <td class="num">${ll}</td>
+      <td class="num">${la}</td>
+      <td class="num ${ld >= 7 ? 'hi' : ld >= 4 ? 'md' : 'lo'}">${ld}</td>
+      <td class="num">$${d.cpr[i]}</td>
+      <td class="dim">${laR}%</td>
+      <td class="dim">${ldR}%</td>
+    </tr>`;
+  });
+}
+
+// ── CPD BAR CHART (por campaña, solo con deals)
+function mkCpdChart() {
+  const withDeals = CAMPAIGNS.filter(c => c.deals > 0);
+  const cpd = withDeals.map(c => Math.round(c.spend / c.deals));
+  const roas = withDeals.map(c => (c.deals * 12000) / c.spend);
+  const colors = roas.map(r => r >= 10 ? '#1D4ED8' : r >= 5 ? '#0369A1' : '#475569');
+  new Chart(document.getElementById('cpdChart'), {
+    type: 'bar',
+    data: {
+      labels: withDeals.map(c => c.name),
+      datasets: [{ data: cpd, backgroundColor: colors.map(c => c + '22'), borderColor: colors, borderWidth: 2, borderRadius: 5 }]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => {
+          const r = roas[ctx.dataIndex];
+          return ` $${ctx.parsed.x.toLocaleString()} CPD · ROAS ${r.toFixed(1)}x`;
+        }}}
+      },
+      scales: {
+        x: { grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 }, callback: v => '$' + v.toLocaleString() } },
+        y: { grid: { display: false }, ticks: { color: '#0F172A', font: { size: 12 } } }
+      }
+    }
+  });
+}
+
+// ── ROAS CARDS (por campaña)
+function mkRoasCards() {
+  const container = document.getElementById('roasCards');
+  const sorted = [...CAMPAIGNS].sort((a, b) => {
+    const ra = a.deals > 0 ? (a.deals * 12000) / a.spend : -1;
+    const rb = b.deals > 0 ? (b.deals * 12000) / b.spend : -1;
+    return rb - ra;
+  });
+  sorted.forEach(c => {
+    const hasDeal = c.deals > 0;
+    const roas = hasDeal ? ((c.deals * 12000) / c.spend) : 0;
+    const cpd = hasDeal ? Math.round(c.spend / c.deals) : null;
+    const color = hasDeal ? (roas >= 10 ? '#1D4ED8' : roas >= 5 ? '#0369A1' : '#475569') : '#94A3B8';
+    const roasTxt = hasDeal ? roas.toFixed(1) + 'x' : '—';
+    const cpdTxt  = hasDeal ? '$' + cpd.toLocaleString() : 'Sin deals';
+    const pct     = hasDeal ? Math.min(100, (roas / 20) * 100) : 0;
+    container.innerHTML += `<div style="display:flex;align-items:center;gap:12px;">
+      <div style="flex:0 0 110px;font-size:12px;font-weight:600;color:var(--tx);">${c.name}</div>
+      <div style="flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;">
+        <div style="height:100%;width:${pct}%;background:${color};border-radius:4px;"></div>
+      </div>
+      <div style="flex:0 0 44px;text-align:right;font-size:13px;font-weight:700;color:${color};">${roasTxt}</div>
+      <div style="flex:0 0 72px;text-align:right;font-size:11px;color:var(--txm);">${cpdTxt}</div>
+    </div>`;
+  });
+}
+
+// ── META CHART — CPD + ROAS histórico
+function mkMetaChart() {
+  const cpd  = ALL_D.deals.map((d,i) => d > 0 ? Math.round(ALL_D.spend[i] / d) : null);
+  const roas = ALL_D.deals.map((d,i) => d > 0 ? +((d * 12000) / ALL_D.spend[i]).toFixed(1) : null);
+  new Chart(document.getElementById('metaChart'), {
+    type: 'bar',
+    data: {
+      labels: ALL_PER,
+      datasets: [
+        { type: 'bar',  label: 'Inversión $', data: ALL_D.spend, backgroundColor: 'rgba(12,35,64,.10)', borderColor: '#0C2340', borderWidth: 1.5, borderRadius: 4, yAxisID: 'yL' },
+        { type: 'line', label: 'CPD $',       data: cpd,  borderColor: '#475569', backgroundColor: 'transparent', tension: 0.4, pointRadius: 4, pointBackgroundColor: '#475569', borderWidth: 2, yAxisID: 'yL', borderDash: [] },
+        { type: 'line', label: 'ROAS (x)',    data: roas, borderColor: '#1D4ED8', backgroundColor: 'rgba(29,78,216,.06)', fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#1D4ED8', borderWidth: 2.5, yAxisID: 'yR' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'top', labels: { font: { size: 11 }, padding: 12, boxWidth: 10 } },
+        tooltip: { callbacks: { label: ctx => {
+          if (ctx.dataset.label === 'CPD $') return ` $${ctx.parsed.y?.toLocaleString()} CPD`;
+          if (ctx.dataset.label === 'ROAS (x)') return ` ${ctx.parsed.y}x ROAS`;
+          return ` $${ctx.parsed.y?.toLocaleString()}`;
+        }}}
+      },
+      scales: {
+        yL: { position: 'left', grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 }, callback: v => '$' + (v >= 1000 ? (v/1000).toFixed(0)+'k' : v) } },
+        yR: { position: 'right', grid: { display: false }, ticks: { color: '#1D4ED8', font: { size: 10 }, callback: v => v + 'x' } }
+      }
+    }
+  });
+}
+
+// ── CAMPAIGN TABLE
+function mkCampTable() {
+  const tbody = document.getElementById('campTable');
+  CAMPAIGNS.forEach(c => {
+    const dr = c.eff > 0 ? (c.deals/c.eff*100).toFixed(0) : 0;
+    tbody.innerHTML += `<tr>
+      <td><span style="display:inline-flex;align-items:center;gap:6px;"><span class="camp-dot dot-${c.st}"></span><strong>${c.name}</strong></span></td>
+      <td class="num">$${c.spend.toLocaleString()}</td>
+      <td class="num">${c.res}</td>
+      <td class="num">${c.crm}</td>
+      <td class="num">${c.appts}</td>
+      <td class="num">${c.eff}</td>
+      <td class="num ${c.deals > 0 ? 'hi' : 'lo'}">${c.deals}</td>
+      <td class="num ${c.cpr < 10 ? 'hi' : c.cpr < 14 ? 'md' : 'lo'}">$${c.cpr}</td>
+      <td class="dim">${dr}%</td>
+    </tr>`;
+  });
+}
+
+// ── SETTER HELPERS
+function getPhase(a,d) {
+  if(d===0) return{l:'E-LOSER',c:'ph-lsr'};
+  if(a<10)  return{l:'RESCUE-E1',c:'ph-rsc'};
+  if(a>=20) return{l:'E-HERO ⭐',c:'ph-hero'};
+  return{l:'E-LEADER',c:'ph-ldr'};
+}
+function calcBonus(s) {
+  const ph=getPhase(s.appts,s.deals);
+  if(ph.c==='ph-lsr'||ph.c==='ph-rsc') return 0;
+  const h=ph.c==='ph-hero';
+  return Math.round(s.appts*(h?BNS.pAH:BNS.pAL)+s.hot*(h?BNS.hH:BNS.hL)+s.cold*BNS.avg*(h?BNS.cH:BNS.cL));
+}
+
+function mkPodium() {
+  const sorted = [...SETTERS].sort((a,b) => b.deals*100+b.appts - (a.deals*100+a.appts));
+  const order = [1,0,2];
+  const hts = ['pd-2','pd-1','pd-3'];
+  const rnks = ['🥈','🥇','🥉'];
+  let html = '';
+  order.forEach((idx,pos) => {
+    const s = sorted[idx]; if(!s) return;
+    const ph = getPhase(s.appts,s.deals);
+    html += `<div class="pd-item"><div class="${hts[pos]} pd-block"><span class="pd-rank">${rnks[pos]}</span></div><div class="pd-name">${s.name}</div><div class="pd-val">${s.deals} deals · ${s.appts} appts</div><span class="phase ${ph.c}">${ph.l}</span></div>`;
+  });
+  document.getElementById('podium').innerHTML = html;
+}
+
+function mkSetterTable() {
+  const tbody = document.getElementById('setterTable');
+  const sorted = [...SETTERS].sort((a,b) => b.deals*100+b.appts - (a.deals*100+a.appts));
+  sorted.forEach(s => {
+    const ph = getPhase(s.appts,s.deals);
+    const bonus = calcBonus(s);
+    const conv = s.leads > 0 ? (s.deals/s.leads*100).toFixed(1) : '0.0';
+    const pct = Math.min(100, Math.round(s.appts/20*100));
+    const barColor = s.appts>=20?'#059669':s.appts>=10?'#0EA5E9':'#94A3B8';
+    tbody.innerHTML += `<tr>
+      <td><span style="display:inline-flex;align-items:center;gap:8px;"><span class="av ${s.av}" style="width:28px;height:28px;font-size:11px;">${s.init}</span>${s.name}</span></td>
+      <td class="num">${s.leads}</td>
+      <td class="num">${s.appts}</td>
+      <td class="num ${s.deals>1?'hi':s.deals===1?'md':'lo'}">${s.deals}</td>
+      <td class="num">${conv}%</td>
+      <td><span class="phase ${ph.c}">${ph.l}</span></td>
+      <td class="num ${bonus>0?'hi':''}">${bonus>0?'COP '+bonus.toLocaleString():'—'}</td>
+      <td style="min-width:110px;"><div style="height:6px;background:var(--bg3);border-radius:3px;margin-bottom:3px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;"></div></div><div style="font-size:10px;color:var(--txd)">${s.appts}/20 (${pct}%)</div></td>
+    </tr>`;
+  });
+}
+
+// ── INIT
+document.addEventListener('DOMContentLoaded', () => {
+  mkSpark('sp0', ALL_D.leads,  '#1D4ED8', 'rgba(29,78,216,.1)',   'tr0');
+  mkSpark('sp1', ALL_D.appts,  '#0369A1', 'rgba(3,105,161,.1)',   'tr1');
+  mkSpark('sp2', ALL_D.deals,  '#475569', 'rgba(71,85,105,.1)',   'tr2');
+  mkPacing();
+  mkLeadStatus();
+  mkDonut('donut1', 66.7, '#0369A1');
+  mkDonut('donut2', 33.3, '#DC2626');
+  mkHistCharts(11);
+  mkCpdChart();
+  mkRoasCards();
+  mkMetaChart();
+  mkCampTable();
+  mkPodium();
+  mkSetterTable();
+});
+</script>
+</body>
+</html>
