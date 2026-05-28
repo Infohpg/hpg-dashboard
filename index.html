@@ -108,8 +108,8 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 .fn-b2{background:linear-gradient(135deg,#0369A1,#0891B2);}
 .fn-b3{background:linear-gradient(135deg,#334155,#475569);}
 .sp-rows{display:flex;flex-direction:column;gap:10px;}
-.sp-row{height:80px;display:flex;align-items:center;}
-.sp-card{flex:1;height:68px;background:var(--bg2);border:1px solid var(--brd);border-radius:8px;padding:6px 10px 4px;display:flex;flex-direction:column;}
+.sp-row{height:130px;display:flex;align-items:center;}
+.sp-card{flex:1;height:118px;background:var(--bg2);border:1px solid var(--brd);border-radius:8px;padding:6px 10px 4px;display:flex;flex-direction:column;}
 .sp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;}
 .sp-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
 .sp-label.pri{color:var(--pri);}
@@ -274,22 +274,22 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         <div class="kpi-prog"><div class="prog-track"><div class="prog-fill amb" style="width:40%"></div></div><div class="prog-label">40% del período · CPR $10.26</div></div>
       </div>
       <div class="kpi c-pri">
-        <div class="kpi-top"><span class="kpi-label">Leads CRM</span><span class="delta up">↑ +4.3%</span></div>
-        <div class="kpi-val">312</div>
-        <div class="kpi-proj">Proy. 780 · Meta 750</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill pri" style="width:41.6%"></div></div><div class="prog-label">312 / 750 acumulado</div></div>
+        <div class="kpi-top"><span class="kpi-label">Revenue Estimado</span><span class="delta up" id="kdelta-rev">↑ Proy. $120k</span></div>
+        <div class="kpi-val" id="krev">$48,000</div>
+        <div class="kpi-proj" id="kprojrev">4 deals × $12,000 ref.</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill pri" id="krevfill" style="width:44.4%"></div></div><div class="prog-label" id="krevlbl">4 / 9 meta · $108k meta</div></div>
       </div>
       <div class="kpi c-sky">
-        <div class="kpi-top"><span class="kpi-label">Appts Confirmados</span><span class="delta up">↑ +5.6%</span></div>
-        <div class="kpi-val">38</div>
-        <div class="kpi-proj">Proy. 95 · Meta 90</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill sky" style="width:42.2%"></div></div><div class="prog-label">38 / 90 acumulado</div></div>
+        <div class="kpi-top"><span class="kpi-label">Conv. Lead → Appt</span><span class="delta up" id="kdelta-l2a">↑ +52%</span></div>
+        <div class="kpi-val" id="kl2a">12.2%</div>
+        <div class="kpi-proj" id="kprojl2a">38 / 312 · vs 8.0% anterior</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill sky" id="kl2afill" style="width:61%"></div></div><div class="prog-label">escala 0 – 20%</div></div>
       </div>
       <div class="kpi c-vio">
-        <div class="kpi-top"><span class="kpi-label">Deals Cerrados</span><span class="delta up">↑ +11.1%</span></div>
-        <div class="kpi-val">4</div>
-        <div class="kpi-proj">Proy. 10 · Meta 9</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill vio" style="width:44.4%"></div></div><div class="prog-label">4 / 9 acumulado</div></div>
+        <div class="kpi-top"><span class="kpi-label">Conv. Appt → Deal</span><span class="delta dn" id="kdelta-a2d">↓ -30%</span></div>
+        <div class="kpi-val" id="ka2d">10.5%</div>
+        <div class="kpi-proj" id="kproja2d">4 / 38 · vs 15.0% anterior</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill vio" id="ka2dfill" style="width:42%"></div></div><div class="prog-label">escala 0 – 25%</div></div>
       </div>
       <div class="kpi c-vio">
         <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta up">↑ Mejora</span></div>
@@ -309,32 +309,32 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         <div class="fn-rows">
           <div class="fn-row">
             <div class="fn-bar-wrap">
-              <div class="fn-bar fn-b1" style="width:100%">
-                <div class="fn-bar-l"><span class="fn-bar-stage">Leads CRM</span><span class="fn-bar-num">312</span></div>
+              <div id="fn-b0" class="fn-bar fn-b1" style="width:100%">
+                <div class="fn-bar-l"><span class="fn-bar-stage">Leads CRM</span><span class="fn-bar-num" id="fn-n0">312</span></div>
                 <div class="fn-bar-r"><div class="fn-bar-pct">100%</div><div class="fn-bar-sub">base</div></div>
               </div>
             </div>
           </div>
           <div class="fn-row">
             <div class="fn-bar-wrap">
-              <div class="fn-bar fn-b2" style="width:68%">
-                <div class="fn-bar-l"><span class="fn-bar-stage">Appts Confirmados</span><span class="fn-bar-num">38</span></div>
-                <div class="fn-bar-r"><div class="fn-bar-pct">12.2%</div><div class="fn-bar-sub">de leads</div></div>
+              <div id="fn-b1" class="fn-bar fn-b2" style="width:68%">
+                <div class="fn-bar-l"><span class="fn-bar-stage">Appts Confirmados</span><span class="fn-bar-num" id="fn-n1">38</span></div>
+                <div class="fn-bar-r"><div class="fn-bar-pct" id="fn-p1">12.2%</div><div class="fn-bar-sub">de leads</div></div>
               </div>
             </div>
           </div>
           <div class="fn-row">
             <div class="fn-bar-wrap">
-              <div class="fn-bar fn-b3" style="width:40%">
-                <div class="fn-bar-l"><span class="fn-bar-stage">Deals Cerrados</span><span class="fn-bar-num">4</span></div>
-                <div class="fn-bar-r"><div class="fn-bar-pct">10.5%</div><div class="fn-bar-sub">de appts</div></div>
+              <div id="fn-b2" class="fn-bar fn-b3" style="width:40%">
+                <div class="fn-bar-l"><span class="fn-bar-stage">Deals Cerrados</span><span class="fn-bar-num" id="fn-n2">4</span></div>
+                <div class="fn-bar-r"><div class="fn-bar-pct" id="fn-p2">10.5%</div><div class="fn-bar-sub">de appts</div></div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="funnel-right">
-        <div class="fn-col-title">Tendencia 12 períodos · incl. actual</div>
+        <div class="fn-col-title">Tendencia histórica · 12 períodos</div>
         <div class="sp-rows">
           <div class="sp-row">
             <div class="sp-card">
@@ -726,24 +726,22 @@ let chartSpend = null, chartVolume = null;
 let currentRange = 11;
 let rsA = 0, rsB = 0, rsDrag = false, rsAnchor = 0;
 
-// ── SPARKLINES (12 períodos: 11 históricos + actual)
-function mkSpark(id, histData, curVal, color, fillColor, trId) {
+// ── SPARKLINES (períodos históricos completos, sin período actual)
+function mkSpark(id, data, color, fillColor, trId) {
   const canvas = document.getElementById(id);
   if (!canvas) return;
-  const labels = [...ALL_PER, 'Actual'];
-  const data   = [...histData, curVal];
-  const ptColors = data.map((_, i) => i === data.length - 1 ? color : color);
-  const ptRadius  = data.map((_, i) => i === data.length - 1 ? 4 : 0);
-  const ptBorder  = data.map((_, i) => i === data.length - 1 ? '#fff' : color);
+  const labels = ALL_PER;
   new Chart(canvas, {
     type: 'line',
     data: {
       labels,
       datasets: [{
         data, borderColor: color, backgroundColor: fillColor, fill: true, tension: 0.4,
-        pointRadius: ptRadius, pointBackgroundColor: ptColors, pointBorderColor: ptBorder,
-        pointBorderWidth: 2, borderWidth: 2,
-        segment: { borderDash: ctx => ctx.p1DataIndex === data.length - 1 ? [4,3] : [] }
+        pointRadius: 3,
+        pointBackgroundColor: color,
+        pointBorderColor: '#fff',
+        pointBorderWidth: 1.5,
+        borderWidth: 2
       }]
     },
     options: {
@@ -752,18 +750,104 @@ function mkSpark(id, histData, curVal, color, fillColor, trId) {
         legend: { display: false },
         tooltip: {
           enabled: true,
-          callbacks: { title: ctx => ctx[0].label, label: ctx => ' ' + ctx.parsed.y }
+          callbacks: {
+            title: ctx => ctx[0].label,
+            label: ctx => ' ' + ctx.parsed.y
+          }
         }
       },
-      scales: { x: { display: false }, y: { display: false } }
+      scales: {
+        x: {
+          display: true,
+          grid: { display: false },
+          ticks: {
+            color: '#94A3B8',
+            font: { size: 8 },
+            maxRotation: 90,
+            minRotation: 90,
+            autoSkip: false
+          }
+        },
+        y: { display: false }
+      }
     }
   });
   const tr = document.getElementById(trId);
-  if (tr) {
-    const pct = Math.round((histData[histData.length-1] - histData[0]) / histData[0] * 100);
+  if (tr && data.length >= 2) {
+    const pct = Math.round((data[data.length-1] - data[0]) / data[0] * 100);
     tr.textContent = (pct >= 0 ? '↑ +' : '↓ ') + Math.abs(pct) + '%';
     tr.className = 'sp-trend ' + (pct >= 0 ? 'up' : 'dn');
   }
+}
+
+// ── FUNNEL BARS (dinámico desde PACING)
+function mkFunnel() {
+  const l = PACING[0].actual, a = PACING[1].actual, d = PACING[2].actual;
+  const l2a = l > 0 ? (a / l * 100).toFixed(1) : '0.0';
+  const a2d = a > 0 ? (d / a * 100).toFixed(1) : '0.0';
+  // Widths: appts visual = max(10, l2a*5), deals visual = max(10, a2d*7)
+  const apptW = l > 0 ? Math.max(10, Math.min(96, parseFloat(l2a) * 5)) : 68;
+  const dealW = a > 0 ? Math.max(10, Math.min(96, parseFloat(a2d) * 7)) : 40;
+  const n0 = document.getElementById('fn-n0'); if (n0) n0.textContent = l;
+  const n1 = document.getElementById('fn-n1'); if (n1) n1.textContent = a;
+  const n2 = document.getElementById('fn-n2'); if (n2) n2.textContent = d;
+  const p1 = document.getElementById('fn-p1'); if (p1) p1.textContent = l2a + '%';
+  const p2 = document.getElementById('fn-p2'); if (p2) p2.textContent = a2d + '%';
+  const b1 = document.getElementById('fn-b1'); if (b1) b1.style.width = apptW + '%';
+  const b2 = document.getElementById('fn-b2'); if (b2) b2.style.width = dealW + '%';
+}
+
+// ── KPI CARDS (dinámico desde PACING y ALL_D)
+function mkKpiCards() {
+  const l = PACING[0].actual, a = PACING[1].actual, d = PACING[2].actual;
+  const goalD = PACING[2].goal || 9;
+  const metaRev = goalD * 12000;
+  const rev = d * 12000;
+  const revFillPct = Math.min(100, (d / goalD * 100)).toFixed(1);
+
+  const pL = ALL_D.leads.length > 0 ? ALL_D.leads[ALL_D.leads.length - 1] : 748;
+  const pA = ALL_D.appts.length > 0 ? ALL_D.appts[ALL_D.appts.length - 1] : 60;
+  const pD = ALL_D.deals.length > 0 ? ALL_D.deals[ALL_D.deals.length - 1] : 9;
+
+  const l2a  = l > 0 ? (a / l * 100).toFixed(1) : '0.0';
+  const a2d  = a > 0 ? (d / a * 100).toFixed(1) : '0.0';
+  const pl2a = pL > 0 ? (pA / pL * 100).toFixed(1) : '0.0';
+  const pa2d = pA > 0 ? (pD / pA * 100).toFixed(1) : '0.0';
+
+  const dl2a = parseFloat(pl2a) > 0 ? Math.round((parseFloat(l2a) - parseFloat(pl2a)) / parseFloat(pl2a) * 100) : 0;
+  const da2d = parseFloat(pa2d) > 0 ? Math.round((parseFloat(a2d) - parseFloat(pa2d)) / parseFloat(pa2d) * 100) : 0;
+
+  // Revenue card
+  const revEl = document.getElementById('krev');
+  if (revEl) revEl.textContent = '$' + rev.toLocaleString();
+  const projEl = document.getElementById('kprojrev');
+  if (projEl) projEl.textContent = d + ' deals × $12,000 ref.';
+  const lblEl = document.getElementById('krevlbl');
+  if (lblEl) lblEl.textContent = d + ' / ' + goalD + ' meta · $' + (metaRev/1000).toFixed(0) + 'k meta';
+  const fillEl = document.getElementById('krevfill');
+  if (fillEl) fillEl.style.width = revFillPct + '%';
+  const dRevEl = document.getElementById('kdelta-rev');
+  if (dRevEl) { const ahead = d >= PACING[2].expected; dRevEl.textContent = ahead ? '↑ Al ritmo' : '↓ Por debajo'; dRevEl.className = 'delta ' + (ahead ? 'up' : 'dn'); }
+
+  // L→A card
+  const l2aEl = document.getElementById('kl2a');
+  if (l2aEl) l2aEl.textContent = l2a + '%';
+  const pl2aEl = document.getElementById('kprojl2a');
+  if (pl2aEl) pl2aEl.textContent = a + ' / ' + l + ' · vs ' + pl2a + '% anterior';
+  const l2aFill = document.getElementById('kl2afill');
+  if (l2aFill) l2aFill.style.width = Math.min(100, parseFloat(l2a) / 20 * 100).toFixed(1) + '%';
+  const dl2aEl = document.getElementById('kdelta-l2a');
+  if (dl2aEl) { dl2aEl.textContent = (dl2a >= 0 ? '↑ +' : '↓ ') + Math.abs(dl2a) + '%'; dl2aEl.className = 'delta ' + (dl2a >= 0 ? 'up' : 'dn'); }
+
+  // A→D card
+  const a2dEl = document.getElementById('ka2d');
+  if (a2dEl) a2dEl.textContent = a2d + '%';
+  const pa2dEl = document.getElementById('kproja2d');
+  if (pa2dEl) pa2dEl.textContent = d + ' / ' + a + ' · vs ' + pa2d + '% anterior';
+  const a2dFill = document.getElementById('ka2dfill');
+  if (a2dFill) a2dFill.style.width = Math.min(100, parseFloat(a2d) / 25 * 100).toFixed(1) + '%';
+  const da2dEl = document.getElementById('kdelta-a2d');
+  if (da2dEl) { da2dEl.textContent = (da2d >= 0 ? '↑ +' : '↓ ') + Math.abs(da2d) + '%'; da2dEl.className = 'delta ' + (da2d >= 0 ? 'up' : 'dn'); }
 }
 
 // ── PACING BARS + CHARTS
@@ -1211,9 +1295,11 @@ function applyData(d) {
 
 // ── INIT
 function initAll() {
-  mkSpark('sp0', ALL_D.leads, PACING[0].actual, '#1D4ED8', 'rgba(29,78,216,.1)',  'tr0');
-  mkSpark('sp1', ALL_D.appts, PACING[1].actual, '#0369A1', 'rgba(3,105,161,.1)', 'tr1');
-  mkSpark('sp2', ALL_D.deals, PACING[2].actual, '#475569', 'rgba(71,85,105,.1)', 'tr2');
+  mkSpark('sp0', ALL_D.leads, '#1D4ED8', 'rgba(29,78,216,.1)',  'tr0');
+  mkSpark('sp1', ALL_D.appts, '#0369A1', 'rgba(3,105,161,.1)', 'tr1');
+  mkSpark('sp2', ALL_D.deals, '#475569', 'rgba(71,85,105,.1)', 'tr2');
+  mkFunnel();
+  mkKpiCards();
   mkPacing();
   mkLeadStatus();
   const confPct = APPTS_BREAKDOWN.total > 0 ? (APPTS_BREAKDOWN.confirmed / APPTS_BREAKDOWN.total * 100) : 66.7;
