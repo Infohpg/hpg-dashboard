@@ -1,1 +1,130 @@
-{"test":1}
+{
+  "updated": "2026-05-27 22:53",
+  "currentKey": "2026-05",
+  "period": {
+    "label": "16 mayo - 15 junio 2026",
+    "short": "May-Jun",
+    "day": 12,
+    "total_days": 30,
+    "pct": 40
+  },
+  "pacing": [
+    {
+      "label": "Leads CRM",
+      "actual": 345,
+      "expected": 300,
+      "goal": 750,
+      "color": "#1D4ED8"
+    },
+    {
+      "label": "Appts Confirmados",
+      "actual": 0,
+      "expected": 36,
+      "goal": 90,
+      "color": "#0369A1"
+    },
+    {
+      "label": "Deals Cerrados",
+      "actual": 0,
+      "expected": 3.6,
+      "goal": 9,
+      "color": "#475569"
+    }
+  ],
+  "funnel": {
+    "leads": 1135,
+    "appts": 0,
+    "deals": 0,
+    "period": "Abr-May"
+  },
+  "history": {
+    "periods": [
+      "Sep-Oct",
+      "Oct-Nov",
+      "Nov-Dic",
+      "Dic-Ene",
+      "Ene-Feb",
+      "Feb-Mar",
+      "Mar-Abr",
+      "Abr-May"
+    ],
+    "leads": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      762,
+      1098,
+      1135
+    ],
+    "appts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "deals": [
+      0,
+      0,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "spend": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "cpr": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "lead_status": {
+    "labels": [
+      "Unknown",
+      "Call later TODAY",
+      "Follow-Up Needed",
+      "Unreachable",
+      "Out of Range",
+      "Not Qualified",
+      "Do Not Call",
+      "Duplicate"
+    ],
+    "values": [
+      438,
+      325,
+      174,
+      158,
+      110,
+      100,
+      55,
+      48
+    ]
+  },
+  "appts_breakdown": {
+    "total": 0,
+    "confirmed": 0,
+    "cancelled": 0,
+    "stages": []
+  }
+}
