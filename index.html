@@ -334,7 +334,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         </div>
       </div>
       <div class="funnel-right">
-        <div class="fn-col-title">Tendencia 11 períodos</div>
+        <div class="fn-col-title">Tendencia 12 períodos · incl. actual</div>
         <div class="sp-rows">
           <div class="sp-row">
             <div class="sp-card">
@@ -375,18 +375,14 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         </div>
         <div class="pacing-nums">
           <div class="pacing-actual" style="color:var(--pri)" id="pval0">312</div>
-          <div class="pacing-sub">de <strong>300</strong> esperados · Meta: <strong>750</strong></div>
-        </div>
-        <div class="pacing-bar-wrap">
-          <div class="pacing-bar-fill" id="pfill0" style="height:100%;border-radius:5px;"></div>
-          <div class="pacing-marker" id="pmark0"></div>
+          <div class="pacing-sub" id="psub0">de <strong>300</strong> esperados · Meta: <strong>750</strong></div>
         </div>
         <div style="height:10px;background:var(--bg3);border-radius:5px;margin-bottom:8px;overflow:visible;position:relative;">
           <div id="pfill0b" style="height:100%;border-radius:5px;background:var(--pri);"></div>
           <div id="pmark0b" style="position:absolute;top:-4px;width:2px;height:18px;background:#94A3B8;border-radius:1px;transform:translateX(-50%);"></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);">
-          <span>0</span><span id="pexp0">Esp: 300</span><span>Meta: 750</span>
+          <span>0</span><span id="pexp0">Esp: 300</span><span id="pgoal0">Meta: 750</span>
         </div>
         <div style="margin-top:12px;height:80px;position:relative;"><canvas id="pc0"></canvas></div>
       </div>
@@ -399,14 +395,14 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         </div>
         <div class="pacing-nums">
           <div class="pacing-actual" style="color:var(--sky)" id="pval1">38</div>
-          <div class="pacing-sub">de <strong>36</strong> esperados · Meta: <strong>90</strong></div>
+          <div class="pacing-sub" id="psub1">de <strong>36</strong> esperados · Meta: <strong>90</strong></div>
         </div>
         <div style="height:10px;background:var(--bg3);border-radius:5px;margin-bottom:8px;overflow:visible;position:relative;">
           <div id="pfill1b" style="height:100%;border-radius:5px;background:var(--sky);"></div>
           <div id="pmark1b" style="position:absolute;top:-4px;width:2px;height:18px;background:#94A3B8;border-radius:1px;transform:translateX(-50%);"></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);">
-          <span>0</span><span id="pexp1">Esp: 36</span><span>Meta: 90</span>
+          <span>0</span><span id="pexp1">Esp: 36</span><span id="pgoal1">Meta: 90</span>
         </div>
         <div style="margin-top:12px;height:80px;position:relative;"><canvas id="pc1"></canvas></div>
       </div>
@@ -419,14 +415,14 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         </div>
         <div class="pacing-nums">
           <div class="pacing-actual" style="color:var(--vio)" id="pval2">4</div>
-          <div class="pacing-sub">de <strong>3.6</strong> esperados · Meta: <strong>9</strong></div>
+          <div class="pacing-sub" id="psub2">de <strong>3.6</strong> esperados · Meta: <strong>9</strong></div>
         </div>
         <div style="height:10px;background:var(--bg3);border-radius:5px;margin-bottom:8px;overflow:visible;position:relative;">
           <div id="pfill2b" style="height:100%;border-radius:5px;background:var(--vio);"></div>
           <div id="pmark2b" style="position:absolute;top:-4px;width:2px;height:18px;background:#94A3B8;border-radius:1px;transform:translateX(-50%);"></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);">
-          <span>0</span><span id="pexp2">Esp: 4</span><span>Meta: 9</span>
+          <span>0</span><span id="pexp2">Esp: 3.6</span><span id="pgoal2">Meta: 9</span>
         </div>
         <div style="margin-top:12px;height:80px;position:relative;"><canvas id="pc2"></canvas></div>
       </div>
@@ -649,7 +645,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
     <div class="card">
       <table class="tbl">
         <thead>
-          <tr><th>Setter</th><th>Leads</th><th>Appts</th><th>Deals</th><th>Conv. %</th><th>Fase</th><th>Bono Est. (COP)</th><th>Hacia E-Hero</th></tr>
+          <tr><th>Setter</th><th>Leads</th><th>Llamadas</th><th>Appts</th><th>Deals</th><th>Conv. %</th><th>Fase</th><th>Bono Est.</th><th>Hacia E-Hero</th></tr>
         </thead>
         <tbody id="setterTable"></tbody>
       </table>
@@ -717,11 +713,11 @@ const CAMPAIGNS = [
 ];
 
 const SETTERS = [
-  {name:'Isabel',   init:'I',av:'av-g',leads:228,appts:22,deals:3,hot:2,cold:1},
-  {name:'Silvia',   init:'S',av:'av-s',leads:215,appts:18,deals:2,hot:2,cold:0},
-  {name:'Oliver',   init:'O',av:'av-b',leads:198,appts:15,deals:2,hot:1,cold:1},
-  {name:'Emmanuel', init:'E',av:'av-p',leads:180,appts:8, deals:1,hot:0,cold:1},
-  {name:'Mary',     init:'M',av:'av-t',leads:73, appts:5, deals:0,hot:0,cold:0},
+  {name:'Isabel',   init:'I',av:'av-g',leads:228,calls:418,appts:22,deals:3,hot:2,cold:1},
+  {name:'Silvia',   init:'S',av:'av-s',leads:215,calls:389,appts:18,deals:2,hot:2,cold:0},
+  {name:'Oliver',   init:'O',av:'av-b',leads:198,calls:352,appts:15,deals:2,hot:1,cold:1},
+  {name:'Emmanuel', init:'E',av:'av-p',leads:180,calls:301,appts:8, deals:1,hot:0,cold:1},
+  {name:'Mary',     init:'M',av:'av-t',leads:73, calls:112,appts:5, deals:0,hot:0,cold:0},
 ];
 const BNS={pAL:5,pAH:7,hL:19,hH:29,cL:.008,cH:.01,avg:52381};
 
@@ -730,25 +726,41 @@ let chartSpend = null, chartVolume = null;
 let currentRange = 11;
 let rsA = 0, rsB = 0, rsDrag = false, rsAnchor = 0;
 
-// ── SPARKLINES
-function mkSpark(id, data, color, fillColor, trId) {
+// ── SPARKLINES (12 períodos: 11 históricos + actual)
+function mkSpark(id, histData, curVal, color, fillColor, trId) {
   const canvas = document.getElementById(id);
   if (!canvas) return;
+  const labels = [...ALL_PER, 'Actual'];
+  const data   = [...histData, curVal];
+  const ptColors = data.map((_, i) => i === data.length - 1 ? color : color);
+  const ptRadius  = data.map((_, i) => i === data.length - 1 ? 4 : 0);
+  const ptBorder  = data.map((_, i) => i === data.length - 1 ? '#fff' : color);
   new Chart(canvas, {
     type: 'line',
     data: {
-      labels: ALL_PER,
-      datasets: [{ data, borderColor: color, backgroundColor: fillColor, fill: true, tension: 0.4, pointRadius: 0, borderWidth: 2 }]
+      labels,
+      datasets: [{
+        data, borderColor: color, backgroundColor: fillColor, fill: true, tension: 0.4,
+        pointRadius: ptRadius, pointBackgroundColor: ptColors, pointBorderColor: ptBorder,
+        pointBorderWidth: 2, borderWidth: 2,
+        segment: { borderDash: ctx => ctx.p1DataIndex === data.length - 1 ? [4,3] : [] }
+      }]
     },
     options: {
       responsive: true, maintainAspectRatio: false, animation: false,
-      plugins: { legend: { display: false }, tooltip: { enabled: false } },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          enabled: true,
+          callbacks: { title: ctx => ctx[0].label, label: ctx => ' ' + ctx.parsed.y }
+        }
+      },
       scales: { x: { display: false }, y: { display: false } }
     }
   });
   const tr = document.getElementById(trId);
   if (tr) {
-    const pct = Math.round((data[data.length-1] - data[0]) / data[0] * 100);
+    const pct = Math.round((histData[histData.length-1] - histData[0]) / histData[0] * 100);
     tr.textContent = (pct >= 0 ? '↑ +' : '↓ ') + Math.abs(pct) + '%';
     tr.className = 'sp-trend ' + (pct >= 0 ? 'up' : 'dn');
   }
@@ -757,17 +769,28 @@ function mkSpark(id, data, color, fillColor, trId) {
 // ── PACING BARS + CHARTS
 function mkPacing() {
   PACING.forEach((p, i) => {
-    const pct = p.actual / p.goal;
+    const pct    = p.actual / p.goal;
     const expPct = p.expected / p.goal;
-    const ahead = p.actual >= p.expected;
-    const diff = Math.round((p.actual - p.expected) / p.expected * 100);
+    const ahead  = p.actual >= p.expected;
+    const diff   = p.expected > 0 ? Math.round((p.actual - p.expected) / p.expected * 100) : 0;
 
+    // Número actual
+    const valEl = document.getElementById('pval' + i);
+    if (valEl) valEl.textContent = p.actual;
+    // Sub texto
+    const subEl = document.getElementById('psub' + i);
+    if (subEl) subEl.innerHTML = `de <strong>${p.expected}</strong> esperados · Meta: <strong>${p.goal}</strong>`;
+    // Labels bajo la barra
+    const expEl  = document.getElementById('pexp'  + i);
+    const goalEl = document.getElementById('pgoal' + i);
+    if (expEl)  expEl.textContent  = 'Esp: '  + p.expected;
+    if (goalEl) goalEl.textContent = 'Meta: ' + p.goal;
     // Bar fill
     const fill = document.getElementById('pfill' + i + 'b');
     if (fill) { fill.style.width = Math.min(100, pct * 100).toFixed(1) + '%'; fill.style.background = ahead ? p.color : '#DC2626'; }
     // Expected marker
     const mark = document.getElementById('pmark' + i + 'b');
-    if (mark) mark.style.left = (expPct * 100).toFixed(1) + '%';
+    if (mark) mark.style.left = Math.min(99, expPct * 100).toFixed(1) + '%';
     // Delta badge
     const del = document.getElementById('pdelta' + i);
     if (del) { del.textContent = (ahead ? '↑ +' : '↓ ') + Math.abs(diff) + '%'; del.className = 'pacing-delta ' + (ahead ? 'up' : 'dn'); }
@@ -1148,6 +1171,7 @@ function mkSetterTable() {
     tbody.innerHTML += `<tr>
       <td><span style="display:inline-flex;align-items:center;gap:8px;"><span class="av ${s.av}" style="width:28px;height:28px;font-size:11px;">${s.init}</span>${s.name}</span></td>
       <td class="num">${s.leads}</td>
+      <td class="num">${s.calls}</td>
       <td class="num">${s.appts}</td>
       <td class="num ${s.deals>1?'hi':s.deals===1?'md':'lo'}">${s.deals}</td>
       <td class="num">${conv}%</td>
@@ -1187,9 +1211,9 @@ function applyData(d) {
 
 // ── INIT
 function initAll() {
-  mkSpark('sp0', ALL_D.leads,  '#1D4ED8', 'rgba(29,78,216,.1)',   'tr0');
-  mkSpark('sp1', ALL_D.appts,  '#0369A1', 'rgba(3,105,161,.1)',   'tr1');
-  mkSpark('sp2', ALL_D.deals,  '#475569', 'rgba(71,85,105,.1)',   'tr2');
+  mkSpark('sp0', ALL_D.leads, PACING[0].actual, '#1D4ED8', 'rgba(29,78,216,.1)',  'tr0');
+  mkSpark('sp1', ALL_D.appts, PACING[1].actual, '#0369A1', 'rgba(3,105,161,.1)', 'tr1');
+  mkSpark('sp2', ALL_D.deals, PACING[2].actual, '#475569', 'rgba(71,85,105,.1)', 'tr2');
   mkPacing();
   mkLeadStatus();
   const confPct = APPTS_BREAKDOWN.total > 0 ? (APPTS_BREAKDOWN.confirmed / APPTS_BREAKDOWN.total * 100) : 66.7;
