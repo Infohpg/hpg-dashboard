@@ -164,11 +164,11 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 .prog8-fill{height:100%;border-radius:3px;}
 
 /* ── DONUT */
-.donut-area{display:flex;gap:24px;align-items:flex-start;}
-.donut-wrap{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:6px;}
-.donut-cw{width:130px;height:130px;position:relative;}
+.donut-area{display:flex;gap:0;align-items:center;justify-content:space-around;width:100%;padding:8px 0;}
+.donut-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.donut-cw{width:175px;height:175px;position:relative;}
 .donut-cw canvas{width:100%!important;height:100%!important;}
-.donut-lbl{font-size:11px;font-weight:600;color:var(--txm);text-align:center;}
+.donut-lbl{font-size:13px;font-weight:700;color:var(--txm);text-align:center;}
 
 /* ── LEAD STATUS */
 .lead-chart-wrap{height:240px;position:relative;}
@@ -317,7 +317,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
           </div>
           <div class="fn-row">
             <div class="fn-bar-wrap">
-              <div id="fn-b1" class="fn-bar fn-b2" style="width:68%">
+              <div id="fn-b1" class="fn-bar fn-b2" style="width:100%">
                 <div class="fn-bar-l"><span class="fn-bar-stage">Appts Confirmados</span><span class="fn-bar-num" id="fn-n1">38</span></div>
                 <div class="fn-bar-r"><div class="fn-bar-pct" id="fn-p1">12.2%</div><div class="fn-bar-sub">de leads</div></div>
               </div>
@@ -325,7 +325,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
           </div>
           <div class="fn-row">
             <div class="fn-bar-wrap">
-              <div id="fn-b2" class="fn-bar fn-b3" style="width:40%">
+              <div id="fn-b2" class="fn-bar fn-b3" style="width:100%">
                 <div class="fn-bar-l"><span class="fn-bar-stage">Deals Cerrados</span><span class="fn-bar-num" id="fn-n2">4</span></div>
                 <div class="fn-bar-r"><div class="fn-bar-pct" id="fn-p2">10.5%</div><div class="fn-bar-sub">de appts</div></div>
               </div>
@@ -785,16 +785,11 @@ function mkFunnel() {
   const l = PACING[0].actual, a = PACING[1].actual, d = PACING[2].actual;
   const l2a = l > 0 ? (a / l * 100).toFixed(1) : '0.0';
   const a2d = a > 0 ? (d / a * 100).toFixed(1) : '0.0';
-  // Widths: appts visual = max(10, l2a*5), deals visual = max(10, a2d*7)
-  const apptW = l > 0 ? Math.max(10, Math.min(96, parseFloat(l2a) * 5)) : 68;
-  const dealW = a > 0 ? Math.max(10, Math.min(96, parseFloat(a2d) * 7)) : 40;
   const n0 = document.getElementById('fn-n0'); if (n0) n0.textContent = l;
   const n1 = document.getElementById('fn-n1'); if (n1) n1.textContent = a;
   const n2 = document.getElementById('fn-n2'); if (n2) n2.textContent = d;
   const p1 = document.getElementById('fn-p1'); if (p1) p1.textContent = l2a + '%';
   const p2 = document.getElementById('fn-p2'); if (p2) p2.textContent = a2d + '%';
-  const b1 = document.getElementById('fn-b1'); if (b1) b1.style.width = apptW + '%';
-  const b2 = document.getElementById('fn-b2'); if (b2) b2.style.width = dealW + '%';
 }
 
 // ── KPI CARDS (dinámico desde PACING y ALL_D)
