@@ -1,5 +1,5 @@
 {
-  "updated": "2026-05-29 00:21",
+  "updated": "2026-05-29 12:21",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo - 15 junio 2026",
@@ -11,7 +11,7 @@
   "pacing": [
     {
       "label": "Leads CRM",
-      "actual": 372,
+      "actual": 397,
       "expected": 350,
       "goal": 750,
       "color": "#1D4ED8"
@@ -32,7 +32,7 @@
     }
   ],
   "funnel": {
-    "leads": 1135,
+    "leads": 1132,
     "appts": 0,
     "deals": 0,
     "period": "Abr-May"
@@ -54,9 +54,9 @@
       0,
       0,
       0,
-      735,
+      713,
       1098,
-      1135
+      1132
     ],
     "appts": [
       0,
@@ -111,14 +111,14 @@
       "Duplicate"
     ],
     "values": [
-      445,
-      335,
-      174,
-      164,
-      111,
-      102,
-      58,
-      49
+      449,
+      346,
+      171,
+      166,
+      113,
+      103,
+      61,
+      50
     ]
   },
   "appts_breakdown": {
