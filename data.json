@@ -1,32 +1,32 @@
 {
-  "updated": "2026-05-29 12:21",
+  "updated": "2026-05-30 00:21",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo - 15 junio 2026",
     "short": "May-Jun",
-    "day": 14,
+    "day": 15,
     "total_days": 30,
-    "pct": 47
+    "pct": 50
   },
   "pacing": [
     {
       "label": "Leads CRM",
       "actual": 397,
-      "expected": 350,
+      "expected": 375,
       "goal": 750,
       "color": "#1D4ED8"
     },
     {
       "label": "Appts Confirmados",
       "actual": 0,
-      "expected": 42,
+      "expected": 45,
       "goal": 90,
       "color": "#0369A1"
     },
     {
       "label": "Deals Cerrados",
       "actual": 0,
-      "expected": 4.2,
+      "expected": 4.5,
       "goal": 9,
       "color": "#475569"
     }
