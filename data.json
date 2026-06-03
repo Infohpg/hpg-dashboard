@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-03 00:21",
+  "updated": "2026-06-03 12:21",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo - 15 junio 2026",
@@ -11,7 +11,7 @@
   "pacing": [
     {
       "label": "Leads CRM",
-      "actual": 504,
+      "actual": 532,
       "expected": 475,
       "goal": 750,
       "color": "#1D4ED8"
@@ -50,7 +50,7 @@
       0,
       0,
       0,
-      606,
+      578,
       1098,
       1132
     ],
@@ -90,23 +90,23 @@
   "lead_status": {
     "labels": [
       "Unknown",
-      "Call later TODAY",
-      "Unreachable",
       "No Answer - Active Recall",
-      "Follow-Up Needed",
+      "Unreachable",
       "Out of Range",
+      "Follow-Up Needed",
       "Not Qualified",
-      "Do Not Call"
+      "Do Not Call",
+      "Duplicate"
     ],
     "values": [
-      469,
-      203,
+      476,
+      367,
       169,
-      165,
-      127,
-      122,
-      104,
-      67
+      124,
+      106,
+      106,
+      69,
+      59
     ]
   },
   "appts_breakdown": {
