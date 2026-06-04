@@ -251,7 +251,13 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
     <span class="badge badge-day">Día 20 / 31 · 64%</span>
     <button class="badge badge-per" id="badge-per-btn" onclick="togglePeriodMenu(event)">16 mayo – 15 junio 2026 ▾</button>
     <div id="period-menu" style="display:none;position:absolute;top:52px;right:28px;background:#fff;border:1px solid var(--brd);border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:200;min-width:200px;padding:6px 0;">
-      <div style="padding:8px 14px;font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--brd);">PERÍODOS DISPONIBLES</div>
+      <div style="padding:8px 14px;font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--brd);">RANGO DE ANÁLISIS</div>
+      <div id="pm-periods" style="max-height:200px;overflow-y:auto;padding:4px 0;"></div>
+      <div style="border-top:1px solid var(--brd);padding:6px 8px;display:flex;gap:4px;flex-wrap:wrap;">
+        <button onclick="pmQuick(3,this)" style="flex:1;font-size:10px;font-weight:600;padding:4px 6px;border:1px solid var(--brd);border-radius:5px;cursor:pointer;background:var(--bg3);color:var(--txm);">Últimos 3</button>
+        <button onclick="pmQuick(6,this)" style="flex:1;font-size:10px;font-weight:600;padding:4px 6px;border:1px solid var(--brd);border-radius:5px;cursor:pointer;background:var(--bg3);color:var(--txm);">Últimos 6</button>
+        <button onclick="pmQuick(0,this)" id="pm-all" style="flex:1;font-size:10px;font-weight:600;padding:4px 6px;border:1px solid var(--pri);border-radius:5px;cursor:pointer;background:var(--pri);color:#fff;">Todo</button>
+      </div>
     </div>
   </div>
 </header>
@@ -272,13 +278,13 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
     <div class="sec-hdr"><span class="sec-title">Resumen del Período</span><span class="sec-sub">16 mayo – 15 junio · Día 12/30 (40% completado)</span></div>
     <div class="kpi-row">
       <div class="kpi c-amb">
-        <div class="kpi-top"><span class="kpi-label">Inversión</span><span class="delta up">↑ +5.2%</span></div>
-        <div class="kpi-val">$3,200</div>
-        <div class="kpi-proj">Proy. $8,000 · Meta $7,500</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill amb" style="width:40%"></div></div><div class="prog-label">40% del período · CPR $10.26</div></div>
+        <div class="kpi-top"><span class="kpi-label">Inversión</span><span class="delta" style="background:var(--bg3);color:var(--txd)">Meta no conectada</span></div>
+        <div class="kpi-val" id="kinv-val">—</div>
+        <div class="kpi-proj">Conectar Meta API para ver datos reales</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill amb" style="width:0%"></div></div><div class="prog-label">sin datos</div></div>
       </div>
       <div class="kpi c-pri">
-        <div class="kpi-top"><span class="kpi-label">Revenue Estimado</span><span class="delta up" id="kdelta-rev">↑ Proy. $120k</span></div>
+        <div class="kpi-top"><span class="kpi-label">Revenue Estimado</span><span class="delta up" id="kdelta-rev">—</span></div>
         <div class="kpi-val" id="krev">$48,000</div>
         <div class="kpi-proj" id="kprojrev">4 deals × $12,000 ref.</div>
         <div class="kpi-prog"><div class="prog-track"><div class="prog-fill pri" id="krevfill" style="width:44.4%"></div></div><div class="prog-label" id="krevlbl">4 / 9 meta · $108k meta</div></div>
@@ -296,10 +302,10 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         <div class="kpi-prog"><div class="prog-track"><div class="prog-fill vio" id="ka2dfill" style="width:42%"></div></div><div class="prog-label">escala 0 – 25%</div></div>
       </div>
       <div class="kpi c-vio">
-        <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta up">↑ Mejora</span></div>
-        <div class="kpi-val">$800</div>
-        <div class="kpi-proj">vs. $845 período anterior</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill vio" style="width:40%"></div></div><div class="prog-label">-5.3% vs anterior</div></div>
+        <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta" id="kdelta-cpd" style="background:var(--bg3);color:var(--txd)">—</span></div>
+        <div class="kpi-val" id="kcpd-val">—</div>
+        <div class="kpi-proj" id="kcpd-proj">vs. período anterior (↓ = mejor)</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill vio" id="kcpd-fill" style="width:0%"></div></div><div class="prog-label">menor = mejor</div></div>
       </div>
     </div>
   </div>
@@ -314,8 +320,8 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
           <div class="fn-row">
             <div class="fn-bar-wrap">
               <div id="fn-b0" class="fn-bar fn-b1" style="width:100%">
-                <div class="fn-bar-l"><span class="fn-bar-stage">Leads CRM</span><span class="fn-bar-num" id="fn-n0">312</span></div>
-                <div class="fn-bar-r"><div class="fn-bar-pct">100%</div><div class="fn-bar-sub">base</div></div>
+                <div class="fn-bar-l"><span class="fn-bar-stage">Leads</span><span class="fn-bar-num" id="fn-n0">312</span></div>
+                <div class="fn-bar-r"><div class="fn-bar-pct">100%</div><div class="fn-bar-sub" id="fn-d0">—</div></div>
               </div>
             </div>
           </div>
@@ -331,7 +337,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
             <div class="fn-bar-wrap">
               <div id="fn-b2" class="fn-bar fn-b3" style="width:100%">
                 <div class="fn-bar-l"><span class="fn-bar-stage">Deals Cerrados</span><span class="fn-bar-num" id="fn-n2">4</span></div>
-                <div class="fn-bar-r"><div class="fn-bar-pct" id="fn-p2">10.5%</div><div class="fn-bar-sub">de appts</div></div>
+                <div class="fn-bar-r"><div class="fn-bar-pct" id="fn-p2">10.5%</div><div class="fn-bar-sub" id="fn-d2">—</div></div>
               </div>
             </div>
           </div>
@@ -342,7 +348,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         <div class="sp-rows">
           <div class="sp-row">
             <div class="sp-card">
-              <div class="sp-top"><span class="sp-label pri">Leads CRM</span><span class="sp-trend" id="tr0"></span></div>
+              <div class="sp-top"><span class="sp-label pri">Leads</span><span class="sp-trend" id="tr0"></span></div>
               <div class="sp-canvas"><canvas id="sp0"></canvas></div>
             </div>
           </div>
@@ -374,7 +380,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
       <!-- Leads pacing -->
       <div class="pacing-card">
         <div class="pacing-hdr">
-          <span class="pacing-label" style="color:var(--pri)">Leads CRM</span>
+          <span class="pacing-label" style="color:var(--pri)">Leads</span>
           <span class="pacing-delta up" id="pdelta0">↑ +4%</span>
         </div>
         <div class="pacing-nums">
@@ -439,14 +445,13 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
     <div class="sec-hdr"><span class="sec-title">Tasas de Conversión del Funnel</span></div>
     <div class="grid2">
       <div class="card">
-        <div style="font-size:10px;font-weight:700;color:var(--txd);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Costo por etapa · Período anterior (Abr-May)</div>
+        <div style="font-size:10px;font-weight:700;color:var(--txd);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Costo por etapa · Período actual</div>
         <table class="tbl">
           <thead><tr><th>Etapa</th><th>Costo USD</th><th>∆ vs anterior</th></tr></thead>
           <tbody>
-            <tr><td>Resultado Meta</td><td class="num">$8.99</td><td class="hi">sin cambio</td></tr>
-            <tr><td>Contacto CRM</td><td class="num">$10.17</td><td class="md">-0.1%</td></tr>
-            <tr><td>Appt Confirmado</td><td class="num">$126.75</td><td class="lo">+3.4%</td></tr>
-            <tr><td><strong>Deal Cerrado</strong></td><td class="num"><strong>$844.98</strong></td><td class="hi">-5.8%</td></tr>
+            <tr><td>Contacto CRM</td><td class="num" id="cost-crm">—</td><td id="dcost-crm">—</td></tr>
+            <tr><td>Appt Confirmado</td><td class="num" id="cost-appt">—</td><td id="dcost-appt">—</td></tr>
+            <tr><td><strong>Deal Cerrado</strong></td><td class="num" id="cost-deal"><strong>—</strong></td><td id="dcost-deal">—</td></tr>
           </tbody>
         </table>
       </div>
@@ -454,25 +459,24 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         <div style="margin-bottom:12px;font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;">Tasas de conversión · Período actual</div>
         <div class="rate-grid">
           <div class="rate-box">
-            <div class="rate-val" style="color:var(--pri)">88.4%</div>
-            <div class="rate-label">Meta → CRM</div>
-            <div class="rate-sub" style="color:var(--txd)">Ref. período anterior</div>
-            <div class="prog8"><div class="prog8-fill" style="width:88%;background:var(--pri)"></div></div>
+            <div class="rate-val" style="color:var(--sky)" id="rate-l2a">—</div>
+            <div class="rate-label">Lead → Appt Confirmado</div>
+            <div class="prog8"><div class="prog8-fill" id="rate-l2a-fill" style="width:0%;background:var(--sky)"></div></div>
           </div>
           <div class="rate-box">
-            <div class="rate-val" style="color:var(--sky)">12.2%</div>
-            <div class="rate-label">CRM → Appt Confirmado</div>
-            <div class="prog8"><div class="prog8-fill" style="width:12.2%;background:var(--sky)"></div></div>
+            <div class="rate-val" style="color:var(--vio)" id="rate-a2d">—</div>
+            <div class="rate-label">Appt → Deal</div>
+            <div class="prog8"><div class="prog8-fill" id="rate-a2d-fill" style="width:0%;background:var(--vio)"></div></div>
           </div>
           <div class="rate-box">
-            <div class="rate-val" style="color:var(--vio)">10.5%</div>
-            <div class="rate-label">Appt Confirmado → Deal</div>
-            <div class="prog8"><div class="prog8-fill" style="width:10.5%;background:var(--vio)"></div></div>
+            <div class="rate-val" style="color:var(--txm)" id="rate-l2d">—</div>
+            <div class="rate-label">Lead → Deal (total)</div>
+            <div class="prog8"><div class="prog8-fill" id="rate-l2d-fill" style="width:0%;background:var(--txm)"></div></div>
           </div>
           <div class="rate-box">
-            <div class="rate-val" style="color:var(--txm)">1.28%</div>
-            <div class="rate-label">CRM → Deal (total)</div>
-            <div class="prog8"><div class="prog8-fill" style="width:1.28%;background:var(--txm)"></div></div>
+            <div class="rate-val" style="color:var(--amb)" id="rate-cpd">—</div>
+            <div class="rate-label">Costo / Deal</div>
+            <div class="rate-sub" style="font-size:9px;color:var(--txd)">Coincide con KPI</div>
           </div>
         </div>
       </div>
@@ -486,110 +490,35 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
   </div>
 
   <!-- APPOINTMENTS BREAKDOWN -->
-  <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Appointments: Composición por Etapa</span><span class="sec-sub">90 totales · 60 confirmados / efectivos · 30 cancelados</span></div>
-    <div class="grid2">
-      <div class="card">
-        <div class="donut-area">
-          <div class="donut-wrap">
-            <div class="donut-cw"><canvas id="donut1"></canvas></div>
-            <div class="donut-lbl">Efectivos<br>66.7%</div>
-          </div>
-          <div class="donut-wrap">
-            <div class="donut-cw"><canvas id="donut2"></canvas></div>
-            <div class="donut-lbl">Cancelados<br>33.3%</div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div style="margin-bottom:12px;font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;">Pipeline Stage</div>
-        <table class="tbl">
-          <thead><tr><th>Stage</th><th>Cantidad</th><th>% del total</th></tr></thead>
-          <tbody>
-            <tr><td>✅ Completed</td><td class="num hi">40</td><td class="dim">44.4%</td></tr>
-            <tr><td>❌ Canceled</td><td class="num lo">30</td><td class="dim">33.3%</td></tr>
-            <tr><td>🔄 Still Working</td><td class="num">13</td><td class="dim">14.4%</td></tr>
-            <tr><td>💰 Sale</td><td class="num hi">6</td><td class="dim">6.7%</td></tr>
-            <tr><td>📅 Scheduled</td><td class="num">1</td><td class="dim">1.1%</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
 
-  <!-- TENDENCIA HISTÓRICA -->
-  <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Tendencia por Período</span></div>
-
-    <!-- RANGE SELECTOR BAR -->
-    <div class="rs-outer">
-      <div class="rs-label">Rango de períodos seleccionado <span id="rsRangeLabel">—</span></div>
-      <div class="rs-bar" id="rsBar"></div>
-      <div class="rs-shortcuts">
-        <button class="tf-btn" onclick="rsQuick(3)">Últimos 3</button>
-        <button class="tf-btn" onclick="rsQuick(6)">Últimos 6</button>
-        <button class="tf-btn on" onclick="rsQuick(11)">Todo</button>
-      </div>
-    </div>
-
-    <div class="grid2">
-      <div class="card">
-        <div style="margin-bottom:8px;font-size:12px;font-weight:600;color:var(--txm);">Inversión y CPR</div>
-        <div class="hist-wrap"><canvas id="histSpend"></canvas></div>
-      </div>
-      <div class="card">
-        <div style="margin-bottom:8px;font-size:12px;font-weight:600;color:var(--txm);">Leads · Appts · Deals</div>
-        <div class="hist-wrap"><canvas id="histVolume"></canvas></div>
-      </div>
-    </div>
-    <!-- Tabla por período -->
-    <div class="card" style="margin-top:16px;">
-      <div style="margin-bottom:12px;font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;">Detalle por período</div>
-      <div style="overflow-x:auto;">
-        <table class="tbl" id="periodTable">
-          <thead><tr><th>Período</th><th>Inversión</th><th>Leads</th><th>Appts</th><th>Deals</th><th>CPR</th><th>Lead→Appt</th><th>Appt→Deal</th></tr></thead>
-          <tbody id="periodTableBody"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-</div><!-- /t1 -->
+</div><!-- end t1 -->
 
 
-<!-- ══════════ TAB 2 — META ADS ══════════ -->
 <div id="t2" class="pane">
 
-  <div style="background:var(--pril);border:1px solid #BFDBFE;border-radius:var(--r);padding:12px 18px;margin-bottom:20px;display:flex;align-items:flex-start;gap:12px;">
-    <span style="font-size:18px;line-height:1.4;">📋</span>
-    <div>
-      <div style="font-size:12px;font-weight:700;color:var(--pri);">Datos del período: 16 abr – 15 may 2026 · Fuente: informe manual</div>
-      <div style="font-size:11px;color:#3B82F6;margin-top:3px;">Meta Ads no está conectado en tiempo real. Los datos de esta sección vienen del informe PDF del período anterior. Cuando se conecte la API, se actualizarán automáticamente.</div>
-    </div>
-  </div>
 
   <div class="sec">
     <div class="sec-hdr"><span class="sec-title">Métricas Meta Ads — Período anterior (16 abr – 15 may)</span></div>
     <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
       <div class="kpi c-amb">
-        <div class="kpi-top"><span class="kpi-label">Inversión Total</span><span class="delta up">↑ +7.1%</span></div>
-        <div class="kpi-val">$7,605</div>
-        <div class="kpi-proj">vs. $7,100 período anterior</div>
+        <div class="kpi-top"><span class="kpi-label">Inversión Total</span><span class="delta up">—</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-proj">—</div>
       </div>
       <div class="kpi c-pri">
-        <div class="kpi-top"><span class="kpi-label">Resultados Meta</span><span class="delta dn">↓ -11.6%</span></div>
-        <div class="kpi-val">846</div>
-        <div class="kpi-proj">CPR $8.99 · vs $8.50 anterior</div>
+        <div class="kpi-top"><span class="kpi-label">Resultados Meta</span><span class="delta dn">—</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-proj">—</div>
       </div>
       <div class="kpi c-sky">
-        <div class="kpi-top"><span class="kpi-label">ROAS Estimado</span><span class="delta up">↑ +20.3%</span></div>
-        <div class="kpi-val">14.2x</div>
-        <div class="kpi-proj">vs. 11.8x período anterior · $12k ref/deal</div>
+        <div class="kpi-top"><span class="kpi-label">ROAS Estimado</span><span class="delta up">—</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-proj">—</div>
       </div>
       <div class="kpi c-vio">
-        <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta up">↑ Mejora -5%</span></div>
-        <div class="kpi-val">$845</div>
-        <div class="kpi-proj">vs. $890 período anterior</div>
+        <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta up">—</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-proj">—</div>
       </div>
     </div>
   </div>
@@ -649,7 +578,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
     <div class="card">
       <table class="tbl">
         <thead>
-          <tr><th>Setter</th><th>Leads</th><th>Llamadas</th><th>Appts</th><th>Deals</th><th>Conv. %</th><th>Fase</th><th>Bono Est.</th><th>Hacia E-Hero</th></tr>
+          <tr><th>Setter</th><th>Llamadas *</th><th>Leads</th><th>Appts</th><th>Deals</th><th>Conv. %</th><th>Fase</th><th>Bono Est.</th><th>Hacia E-Hero</th></tr>
         </thead>
         <tbody id="setterTable"></tbody>
       </table>
@@ -693,7 +622,7 @@ let ALL_D = {
   cpr:    [11.9,12.4,12.5,12.9,12.5,13.0,12.3,11.7,9.5,9.4,10.2]
 };
 let PACING = [
-  { label:'Leads CRM',        actual:312, expected:300, goal:750, color:'#1D4ED8' },
+  { label:'Leads',        actual:312, expected:300, goal:750, color:'#1D4ED8' },
   { label:'Appts Confirmados', actual:38, expected:36,  goal:90,  color:'#0369A1' },
   { label:'Deals Cerrados',   actual:4,   expected:3.6, goal:9,   color:'#475569' }
 ];
@@ -717,12 +646,13 @@ const CAMPAIGNS = [
 ];
 
 const SETTERS = [
-  {name:'Isabel',   init:'I',av:'av-g',leads:228,calls:418,appts:22,deals:3,hot:2,cold:1},
-  {name:'Silvia',   init:'S',av:'av-s',leads:215,calls:389,appts:18,deals:2,hot:2,cold:0},
-  {name:'Oliver',   init:'O',av:'av-b',leads:198,calls:352,appts:15,deals:2,hot:1,cold:1},
-  {name:'Emmanuel', init:'E',av:'av-p',leads:180,calls:301,appts:8, deals:1,hot:0,cold:1},
-  {name:'Mary',     init:'M',av:'av-t',leads:73, calls:112,appts:5, deals:0,hot:0,cold:0},
-];
+  {name:'Oliver',   init:'O', av:'av-b', leads:333,  calls:735,  appts:110, deals:0, hot:0, cold:0},
+  {name:'Pablo',    init:'P', av:'av-p', leads:59,   calls:1624, appts:10,  deals:0, hot:0, cold:0},
+  {name:'Silvia',   init:'S', av:'av-s', leads:146,  calls:1515, appts:78,  deals:0, hot:0, cold:0},
+  {name:'Emmanuel', init:'E', av:'av-t', leads:127,  calls:483,  appts:44,  deals:0, hot:0, cold:0},
+  {name:'Isabel',   init:'I', av:'av-g', leads:97,   calls:80,   appts:89,  deals:0, hot:0, cold:0},
+  {name:'Daniela',  init:'D', av:'av-g', leads:27,   calls:368,  appts:0,   deals:0, hot:0, cold:0},
+]; // Datos de may-jun 2026. Deals se reportan en pipeline, no por setter.
 const BNS={pAL:5,pAH:7,hL:19,hH:29,cL:.008,cH:.01,avg:52381};
 
 // ── CHART REFS
@@ -794,6 +724,18 @@ function mkFunnel() {
   const n2 = document.getElementById('fn-n2'); if (n2) n2.textContent = fmtNum(d);
   const p1 = document.getElementById('fn-p1'); if (p1) p1.textContent = fmtPct(l2a);
   const p2 = document.getElementById('fn-p2'); if (p2) p2.textContent = fmtPct(a2d);
+  // #8 delta vs previous period
+  const prv2 = ALL_D.leads.length >= 2 ? ALL_D.leads.length - 2 : 0;
+  const pl2 = ALL_D.leads[prv2]||0, pa2 = ALL_D.appts[prv2]||0, pd2 = ALL_D.deals[prv2]||0;
+  const setFnDelta = (id, curr, prev) => {
+    const el = document.getElementById(id); if (!el) return;
+    if (!prev || !curr) { el.textContent = '—'; return; }
+    const pct = Math.round((curr-prev)/prev*100);
+    el.textContent = (pct>=0?'▲ +':'▼ ')+Math.abs(pct)+'% vs ant.';
+    el.style.fontSize='9px'; el.style.opacity='.8';
+  };
+  setFnDelta('fn-d0', l, pl2);
+  setFnDelta('fn-d2', d, pd2);
 }
 
 // ── KPI CARDS (dinámico desde PACING y ALL_D)
@@ -804,9 +746,11 @@ function mkKpiCards() {
   const rev = d * 12000;
   const revFillPct = Math.min(100, (d / goalD * 100)).toFixed(1);
 
-  const pL = ALL_D.leads.length > 0 ? ALL_D.leads[ALL_D.leads.length - 1] : 748;
-  const pA = ALL_D.appts.length > 0 ? ALL_D.appts[ALL_D.appts.length - 1] : 60;
-  const pD = ALL_D.deals.length > 0 ? ALL_D.deals[ALL_D.deals.length - 1] : 9;
+  // #5/#6: second-to-last = last completed period (last = current incomplete)
+  const prevIdx = ALL_D.leads.length >= 2 ? ALL_D.leads.length - 2 : 0;
+  const pL = ALL_D.leads[prevIdx] || 0;
+  const pA = ALL_D.appts[prevIdx] || 0;
+  const pD = ALL_D.deals[prevIdx] || 0;
 
   const l2a  = l > 0 ? (a / l * 100).toFixed(1) : '0.0';
   const a2d  = a > 0 ? (d / a * 100).toFixed(1) : '0.0';
@@ -826,7 +770,11 @@ function mkKpiCards() {
   const fillEl = document.getElementById('krevfill');
   if (fillEl) fillEl.style.width = revFillPct + '%';
   const dRevEl = document.getElementById('kdelta-rev');
-  if (dRevEl) { const ahead = d >= PACING[2].expected; dRevEl.textContent = ahead ? '↑ Al ritmo' : '↓ Por debajo'; dRevEl.className = 'delta ' + (ahead ? 'up' : 'dn'); }
+  if (dRevEl) {
+    const dRev = pD > 0 ? Math.round((d - pD) / pD * 100) : null;
+    dRevEl.textContent = dRev !== null ? (dRev >= 0 ? '↑ +' : '↓ ') + Math.abs(dRev) + '%' : '—';
+    dRevEl.className = 'delta ' + (dRev !== null && dRev >= 0 ? 'up' : 'dn');
+  }
 
   // L→A card
   const l2aEl = document.getElementById('kl2a');
@@ -837,6 +785,20 @@ function mkKpiCards() {
   if (l2aFill) l2aFill.style.width = Math.min(100, parseFloat(l2a) / 20 * 100).toFixed(1) + '%';
   const dl2aEl = document.getElementById('kdelta-l2a');
   if (dl2aEl) { dl2aEl.textContent = (dl2a >= 0 ? '↑ +' : '↓ ') + Math.abs(dl2a) + '%'; dl2aEl.className = 'delta ' + (dl2a >= 0 ? 'up' : 'dn'); }
+
+  // Costo/Deal card — inverted (lower = green) #7
+  const spendNow = ALL_D.spend.length > 0 ? ALL_D.spend[ALL_D.spend.length-1] : 0;
+  const spendPrev = ALL_D.spend.length >= 2 ? ALL_D.spend[prevIdx] : 0;
+  const cpdNow = d > 0 && spendNow > 0 ? Math.round(spendNow/d) : 0;
+  const cpdPrev = pD > 0 && spendPrev > 0 ? Math.round(spendPrev/pD) : 0;
+  const dCpd = cpdPrev > 0 && cpdNow > 0 ? Math.round((cpdNow-cpdPrev)/cpdPrev*100) : null;
+  const cpdValEl = document.getElementById('kcpd-val');
+  if (cpdValEl) cpdValEl.textContent = cpdNow > 0 ? '$'+cpdNow.toLocaleString() : '—';
+  const cpdDelta = document.getElementById('kdelta-cpd');
+  if (cpdDelta && dCpd !== null) {
+    cpdDelta.textContent = (dCpd <= 0 ? '↓ ' : '↑ +') + Math.abs(dCpd) + '%';
+    cpdDelta.className = 'delta ' + (dCpd <= 0 ? 'up' : 'dn'); // inverted: ↓ is good
+  } else if (cpdDelta) { cpdDelta.textContent = '—'; cpdDelta.className = 'delta'; cpdDelta.style.background='var(--bg3)'; cpdDelta.style.color='var(--txd)'; }
 
   // A→D card
   const a2dEl = document.getElementById('ka2d');
@@ -909,9 +871,11 @@ function mkPacing() {
 
 // ── LEAD STATUS
 function mkLeadStatus() {
-  const labels = ['Call Later TODAY','Unreachable','Follow-Up Needed','Out of Range','Not Qualified','Do Not Call','Duplicate','Other Co. Sold'];
-  const values = [265,120,114,82,56,48,38,22];
-  const colors = ['#1D4ED8','#DC2626','#0369A1','#3B82F6','#64748B','#334155','#94A3B8','#CBD5E1'];
+  const labels = LEAD_STATUS.labels;
+  const values = LEAD_STATUS.values;
+  const total = values.reduce((s,v) => s+v, 0);
+  const palette = ['#1D4ED8','#DC2626','#0369A1','#3B82F6','#64748B','#334155','#94A3B8','#CBD5E1','#059669','#D97706'];
+  const colors = labels.map((_,i) => palette[i % palette.length]);
   new Chart(document.getElementById('leadStatusChart'), {
     type: 'bar',
     data: { labels, datasets: [{ data: values, backgroundColor: colors, borderRadius: 4 }] },
@@ -1253,8 +1217,8 @@ function mkSetterTable() {
     const barColor = s.appts>=20?'#059669':s.appts>=10?'#0EA5E9':'#94A3B8';
     tbody.innerHTML += `<tr>
       <td><span style="display:inline-flex;align-items:center;gap:8px;"><span class="av ${s.av}" style="width:28px;height:28px;font-size:11px;">${s.init}</span>${s.name}</span></td>
-      <td class="num">${s.leads}</td>
-      <td class="num">${s.calls}</td>
+      <td class="num">${s.calls > 0 ? s.calls.toLocaleString() : '—'}</td>
+      <td class="num">${s.leads > 0 ? s.leads : '—'}</td>
       <td class="num">${s.appts}</td>
       <td class="num ${s.deals>1?'hi':s.deals===1?'md':'lo'}">${s.deals}</td>
       <td class="num">${conv}%</td>
@@ -1290,12 +1254,68 @@ function applyData(d) {
   }
 }
 
+// ── TASAS DE CONVERSIÓN (dynamic) #10/#11
+function mkTasas() {
+  const l=PACING[0].actual, a=PACING[1].actual, d=PACING[2].actual;
+  const prIdx=ALL_D.leads.length>=2?ALL_D.leads.length-2:0;
+  const pl=ALL_D.leads[prIdx]||0, pa=ALL_D.appts[prIdx]||0, pd=ALL_D.deals[prIdx]||0;
+  const spend=ALL_D.spend.length>0?ALL_D.spend[ALL_D.spend.length-1]:0;
+  const pspend=ALL_D.spend.length>=2?ALL_D.spend[prIdx]:0;
+  const fmtR=v=>v!==null&&v!==undefined?(+v).toFixed(1)+'%':'—';
+  const fmtC=v=>v>0?'$'+Math.round(v).toLocaleString():'—';
+  const setEl=(id,val)=>{const e=document.getElementById(id);if(e)e.textContent=val;};
+  const setFill=(id,pct)=>{const e=document.getElementById(id);if(e)e.style.width=Math.min(100,pct||0)+'%';};
+  const l2a=l>0?(a/l*100):null, a2d=a>0?(d/a*100):null, l2d=l>0?(d/l*100):null;
+  setEl('rate-l2a',fmtR(l2a)); setFill('rate-l2a-fill',l2a&&l2a/20*100);
+  setEl('rate-a2d',fmtR(a2d)); setFill('rate-a2d-fill',a2d&&a2d/25*100);
+  setEl('rate-l2d',fmtR(l2d)); setFill('rate-l2d-fill',l2d&&l2d/5*100);
+  const cpd=d>0&&spend>0?spend/d:0; setEl('rate-cpd',fmtC(cpd));
+  setEl('cost-crm',l>0&&spend>0?fmtC(spend/l):'—');
+  setEl('cost-appt',a>0&&spend>0?fmtC(spend/a):'—');
+  document.getElementById('cost-deal')&&(document.getElementById('cost-deal').innerHTML=cpd>0?'<strong>$'+Math.round(cpd).toLocaleString()+'</strong>':'—');
+  const fmtDelta=(curr,prev,inv)=>{if(!curr||!prev)return'—';const p=Math.round((curr-prev)/prev*100);const good=inv?p<=0:p>=0;return'<span class="'+`dim ${good?'hi':'lo'}`+'">'+(p>=0?'+':'')+p+'%</span>';};
+  const ccrm=l>0&&spend>0?spend/l:0, pcrm=pl>0&&pspend>0?pspend/pl:0;
+  const cappt=a>0&&spend>0?spend/a:0, pappt=pa>0&&pspend>0?pspend/pa:0;
+  document.getElementById('dcost-crm')&&(document.getElementById('dcost-crm').innerHTML=fmtDelta(ccrm,pcrm,true));
+  document.getElementById('dcost-appt')&&(document.getElementById('dcost-appt').innerHTML=fmtDelta(cappt,pappt,true));
+  document.getElementById('dcost-deal')&&(document.getElementById('dcost-deal').innerHTML=fmtDelta(cpd,pd>0&&pspend>0?pspend/pd:0,true));
+}
+
 // ── TOGGLE PERIOD MENU
 function togglePeriodMenu(e) {
   e.stopPropagation();
   const menu = document.getElementById('period-menu');
   if (!menu) return;
-  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+  if (menu.style.display === 'none') {
+    const cont = document.getElementById('pm-periods');
+    if (cont) cont.innerHTML = ALL_PER.map((p,i) =>
+      `<div onclick="pmSelectPeriod(${i})" style="padding:6px 14px;font-size:12px;cursor:pointer;color:var(--tx);hover:background:var(--bg2)">${p}</div>`
+    ).join('');
+    menu.style.display = 'block';
+  } else {
+    menu.style.display = 'none';
+  }
+}
+function pmQuick(n, btn) {
+  const menu = document.getElementById('period-menu');
+  if (menu) menu.style.display = 'none';
+  const total = ALL_PER.length;
+  const count = n > 0 ? Math.min(n, total) : total;
+  const startI = total - count;
+  rsA = startI; rsB = total - 1;
+  if (typeof paintRangeBar === 'function') paintRangeBar();
+  mkHistCharts(count, startI);
+  const btn2 = document.getElementById('badge-per-btn');
+  if (btn2) btn2.textContent = (n===0 ? 'Todo el histórico' : 'Últimos '+count+' períodos') + ' ▾';
+}
+function pmSelectPeriod(i) {
+  const menu = document.getElementById('period-menu');
+  if (menu) menu.style.display = 'none';
+  rsA = i; rsB = i;
+  if (typeof paintRangeBar === 'function') paintRangeBar();
+  mkHistCharts(1, i);
+  const btn = document.getElementById('badge-per-btn');
+  if (btn) btn.textContent = ALL_PER[i] + ' ▾';
 }
 document.addEventListener('click', () => {
   const m = document.getElementById('period-menu');
@@ -1314,19 +1334,38 @@ function fmtPct(v) {
 
 // ── INIT
 function initAll() {
+  // #9: inject current period PACING into last history index (replaces 0)
+  if (PACING[0] && ALL_D.leads.length > 0 && ALL_D.leads[ALL_D.leads.length-1] === 0) ALL_D.leads[ALL_D.leads.length-1] = PACING[0].actual;
+  if (PACING[1] && ALL_D.appts.length > 0 && ALL_D.appts[ALL_D.appts.length-1] === 0) ALL_D.appts[ALL_D.appts.length-1] = PACING[1].actual;
+  if (PACING[2] && ALL_D.deals.length > 0 && ALL_D.deals[ALL_D.deals.length-1] === 0) ALL_D.deals[ALL_D.deals.length-1] = PACING[2].actual;
   mkSpark('sp0', ALL_D.leads, '#1D4ED8', 'rgba(29,78,216,.1)',  'tr0');
   mkSpark('sp1', ALL_D.appts, '#0369A1', 'rgba(3,105,161,.1)', 'tr1');
   mkSpark('sp2', ALL_D.deals, '#475569', 'rgba(71,85,105,.1)', 'tr2');
   mkFunnel();
   mkKpiCards();
+  mkTasas(); // #10/#11
   mkPacing();
   mkLeadStatus();
   const confPct = APPTS_BREAKDOWN.total > 0 ? (APPTS_BREAKDOWN.confirmed / APPTS_BREAKDOWN.total * 100) : 66.7;
   const cancPct = APPTS_BREAKDOWN.total > 0 ? (APPTS_BREAKDOWN.cancelled / APPTS_BREAKDOWN.total * 100) : 33.3;
   mkDonut('donut1', confPct, '#0369A1');
   mkDonut('donut2', cancPct, '#DC2626');
+  // #13/#14 dynamic appointments labels
+  const apptSub = document.getElementById('appt-sub');
+  if (apptSub) apptSub.textContent = APPTS_BREAKDOWN.total+' totales · '+APPTS_BREAKDOWN.confirmed+' confirmados · '+APPTS_BREAKDOWN.cancelled+' cancelados';
+  const d1lbl = document.getElementById('donut1-lbl'); if (d1lbl) d1lbl.textContent = confPct.toFixed(1)+'%';
+  const d2lbl = document.getElementById('donut2-lbl'); if (d2lbl) d2lbl.textContent = cancPct.toFixed(1)+'%';
+  const stageBody = document.getElementById('apptStageBody');
+  if (stageBody && APPTS_BREAKDOWN.stages) {
+    const ico = {Completed:'✅',Cancelled:'❌','Still Working':'🔄',Sale:'💰','Appt Set':'📅',Other:'📋',Pending:'⏳'};
+    stageBody.innerHTML = APPTS_BREAKDOWN.stages.map(s => {
+      const pct = APPTS_BREAKDOWN.total > 0 ? (s.count/APPTS_BREAKDOWN.total*100).toFixed(1) : '—';
+      const cls = s.label==='Completed'?'hi':s.label==='Cancelled'?'lo':'';
+      return '<tr><td>'+(ico[s.label]||'•')+' '+s.label+'</td><td class="num '+cls+'">'+(s.count||'—')+'</td><td class="dim">'+pct+'%</td></tr>';
+    }).join('');
+  }
   buildRangeBar();
-  mkHistCharts(11);
+  pmQuick(0, null); // #2 show all history by default
   mkCpdChart();
   mkRoasCards();
   mkMetaChart();
