@@ -317,7 +317,8 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
       <div class="funnel-left">
         <div class="fn-col-title">Volumen por etapa</div>
         <div class="fn-rows">
-          <div class="fn-row">
+          <div class="fn-row" style="position:relative;">
+            <span id="fn-badge0" style="position:absolute;top:4px;right:6px;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;background:rgba(255,255,255,.25);color:#fff;z-index:1;">—</span>
             <div class="fn-bar-wrap">
               <div id="fn-b0" class="fn-bar fn-b1" style="width:100%">
                 <div class="fn-bar-l"><span class="fn-bar-stage">Leads</span><span class="fn-bar-num" id="fn-n0">312</span></div>
@@ -326,6 +327,8 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
             </div>
           </div>
           <div class="fn-row">
+            <div style="position:relative;">
+            <span id="fn-badge1" style="position:absolute;top:4px;right:6px;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;background:rgba(255,255,255,.25);color:#fff;z-index:1;">—</span>
             <div class="fn-bar-wrap">
               <div id="fn-b1" class="fn-bar fn-b2" style="width:100%">
                 <div class="fn-bar-l"><span class="fn-bar-stage">Appts Confirmados</span><span class="fn-bar-num" id="fn-n1">38</span></div>
@@ -334,6 +337,8 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
             </div>
           </div>
           <div class="fn-row">
+            <div style="position:relative;">
+            <span id="fn-badge2" style="position:absolute;top:4px;right:6px;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;background:rgba(255,255,255,.25);color:#fff;z-index:1;">—</span>
             <div class="fn-bar-wrap">
               <div id="fn-b2" class="fn-bar fn-b3" style="width:100%">
                 <div class="fn-bar-l"><span class="fn-bar-stage">Deals Cerrados</span><span class="fn-bar-num" id="fn-n2">4</span></div>
@@ -490,6 +495,32 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
   </div>
 
   <!-- APPOINTMENTS BREAKDOWN -->
+  <!-- APPOINTMENTS BREAKDOWN -->
+  <div class="sec">
+    <div class="sec-hdr"><span class="sec-title">Appointments: Composición por Etapa</span><span class="sec-sub" id="appt-sub">—</span></div>
+    <div class="grid2">
+      <div class="card">
+        <div class="donut-area">
+          <div class="donut-wrap">
+            <div class="donut-cw"><canvas id="donut1"></canvas></div>
+            <div class="donut-lbl">Confirmados<br><span id="donut1-lbl">—</span></div>
+          </div>
+          <div class="donut-wrap">
+            <div class="donut-cw"><canvas id="donut2"></canvas></div>
+            <div class="donut-lbl">Cancelados<br><span id="donut2-lbl">—</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="margin-bottom:12px;font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;">Pipeline Stage</div>
+        <table class="tbl">
+          <thead><tr><th>Stage</th><th>Cantidad</th><th>% del total</th></tr></thead>
+          <tbody id="apptStageBody"><tr><td colspan="3" style="color:var(--txd)">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 
 </div><!-- end t1 -->
 
@@ -578,7 +609,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
     <div class="card">
       <table class="tbl">
         <thead>
-          <tr><th>Setter</th><th>Llamadas *</th><th>Leads</th><th>Appts</th><th>Deals</th><th>Conv. %</th><th>Fase</th><th>Bono Est.</th><th>Hacia E-Hero</th></tr>
+          <tr><th>Setter</th><th>Llamadas *</th><th>Appts Conf.</th><th>Deals</th><th>Fase</th></tr>
         </thead>
         <tbody id="setterTable"></tbody>
       </table>
@@ -706,12 +737,7 @@ function mkSpark(id, data, color, fillColor, trId) {
       }
     }
   });
-  const tr = document.getElementById(trId);
-  if (tr && data.length >= 2) {
-    const pct = Math.round((data[data.length-1] - data[0]) / data[0] * 100);
-    tr.textContent = (pct >= 0 ? '↑ +' : '↓ ') + Math.abs(pct) + '%';
-    tr.className = 'sp-trend ' + (pct >= 0 ? 'up' : 'dn');
-  }
+  // #3: trend % removed (avoids Infinity when first period = 0)
 }
 
 // ── FUNNEL BARS (dinámico desde PACING)
@@ -726,7 +752,7 @@ function mkFunnel() {
   const p2 = document.getElementById('fn-p2'); if (p2) p2.textContent = fmtPct(a2d);
   // #8 delta vs previous period
   const prv2 = ALL_D.leads.length >= 2 ? ALL_D.leads.length - 2 : 0;
-  const pl2 = ALL_D.leads[prv2]||0, pa2 = ALL_D.appts[prv2]||0, pd2 = ALL_D.deals[prv2]||0;
+  const pl2 = ALL_D.leads[prv2]||0, pa2 = ALL_D.appts[prv2]||0, pd2 = ALL_D.deals[prv2]||0; // #2 also used for badge chips
   const setFnDelta = (id, curr, prev) => {
     const el = document.getElementById(id); if (!el) return;
     if (!prev || !curr) { el.textContent = '—'; return; }
@@ -736,6 +762,17 @@ function mkFunnel() {
   };
   setFnDelta('fn-d0', l, pl2);
   setFnDelta('fn-d2', d, pd2);
+  // #2: badge chips top-right of each bar
+  const setBadge = (id, curr, prev) => {
+    const el = document.getElementById(id); if (!el) return;
+    if (!prev || !curr) { el.textContent = '—'; return; }
+    const pct = Math.round((curr-prev)/prev*100);
+    el.textContent = (pct>=0?'↑ +':'↓ ')+Math.abs(pct)+'%';
+    el.style.background = pct>=0 ? 'rgba(5,150,105,.4)' : 'rgba(220,38,38,.4)';
+  };
+  setBadge('fn-badge0', l, pl2);
+  setBadge('fn-badge1', a, pa2);
+  setBadge('fn-badge2', d, pd2);
 }
 
 // ── KPI CARDS (dinámico desde PACING y ALL_D)
@@ -1216,15 +1253,11 @@ function mkSetterTable() {
     const pct = Math.min(100, Math.round(s.appts/20*100));
     const barColor = s.appts>=20?'#059669':s.appts>=10?'#0EA5E9':'#94A3B8';
     tbody.innerHTML += `<tr>
-      <td><span style="display:inline-flex;align-items:center;gap:8px;"><span class="av ${s.av}" style="width:28px;height:28px;font-size:11px;">${s.init}</span>${s.name}</span></td>
+      <td><span style="display:inline-flex;align-items:center;gap:8px;"><span class="av ${s.av}" style="width:28px;height:28px;font-size:11px;background:${barColor.replace('#','#')};color:#fff;">${s.init}</span><strong>${s.name}</strong></span></td>
       <td class="num">${s.calls > 0 ? s.calls.toLocaleString() : '—'}</td>
-      <td class="num">${s.leads > 0 ? s.leads : '—'}</td>
-      <td class="num">${s.appts}</td>
-      <td class="num ${s.deals>1?'hi':s.deals===1?'md':'lo'}">${s.deals}</td>
-      <td class="num">${conv}%</td>
+      <td class="num ${s.appts>0?'hi':''}">${s.appts > 0 ? s.appts : '—'}</td>
+      <td class="num ${s.deals>0?'hi':'lo'}">${s.deals > 0 ? s.deals : '—'}</td>
       <td><span class="phase ${ph.c}">${ph.l}</span></td>
-      <td class="num ${bonus>0?'hi':''}">${bonus>0?'$'+bonus.toLocaleString():'—'}</td>
-      <td style="min-width:110px;"><div style="height:6px;background:var(--bg3);border-radius:3px;margin-bottom:3px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;"></div></div><div style="font-size:10px;color:var(--txd)">${s.appts}/20 (${pct}%)</div></td>
     </tr>`;
   });
 }
@@ -1239,7 +1272,7 @@ function applyData(d) {
     if (d.history.spend && d.history.spend.some(v => v > 0)) ALL_D.spend = d.history.spend;
     if (d.history.cpr   && d.history.cpr.some(v => v > 0))   ALL_D.cpr   = d.history.cpr;
   }
-  if (d.pacing) PACING = d.pacing;
+  if (d.pacing) { PACING = d.pacing; window._PACING_ORIG = JSON.parse(JSON.stringify(d.pacing)); }
   if (d.funnel) FUNNEL = d.funnel;
   if (d.lead_status) LEAD_STATUS = d.lead_status;
   if (d.appts_breakdown) APPTS_BREAKDOWN = d.appts_breakdown;
@@ -1304,18 +1337,36 @@ function pmQuick(n, btn) {
   const startI = total - count;
   rsA = startI; rsB = total - 1;
   if (typeof paintRangeBar === 'function') paintRangeBar();
-  mkHistCharts(count, startI);
+  // Restore current period PACING when switching to overview
+  if (window._PACING_ORIG) PACING = JSON.parse(JSON.stringify(window._PACING_ORIG));
+  mkFunnel(); mkKpiCards(); if (typeof mkTasas === 'function') mkTasas();
   const btn2 = document.getElementById('badge-per-btn');
   if (btn2) btn2.textContent = (n===0 ? 'Todo el histórico' : 'Últimos '+count+' períodos') + ' ▾';
 }
 function pmSelectPeriod(i) {
   const menu = document.getElementById('period-menu');
   if (menu) menu.style.display = 'none';
-  rsA = i; rsB = i;
-  if (typeof paintRangeBar === 'function') paintRangeBar();
-  mkHistCharts(1, i);
   const btn = document.getElementById('badge-per-btn');
   if (btn) btn.textContent = ALL_PER[i] + ' ▾';
+  // Update page data for selected period
+  const l = ALL_D.leads[i] || 0;
+  const a = ALL_D.appts[i] || 0;
+  const d = ALL_D.deals[i] || 0;
+  // Clone PACING with selected period values
+  PACING = PACING.map((p, idx) => ({
+    ...p,
+    actual: [l, a, d][idx] || 0,
+    expected: [l, a, d][idx] || 0  // past period = achieved
+  }));
+  mkFunnel();
+  mkKpiCards();
+  if (typeof mkTasas === 'function') mkTasas();
+  // Highlight selected period in period list
+  document.querySelectorAll('#pm-periods div').forEach((el, j) => {
+    el.style.background = j === i ? 'var(--pril)' : '';
+    el.style.fontWeight = j === i ? '700' : '';
+    el.style.color = j === i ? 'var(--pri)' : 'var(--tx)';
+  });
 }
 document.addEventListener('click', () => {
   const m = document.getElementById('period-menu');
