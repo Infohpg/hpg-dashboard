@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-04 01:00",
+  "updated": "2026-06-04 02:00",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -10,7 +10,7 @@
   },
   "pacing": [
     {
-      "label": "Leads CRM",
+      "label": "Leads",
       "actual": 585,
       "expected": 355,
       "goal": 550,
@@ -80,7 +80,7 @@
       0,
       0,
       0,
-      7605,
+      0,
       0
     ],
     "cpr": [
@@ -89,13 +89,13 @@
       0,
       0,
       0,
-      10.2,
+      0,
       0
     ]
   },
   "lead_status": {
     "labels": [
-      "No Answer",
+      "No Answer - Active Recall",
       "Unreachable",
       "Not Qualified",
       "Follow-Up Needed",
