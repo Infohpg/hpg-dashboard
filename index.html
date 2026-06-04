@@ -40,9 +40,10 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 .hdr-sub{font-size:11px;color:var(--txm);}
 .hdr-r{display:flex;align-items:center;gap:10px;}
 .badge{border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;}
-.badge-per{background:var(--bg3);border:1px solid var(--brd);color:var(--txm);}
+.badge-per{background:var(--pri);border:1px solid var(--pri);color:#fff;cursor:pointer;font-weight:700;}
+.badge-per:hover{background:#1a45c4;}
+.badge-upd{background:var(--bg3);border:1px solid var(--brd);color:var(--txm);}
 .badge-day{background:var(--pril);border:1px solid #C7D2FE;color:var(--pri);}
-.badge-mock{background:var(--bg3);border:1px solid var(--brd);color:var(--txm);font-size:10px;font-weight:700;}
 
 /* ── TABS */
 .tabs{background:var(--bg);border-bottom:1px solid var(--brd);padding:0 28px;display:flex;}
@@ -95,12 +96,12 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 .funnel-right{padding:20px 24px 20px 20px;}
 .fn-col-title{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
 .fn-rows{display:flex;flex-direction:column;gap:10px;}
-.fn-row{height:80px;display:flex;align-items:center;}
+.fn-row{height:130px;display:flex;align-items:center;}
 .fn-bar-wrap{width:100%;display:flex;justify-content:center;}
-.fn-bar{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-radius:8px;color:#fff;}
+.fn-bar{height:108px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-radius:8px;color:#fff;}
 .fn-bar-l{display:flex;flex-direction:column;gap:2px;}
 .fn-bar-stage{font-size:10px;font-weight:600;opacity:.85;}
-.fn-bar-num{font-size:22px;font-weight:800;line-height:1;}
+.fn-bar-num{font-size:28px;font-weight:800;line-height:1;}
 .fn-bar-r{text-align:right;}
 .fn-bar-pct{font-size:13px;font-weight:700;}
 .fn-bar-sub{font-size:9px;opacity:.75;margin-top:2px;}
@@ -246,9 +247,12 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
     </div>
   </div>
   <div class="hdr-r">
-    <span class="badge badge-per">16 mayo – 15 junio 2026</span>
-    <span class="badge badge-day">Día 12 / 30 · 40%</span>
-    <span class="badge badge-mock">MOCK DATA</span>
+    <span class="badge badge-upd" id="badge-upd" style="display:none"></span>
+    <span class="badge badge-day">Día 20 / 31 · 64%</span>
+    <button class="badge badge-per" id="badge-per-btn" onclick="togglePeriodMenu(event)">16 mayo – 15 junio 2026 ▾</button>
+    <div id="period-menu" style="display:none;position:absolute;top:52px;right:28px;background:#fff;border:1px solid var(--brd);border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:200;min-width:200px;padding:6px 0;">
+      <div style="padding:8px 14px;font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--brd);">PERÍODOS DISPONIBLES</div>
+    </div>
   </div>
 </header>
 
@@ -302,7 +306,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 
   <!-- FUNNEL (3 etapas) + SPARKLINES -->
   <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Funnel de Conversión</span><span class="sec-sub">Período actual en curso — 16 mayo – 15 junio · Día 12/30</span></div>
+    <div class="sec-hdr"><span class="sec-title">Funnel de Conversión</span><span class="sec-sub">Período actual en curso — 16 mayo – 15 junio · Día 20/31</span></div>
     <div class="funnel-split">
       <div class="funnel-left">
         <div class="fn-col-title">Volumen por etapa</div>
@@ -783,13 +787,13 @@ function mkSpark(id, data, color, fillColor, trId) {
 // ── FUNNEL BARS (dinámico desde PACING)
 function mkFunnel() {
   const l = PACING[0].actual, a = PACING[1].actual, d = PACING[2].actual;
-  const l2a = l > 0 ? (a / l * 100).toFixed(1) : '0.0';
-  const a2d = a > 0 ? (d / a * 100).toFixed(1) : '0.0';
-  const n0 = document.getElementById('fn-n0'); if (n0) n0.textContent = l;
-  const n1 = document.getElementById('fn-n1'); if (n1) n1.textContent = a;
-  const n2 = document.getElementById('fn-n2'); if (n2) n2.textContent = d;
-  const p1 = document.getElementById('fn-p1'); if (p1) p1.textContent = l2a + '%';
-  const p2 = document.getElementById('fn-p2'); if (p2) p2.textContent = a2d + '%';
+  const l2a = l > 0 ? (a / l * 100).toFixed(1) : null;
+  const a2d = a > 0 ? (d / a * 100).toFixed(1) : null;
+  const n0 = document.getElementById('fn-n0'); if (n0) n0.textContent = fmtNum(l);
+  const n1 = document.getElementById('fn-n1'); if (n1) n1.textContent = fmtNum(a);
+  const n2 = document.getElementById('fn-n2'); if (n2) n2.textContent = fmtNum(d);
+  const p1 = document.getElementById('fn-p1'); if (p1) p1.textContent = fmtPct(l2a);
+  const p2 = document.getElementById('fn-p2'); if (p2) p2.textContent = fmtPct(a2d);
 }
 
 // ── KPI CARDS (dinámico desde PACING y ALL_D)
@@ -1281,11 +1285,31 @@ function applyData(d) {
     document.querySelectorAll('.badge-mock').forEach(el => el.remove());
   }
   if (d.updated) {
-    const upd = document.createElement('span');
-    upd.className = 'badge badge-per';
-    upd.textContent = 'Actualizado ' + d.updated;
-    document.querySelector('.hdr-r')?.prepend(upd);
+    const updEl = document.getElementById('badge-upd');
+    if (updEl) { updEl.textContent = 'Actualizado ' + d.updated; updEl.style.display = ''; }
   }
+}
+
+// ── TOGGLE PERIOD MENU
+function togglePeriodMenu(e) {
+  e.stopPropagation();
+  const menu = document.getElementById('period-menu');
+  if (!menu) return;
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+document.addEventListener('click', () => {
+  const m = document.getElementById('period-menu');
+  if (m) m.style.display = 'none';
+});
+
+// ── ZERO → DASH helper
+function fmtNum(v, decimals) {
+  if (v === null || v === undefined || v === 0 || v === '0' || v === 0.0) return '—';
+  return decimals !== undefined ? parseFloat(v).toFixed(decimals) : String(v);
+}
+function fmtPct(v) {
+  if (!v || parseFloat(v) === 0) return '—';
+  return v + '%';
 }
 
 // ── INIT
