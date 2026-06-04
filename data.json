@@ -1,41 +1,41 @@
 {
-  "updated": "2026-06-03 12:21",
+  "updated": "2026-06-04 01:00",
   "currentKey": "2026-05",
   "period": {
-    "label": "16 mayo - 15 junio 2026",
+    "label": "16 mayo – 15 junio 2026",
     "short": "May-Jun",
-    "day": 19,
-    "total_days": 30,
-    "pct": 63
+    "day": 20,
+    "total_days": 31,
+    "pct": 64
   },
   "pacing": [
     {
       "label": "Leads CRM",
-      "actual": 532,
-      "expected": 475,
-      "goal": 750,
+      "actual": 585,
+      "expected": 355,
+      "goal": 550,
       "color": "#1D4ED8"
     },
     {
       "label": "Appts Confirmados",
-      "actual": 0,
-      "expected": 57,
-      "goal": 90,
+      "actual": 76,
+      "expected": 39,
+      "goal": 60,
       "color": "#0369A1"
     },
     {
-      "label": "Deals Cerrados",
-      "actual": 0,
-      "expected": 5.7,
-      "goal": 9,
+      "label": "Deals Confirmados",
+      "actual": 8,
+      "expected": 7,
+      "goal": 11,
       "color": "#475569"
     }
   ],
   "funnel": {
-    "leads": 1132,
-    "appts": 0,
-    "deals": 0,
-    "period": "Abr-May"
+    "leads": 585,
+    "appts": 76,
+    "deals": 8,
+    "period": "May-Jun"
   },
   "history": {
     "periods": [
@@ -44,30 +44,34 @@
       "Ene-Feb",
       "Feb-Mar",
       "Mar-Abr",
-      "Abr-May"
+      "Abr-May",
+      "May-Jun"
     ],
     "leads": [
       0,
       0,
-      0,
-      578,
-      1098,
-      1132
+      512,
+      1118,
+      1125,
+      585,
+      0
     ],
     "appts": [
       0,
       0,
       0,
-      0,
-      0,
+      54,
+      87,
+      76,
       0
     ],
     "deals": [
-      2,
       0,
-      0,
-      0,
-      0,
+      4,
+      7,
+      5,
+      10,
+      8,
       0
     ],
     "spend": [
@@ -76,6 +80,7 @@
       0,
       0,
       0,
+      7605,
       0
     ],
     "cpr": [
@@ -84,339 +89,62 @@
       0,
       0,
       0,
+      10.2,
       0
     ]
   },
   "lead_status": {
     "labels": [
-      "Unknown",
-      "No Answer - Active Recall",
+      "No Answer",
       "Unreachable",
-      "Out of Range",
-      "Follow-Up Needed",
       "Not Qualified",
+      "Follow-Up Needed",
+      "Out of Range",
       "Do Not Call",
-      "Duplicate"
+      "Other Co. Sold",
+      "Hot Follow-Up"
     ],
     "values": [
-      476,
-      367,
-      169,
-      124,
-      106,
-      106,
-      69,
-      59
+      670,
+      368,
+      243,
+      213,
+      192,
+      135,
+      131,
+      52
     ]
   },
   "appts_breakdown": {
-    "total": 87,
-    "confirmed": 0,
-    "cancelled": 87,
+    "total": 259,
+    "confirmed": 207,
+    "cancelled": 22,
+    "noshow": 3,
+    "pending": 25,
     "stages": [
       {
-        "label": "2026-05-07 23:00",
-        "count": 4
+        "label": "Completed",
+        "count": 101
       },
       {
-        "label": "2026-05-01 23:00",
-        "count": 4
+        "label": "Cancelled",
+        "count": 92
       },
       {
-        "label": "2026-05-16 15:00",
-        "count": 2
+        "label": "Still Working",
+        "count": 24
       },
       {
-        "label": "2026-05-08 19:00",
-        "count": 2
+        "label": "Sale",
+        "count": 22
       },
       {
-        "label": "2026-05-07 15:00",
-        "count": 2
+        "label": "Appt Set",
+        "count": 6
       },
       {
-        "label": "2026-05-09 15:00",
-        "count": 2
-      },
-      {
-        "label": "2026-04-29 15:00",
-        "count": 2
-      },
-      {
-        "label": "2026-05-18 22:30",
-        "count": 1
-      },
-      {
-        "label": "2026-05-20 23:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-16 14:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-16 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-15 20:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-14 21:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-16 16:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-13 15:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-12 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-12 23:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-18 15:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-11 22:30",
-        "count": 1
-      },
-      {
-        "label": "2026-05-11 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-11 23:30",
-        "count": 1
-      },
-      {
-        "label": "2026-05-09 17:30",
-        "count": 1
-      },
-      {
-        "label": "2026-05-09 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-06 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-05 22:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-04 21:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-03 23:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-03 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-05 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-05 15:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-03 18:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-04 15:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-04 22:30",
-        "count": 1
-      },
-      {
-        "label": "2026-05-02 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-02 17:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-01 21:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-03 15:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-02 18:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-01 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-30 22:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-06 15:30",
-        "count": 1
-      },
-      {
-        "label": "2026-05-01 15:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-30 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-02 21:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-29 21:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-02 13:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-28 22:30",
-        "count": 1
-      },
-      {
-        "label": "2026-04-28 22:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-27 15:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-03 15:30",
-        "count": 1
-      },
-      {
-        "label": "2026-04-26 17:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-28 15:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-25 23:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-28 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-25 22:30",
-        "count": 1
-      },
-      {
-        "label": "2026-04-24 23:00",
-        "count": 1
-      },
-      {
-        "label": "2026-05-05 23:30",
-        "count": 1
-      },
-      {
-        "label": "2026-04-27 18:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-24 14:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-25 15:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-25 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-23 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-26 14:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-22 23:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-24 19:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-22 21:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-23 22:30",
-        "count": 1
-      },
-      {
-        "label": "2026-04-23 14:30",
-        "count": 1
-      },
-      {
-        "label": "2026-04-21 22:30",
-        "count": 1
-      },
-      {
-        "label": "2026-04-25 14:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-20 22:30",
-        "count": 1
-      },
-      {
-        "label": "2026-04-21 23:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-21 00:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-22 22:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-20 15:00",
-        "count": 1
-      },
-      {
-        "label": "2026-04-19 14:00",
-        "count": 1
+        "label": "Other",
+        "count": 14
       }
     ]
   }
