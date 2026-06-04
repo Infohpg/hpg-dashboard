@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-04 02:00",
+  "updated": "2026-06-04 15:00",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -11,30 +11,30 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 585,
+      "actual": 590,
       "expected": 355,
       "goal": 550,
       "color": "#1D4ED8"
     },
     {
       "label": "Appts Confirmados",
-      "actual": 76,
+      "actual": 25,
       "expected": 39,
       "goal": 60,
       "color": "#0369A1"
     },
     {
       "label": "Deals Confirmados",
-      "actual": 8,
+      "actual": 4,
       "expected": 7,
       "goal": 11,
       "color": "#475569"
     }
   ],
   "funnel": {
-    "leads": 585,
-    "appts": 76,
-    "deals": 8,
+    "leads": 590,
+    "appts": 25,
+    "deals": 4,
     "period": "May-Jun"
   },
   "history": {
@@ -53,8 +53,8 @@
       512,
       1118,
       1125,
-      585,
-      0
+      590,
+      590
     ],
     "appts": [
       0,
@@ -62,8 +62,8 @@
       0,
       54,
       87,
-      76,
-      0
+      25,
+      25
     ],
     "deals": [
       0,
@@ -71,8 +71,8 @@
       7,
       5,
       10,
-      8,
-      0
+      4,
+      4
     ],
     "spend": [
       0,
