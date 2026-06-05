@@ -18,7 +18,7 @@
     },
     {
       "label": "Appts Confirmados",
-      "actual": 25,
+      "actual": 27,
       "expected": 43,
       "goal": 60,
       "color": "#0369A1"
@@ -33,7 +33,7 @@
   ],
   "funnel": {
     "leads": 606,
-    "appts": 25,
+    "appts": 27,
     "deals": 4,
     "period": "May-Jun"
   },
@@ -53,7 +53,7 @@
       512,
       1118,
       1125,
-      585,
+      1125,
       0
     ],
     "appts": [
@@ -62,7 +62,7 @@
       0,
       54,
       87,
-      76,
+      64,
       0
     ],
     "deals": [
@@ -71,7 +71,7 @@
       7,
       5,
       10,
-      8,
+      9,
       0
     ],
     "spend": [
@@ -91,6 +91,59 @@
       0,
       0,
       0
+    ]
+  },
+  "lead_status": {
+    "labels": [
+      "No Answer - Active Recall",
+      "Out of Range",
+      "Not Qualified",
+      "Recall - Short",
+      "Unreachable",
+      "Duplicate",
+      "Lost - Not Interested",
+      "Future Buyer"
+    ],
+    "values": [
+      160,
+      42,
+      28,
+      27,
+      27,
+      25,
+      25,
+      21
+    ]
+  },
+  "appts_breakdown": {
+    "total": 61,
+    "confirmed": 27,
+    "cancelled": 25,
+    "stages": [
+      {
+        "label": "Cancelled",
+        "count": 25
+      },
+      {
+        "label": "Completed",
+        "count": 13
+      },
+      {
+        "label": "Sale",
+        "count": 10
+      },
+      {
+        "label": "Pending Confirmation",
+        "count": 5
+      },
+      {
+        "label": "Still Working",
+        "count": 4
+      },
+      {
+        "label": "Appointment Set",
+        "count": 3
+      }
     ]
   },
   "setter_calls": [
@@ -135,68 +188,11 @@
       "citas": 0,
       "deals": 0,
       "meta": 6600
-    },
-    {
-      "name": "TOTAL",
-      "calls": 11657,
-      "citas": 27,
-      "deals": 0,
-      "meta": 39600
     }
   ],
-  "lead_status": {
-    "labels": [
-      "No Answer - Active Recall",
-      "Unreachable",
-      "Not Qualified",
-      "Follow-Up Needed",
-      "Out of Range",
-      "Do Not Call",
-      "Other Co. Sold",
-      "Hot Follow-Up"
-    ],
-    "values": [
-      670,
-      368,
-      243,
-      213,
-      192,
-      135,
-      131,
-      52
-    ]
-  },
-  "appts_breakdown": {
-    "total": 259,
-    "confirmed": 207,
-    "cancelled": 22,
-    "noshow": 3,
-    "pending": 25,
-    "stages": [
-      {
-        "label": "Completed",
-        "count": 101
-      },
-      {
-        "label": "Cancelled",
-        "count": 92
-      },
-      {
-        "label": "Still Working",
-        "count": 24
-      },
-      {
-        "label": "Sale",
-        "count": 22
-      },
-      {
-        "label": "Appt Set",
-        "count": 6
-      },
-      {
-        "label": "Other",
-        "count": 14
-      }
-    ]
+  "setter_calls_total": {
+    "calls": 11657,
+    "citas": 27,
+    "meta_total": 39600
   }
 }
