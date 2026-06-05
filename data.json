@@ -1,38 +1,38 @@
 {
-  "updated": "2026-06-04 15:00",
+  "updated": "2026-06-05 01:00",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
     "short": "May-Jun",
-    "day": 20,
+    "day": 21,
     "total_days": 31,
-    "pct": 64
+    "pct": 68
   },
   "pacing": [
     {
       "label": "Leads",
-      "actual": 590,
-      "expected": 355,
+      "actual": 606,
+      "expected": 391,
       "goal": 550,
       "color": "#1D4ED8"
     },
     {
       "label": "Appts Confirmados",
       "actual": 25,
-      "expected": 39,
+      "expected": 43,
       "goal": 60,
       "color": "#0369A1"
     },
     {
       "label": "Deals Confirmados",
       "actual": 4,
-      "expected": 7,
+      "expected": 8,
       "goal": 11,
       "color": "#475569"
     }
   ],
   "funnel": {
-    "leads": 590,
+    "leads": 606,
     "appts": 25,
     "deals": 4,
     "period": "May-Jun"
@@ -53,8 +53,8 @@
       512,
       1118,
       1125,
-      590,
-      590
+      585,
+      0
     ],
     "appts": [
       0,
@@ -62,8 +62,8 @@
       0,
       54,
       87,
-      25,
-      25
+      76,
+      0
     ],
     "deals": [
       0,
@@ -71,8 +71,8 @@
       7,
       5,
       10,
-      4,
-      4
+      8,
+      0
     ],
     "spend": [
       0,
@@ -93,6 +93,57 @@
       0
     ]
   },
+  "setter_calls": [
+    {
+      "name": "Oliver",
+      "calls": 2214,
+      "citas": 7,
+      "deals": 0,
+      "meta": 6600
+    },
+    {
+      "name": "Silvia",
+      "calls": 3538,
+      "citas": 7,
+      "deals": 0,
+      "meta": 6600
+    },
+    {
+      "name": "Emmanuel",
+      "calls": 1933,
+      "citas": 8,
+      "deals": 0,
+      "meta": 6600
+    },
+    {
+      "name": "Pablo",
+      "calls": 3150,
+      "citas": 5,
+      "deals": 0,
+      "meta": 6600
+    },
+    {
+      "name": "Daniela",
+      "calls": 529,
+      "citas": 0,
+      "deals": 0,
+      "meta": 6600
+    },
+    {
+      "name": "Alejandro",
+      "calls": 293,
+      "citas": 0,
+      "deals": 0,
+      "meta": 6600
+    },
+    {
+      "name": "TOTAL",
+      "calls": 11657,
+      "citas": 27,
+      "deals": 0,
+      "meta": 39600
+    }
+  ],
   "lead_status": {
     "labels": [
       "No Answer - Active Recall",
