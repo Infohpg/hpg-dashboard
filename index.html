@@ -96,12 +96,13 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 .funnel-right{padding:20px 24px 20px 20px;}
 .fn-col-title{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
 .fn-rows{display:flex;flex-direction:column;gap:10px;}
-.fn-row{height:80px;display:flex;align-items:center;}
+.fn-row{height:130px;display:flex;align-items:center;}
 .fn-bar-wrap{width:100%;display:flex;justify-content:center;}
-.fn-bar{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-radius:8px;color:#fff;}
+.fn-bar{height:118px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-radius:8px;color:#fff;}
 .fn-bar-l{display:flex;flex-direction:column;gap:2px;}
 .fn-bar-stage{font-size:10px;font-weight:600;opacity:.85;}
-.fn-bar-num{font-size:22px;font-weight:800;line-height:1;}
+.fn-bar-num{font-size:28px;font-weight:800;line-height:1;}
+.fn-bar-num_placeholder{font-size:22px;font-weight:800;line-height:1;}
 .fn-bar-r{text-align:right;}
 .fn-bar-pct{font-size:13px;font-weight:700;}
 .fn-bar-sub{font-size:9px;opacity:.75;margin-top:2px;}
@@ -1430,9 +1431,11 @@ function initAll() {
   const stageBody = document.getElementById('apptStageBody');
   if (stageBody && APPTS_BREAKDOWN.stages) {
     const ico = {Completed:'✅',Cancelled:'❌','Still Working':'🔄',Sale:'💰','Appt Set':'📅',Other:'📋',Pending:'⏳'};
-    stageBody.innerHTML = APPTS_BREAKDOWN.stages.map(s => {
+    const validCount = APPTS_BREAKDOWN.confirmed || 0;
+    const summaryRow = '<tr style="background:var(--pril);"><td><strong>✅ Total válidos</strong></td><td class="num hi"><strong>'+validCount+'</strong></td><td class="dim hi"><strong>'+(APPTS_BREAKDOWN.total>0?(validCount/APPTS_BREAKDOWN.total*100).toFixed(1):'—')+'%</strong></td></tr>';
+    stageBody.innerHTML = summaryRow + APPTS_BREAKDOWN.stages.map(s => {
       const pct = APPTS_BREAKDOWN.total > 0 ? (s.count/APPTS_BREAKDOWN.total*100).toFixed(1) : '—';
-      const cls = s.label==='Completed'?'hi':s.label==='Cancelled'?'lo':'';
+      const cls = s.label==='Completed'?'hi':s.label==='Still Working'?'hi':s.label==='Sale'?'hi':s.label==='Cancelled'?'lo':'';
       return '<tr><td>'+(ico[s.label]||'•')+' '+s.label+'</td><td class="num '+cls+'">'+(s.count||'—')+'</td><td class="dim">'+pct+'%</td></tr>';
     }).join('');
   }
