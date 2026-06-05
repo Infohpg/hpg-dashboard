@@ -314,9 +314,9 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
   <div class="sec">
     <div class="sec-hdr"><span class="sec-title">Funnel de Conversión</span><span class="sec-sub">Período actual en curso — 16 mayo – 15 junio · Día 20/31</span></div>
     <div class="funnel-split">
-      <div class="funnel-left">
+      <div class="funnel-left" style="align-self:flex-start;">
         <div class="fn-col-title">Volumen por etapa</div>
-        <div class="fn-rows">
+        <div class="fn-rows" style="display:flex;flex-direction:column;gap:8px;">
           <div class="fn-row">
             <div class="fn-bar-wrap">
               <div id="fn-b0" class="fn-bar fn-b1" style="width:100%">
@@ -512,6 +512,29 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
           <thead><tr><th>Stage</th><th>Cantidad</th><th>% del total</th></tr></thead>
           <tbody id="apptStageBody"><tr><td colspan="3" style="color:var(--txd)">Cargando...</td></tr></tbody>
         </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- TENDENCIA HISTÓRICA -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <span class="sec-title">Tendencia Histórica · 12 Períodos</span>
+      <div class="rs-shortcuts" style="margin-left:auto;display:flex;gap:6px;">
+        <button class="tf-btn" onclick="rsQuick(3)">Últ. 3</button>
+        <button class="tf-btn" onclick="rsQuick(6)">Últ. 6</button>
+        <button class="tf-btn on" onclick="rsQuick(0)">Todo</button>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <div style="margin-bottom:6px;font-size:11px;font-weight:600;color:var(--txm);">Inversión y CPR</div>
+        <div class="hist-wrap"><canvas id="histSpend"></canvas></div>
+      </div>
+      <div class="card">
+        <div style="margin-bottom:6px;font-size:11px;font-weight:600;color:var(--txm);">Volumen · Leads / Appts / Deals</div>
+        <div class="hist-wrap"><canvas id="histVolume"></canvas></div>
       </div>
     </div>
   </div>
@@ -1266,6 +1289,18 @@ function applyData(d) {
     document.querySelectorAll('.badge-per').forEach(el => el.textContent = d.period.label);
     document.querySelectorAll('.badge-day').forEach(el => el.textContent = `Día ${d.period.day} / ${d.period.total_days} · ${d.period.pct}%`);
     document.querySelectorAll('.badge-mock').forEach(el => el.remove());
+  }
+  if (d.setter_calls && Array.isArray(d.setter_calls)) {
+    // Update SETTERS array with fresh data from setter_calls
+    const scMap = {};
+    d.setter_calls.forEach(s => { scMap[s.name] = s; });
+    SETTERS.forEach(s => {
+      if (scMap[s.name]) {
+        s.calls = scMap[s.name].calls || s.calls;
+        s.appts = scMap[s.name].citas || s.appts;
+        s.deals = scMap[s.name].deals || s.deals;
+      }
+    });
   }
   if (d.updated) {
     const updEl = document.getElementById('badge-upd');
