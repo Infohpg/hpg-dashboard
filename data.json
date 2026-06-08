@@ -116,7 +116,7 @@
     ]
   },
   "appts_breakdown": {
-    "total": 65,
+    "total": 68,
     "confirmed": 30,
     "cancelled": 28,
     "stages": [
@@ -133,16 +133,16 @@
         "count": 11
       },
       {
+        "label": "Appointment Set",
+        "count": 5
+      },
+      {
         "label": "Still Working",
         "count": 5
       },
       {
-        "label": "Appointment Set",
-        "count": 4
-      },
-      {
         "label": "Pending Confirmation",
-        "count": 2
+        "count": 4
       },
       {
         "label": "Unknown",
@@ -153,49 +153,49 @@
   "setter_calls": [
     {
       "name": "Oliver",
-      "calls": 2257,
+      "calls": 2302,
       "citas": 8,
       "deals": 0,
       "meta": 6600
     },
     {
       "name": "Silvia",
-      "calls": 5000,
+      "calls": 4174,
       "citas": 7,
       "deals": 0,
       "meta": 6600
     },
     {
       "name": "Emmanuel",
-      "calls": 2242,
+      "calls": 2261,
       "citas": 8,
       "deals": 0,
       "meta": 6600
     },
     {
       "name": "Pablo",
-      "calls": 3458,
+      "calls": 3564,
       "citas": 7,
       "deals": 0,
       "meta": 6600
     },
     {
       "name": "Daniela",
-      "calls": 692,
+      "calls": 747,
       "citas": 0,
       "deals": 0,
       "meta": 6600
     },
     {
       "name": "Alejandro",
-      "calls": 445,
+      "calls": 490,
       "citas": 0,
       "deals": 0,
       "meta": 6600
     }
   ],
   "setter_calls_total": {
-    "calls": 13141,
+    "calls": 13538,
     "citas": 30,
     "meta_total": 39600
   }
