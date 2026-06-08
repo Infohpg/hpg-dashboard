@@ -174,14 +174,14 @@
     },
     {
       "name": "Pablo",
-      "calls": 3564,
+      "calls": 3583,
       "citas": 7,
       "deals": 0,
       "meta": 6600
     },
     {
       "name": "Daniela",
-      "calls": 747,
+      "calls": 751,
       "citas": 0,
       "deals": 0,
       "meta": 6600
@@ -195,7 +195,7 @@
     }
   ],
   "setter_calls_total": {
-    "calls": 13538,
+    "calls": 13561,
     "citas": 30,
     "meta_total": 39600
   }
