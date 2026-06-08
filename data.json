@@ -1,40 +1,40 @@
 {
-  "updated": "2026-06-05 01:00",
+  "updated": "2026-06-08 13:37",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
     "short": "May-Jun",
-    "day": 21,
-    "total_days": 31,
-    "pct": 68
+    "day": 24,
+    "total_days": 30,
+    "pct": 80
   },
   "pacing": [
     {
       "label": "Leads",
-      "actual": 606,
-      "expected": 391,
+      "actual": 668,
+      "expected": 440,
       "goal": 550,
       "color": "#1D4ED8"
     },
     {
       "label": "Appts Confirmados",
-      "actual": 27,
-      "expected": 43,
+      "actual": 30,
+      "expected": 48,
       "goal": 60,
       "color": "#0369A1"
     },
     {
       "label": "Deals Confirmados",
-      "actual": 4,
-      "expected": 8,
+      "actual": 5,
+      "expected": 9,
       "goal": 11,
       "color": "#475569"
     }
   ],
   "funnel": {
-    "leads": 606,
-    "appts": 27,
-    "deals": 4,
+    "leads": 668,
+    "appts": 30,
+    "deals": 5,
     "period": "May-Jun"
   },
   "history": {
@@ -50,27 +50,27 @@
     "leads": [
       0,
       0,
-      512,
-      1118,
-      1125,
-      1125,
+      1016,
+      1086,
+      1098,
+      1132,
       0
     ],
     "appts": [
-      0,
-      0,
-      0,
+      1,
+      21,
       54,
-      87,
+      28,
+      50,
       64,
       0
     ],
     "deals": [
-      0,
       4,
+      2,
+      11,
       7,
-      5,
-      10,
+      8,
       9,
       0
     ],
@@ -97,102 +97,106 @@
     "labels": [
       "No Answer - Active Recall",
       "Out of Range",
-      "Not Qualified",
-      "Recall - Short",
-      "Unreachable",
-      "Duplicate",
       "Lost - Not Interested",
-      "Future Buyer"
+      "New",
+      "Unreachable",
+      "Not Qualified",
+      "Duplicate",
+      "Recall - Short"
     ],
     "values": [
       160,
       42,
+      35,
+      31,
+      29,
+      29,
       28,
-      27,
-      27,
-      25,
-      25,
-      21
+      28
     ]
   },
   "appts_breakdown": {
-    "total": 61,
-    "confirmed": 27,
-    "cancelled": 25,
+    "total": 65,
+    "confirmed": 30,
+    "cancelled": 28,
     "stages": [
       {
         "label": "Cancelled",
-        "count": 25
+        "count": 28
       },
       {
         "label": "Completed",
-        "count": 13
+        "count": 14
       },
       {
         "label": "Sale",
-        "count": 10
-      },
-      {
-        "label": "Pending Confirmation",
-        "count": 5
+        "count": 11
       },
       {
         "label": "Still Working",
-        "count": 4
+        "count": 5
       },
       {
         "label": "Appointment Set",
-        "count": 3
+        "count": 4
+      },
+      {
+        "label": "Pending Confirmation",
+        "count": 2
+      },
+      {
+        "label": "Unknown",
+        "count": 1
       }
     ]
   },
   "setter_calls": [
     {
       "name": "Oliver",
-      "calls": 2214,
-      "citas": 7,
+      "calls": 2257,
+      "citas": 8,
       "deals": 0,
       "meta": 6600
     },
     {
       "name": "Silvia",
-      "calls": 3538,
+      "calls": 5000,
       "citas": 7,
       "deals": 0,
       "meta": 6600
     },
     {
       "name": "Emmanuel",
-      "calls": 1933,
+      "calls": 2242,
       "citas": 8,
       "deals": 0,
       "meta": 6600
     },
     {
       "name": "Pablo",
-      "calls": 3150,
-      "citas": 5,
+      "calls": 3458,
+      "citas": 7,
       "deals": 0,
       "meta": 6600
     },
     {
       "name": "Daniela",
-      "calls": 529,
+      "calls": 692,
       "citas": 0,
       "deals": 0,
       "meta": 6600
     },
     {
       "name": "Alejandro",
-      "calls": 293,
+      "calls": 445,
       "citas": 0,
       "deals": 0,
       "meta": 6600
     }
   ],
   "setter_calls_total": {
-    "calls": 11657,
-    "citas": 27,
+    "calls": 13141,
+    "citas": 30,
     "meta_total": 39600
   }
 }
