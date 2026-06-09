@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-09 14:17",
+  "updated": "2026-06-09 14:21",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -154,13 +154,13 @@
   "product": [
     {
       "label": "Roofing",
-      "leads": 464,
-      "deals": 4
+      "leads": 510,
+      "deals": 0
     },
     {
-      "label": "Windows",
-      "leads": 82,
-      "deals": 1
+      "label": "Window Replacement",
+      "leads": 33,
+      "deals": 0
     }
   ],
   "geo": [
@@ -210,7 +210,7 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5500,
-      "leads": 85
+      "leads": 84
     },
     {
       "name": "Daniela",
