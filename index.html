@@ -800,6 +800,8 @@ function mkKpiCards() {
 
   const prevIdx = ALL_D.leads.length >= 2 ? ALL_D.leads.length - 2 : 0;
   const pD = ALL_D.deals[prevIdx] || 0;
+  const spendNow  = ALL_D.spend.length > 0 ? ALL_D.spend[ALL_D.spend.length-1] : 0;
+  const spendPrev = ALL_D.spend.length >= 2 ? ALL_D.spend[prevIdx] : 0;
 
   // Inversión card — from Meta spend
   const invEl = document.getElementById('kinv-val');
@@ -822,8 +824,6 @@ function mkKpiCards() {
   }
 
   // Costo/Deal card — inverted (lower = green)
-  const spendNow  = ALL_D.spend.length > 0 ? ALL_D.spend[ALL_D.spend.length-1] : 0;
-  const spendPrev = ALL_D.spend.length >= 2 ? ALL_D.spend[prevIdx] : 0;
   const cpdNow  = d > 0 && spendNow  > 0 ? Math.round(spendNow  / d)  : 0;
   const cpdPrev = pD > 0 && spendPrev > 0 ? Math.round(spendPrev / pD) : 0;
   const dCpd = cpdPrev > 0 && cpdNow > 0 ? Math.round((cpdNow - cpdPrev) / cpdPrev * 100) : null;
