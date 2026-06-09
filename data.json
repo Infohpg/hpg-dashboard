@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-09 09:19",
+  "updated": "2026-06-09 09:34",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -11,7 +11,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 550,
+      "actual": 551,
       "expected": 458,
       "goal": 550,
       "color": "#1D4ED8"
@@ -32,7 +32,7 @@
     }
   ],
   "funnel": {
-    "leads": 550,
+    "leads": 551,
     "appts": 30,
     "deals": 5,
     "period": "May-Jun"
@@ -48,7 +48,7 @@
       "May-Jun"
     ],
     "leads": [
-      70,
+      69,
       600,
       1577,
       670,
