@@ -1,25 +1,25 @@
 {
-  "updated": "2026-06-08 17:47",
+  "updated": "2026-06-09 06:24",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
     "short": "May-Jun",
-    "day": 24,
+    "day": 25,
     "total_days": 30,
-    "pct": 80
+    "pct": 83
   },
   "pacing": [
     {
       "label": "Leads",
       "actual": 685,
-      "expected": 440,
+      "expected": 458,
       "goal": 550,
       "color": "#1D4ED8"
     },
     {
       "label": "Appts Confirmados",
       "actual": 30,
-      "expected": 48,
+      "expected": 50,
       "goal": 60,
       "color": "#0369A1"
     },
