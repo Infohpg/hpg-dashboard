@@ -65,7 +65,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 .card{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:20px;box-shadow:var(--sdw);}
 
 /* ── KPI ROW */
-.kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
 .kpi{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sdw);position:relative;overflow:hidden;}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;}
 .kpi.c-amb::before{background:var(--amb);}
@@ -284,29 +284,23 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         <div class="kpi-proj">Conectar Meta API para ver datos reales</div>
         <div class="kpi-prog"><div class="prog-track"><div class="prog-fill amb" style="width:0%"></div></div><div class="prog-label">sin datos</div></div>
       </div>
-      <div class="kpi c-pri">
-        <div class="kpi-top"><span class="kpi-label">Revenue Estimado</span><span class="delta up" id="kdelta-rev">—</span></div>
-        <div class="kpi-val" id="krev">$48,000</div>
-        <div class="kpi-proj" id="kprojrev">4 deals × $12,000 ref.</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill pri" id="krevfill" style="width:44.4%"></div></div><div class="prog-label" id="krevlbl">4 / 9 meta · $108k meta</div></div>
-      </div>
-      <div class="kpi c-sky">
-        <div class="kpi-top"><span class="kpi-label">Conv. Lead → Appt</span><span class="delta up" id="kdelta-l2a">↑ +52%</span></div>
-        <div class="kpi-val" id="kl2a">12.2%</div>
-        <div class="kpi-proj" id="kprojl2a">38 / 312 · vs 8.0% anterior</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill sky" id="kl2afill" style="width:61%"></div></div><div class="prog-label">escala 0 – 20%</div></div>
-      </div>
-      <div class="kpi c-vio">
-        <div class="kpi-top"><span class="kpi-label">Conv. Appt → Deal</span><span class="delta dn" id="kdelta-a2d">↓ -30%</span></div>
-        <div class="kpi-val" id="ka2d">10.5%</div>
-        <div class="kpi-proj" id="kproja2d">4 / 38 · vs 15.0% anterior</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill vio" id="ka2dfill" style="width:42%"></div></div><div class="prog-label">escala 0 – 25%</div></div>
-      </div>
       <div class="kpi c-vio">
         <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta" id="kdelta-cpd" style="background:var(--bg3);color:var(--txd)">—</span></div>
         <div class="kpi-val" id="kcpd-val">—</div>
         <div class="kpi-proj" id="kcpd-proj">vs. período anterior (↓ = mejor)</div>
         <div class="kpi-prog"><div class="prog-track"><div class="prog-fill vio" id="kcpd-fill" style="width:0%"></div></div><div class="prog-label">menor = mejor</div></div>
+      </div>
+      <div class="kpi c-pri">
+        <div class="kpi-top"><span class="kpi-label">Revenue Total</span><span class="delta up" id="kdelta-rev">—</span></div>
+        <div class="kpi-val" id="krev">—</div>
+        <div class="kpi-proj" id="kprojrev">—</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill pri" id="krevfill" style="width:0%"></div></div><div class="prog-label" id="krevlbl">— / 9 meta</div></div>
+      </div>
+      <div class="kpi c-sky">
+        <div class="kpi-top"><span class="kpi-label">Total Llamadas</span><span class="delta" id="kdelta-calls" style="background:var(--bg3);color:var(--txd)">—</span></div>
+        <div class="kpi-val" id="kcalls-val">—</div>
+        <div class="kpi-proj" id="kcalls-proj">llamadas este período</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill sky" id="kcalls-fill" style="width:0%"></div></div><div class="prog-label" id="kcalls-lbl">período en curso</div></div>
       </div>
     </div>
   </div>
@@ -820,33 +814,42 @@ function mkFunnel() {
 
 // ── KPI CARDS (dinámico desde PACING y ALL_D)
 function mkKpiCards() {
-  const l = PACING[0].actual, a = PACING[1].actual, d = PACING[2].actual;
+  const d = PACING[2].actual;
   const goalD = PACING[2].goal || 9;
-  const metaRev = goalD * 12000;
-  const rev = d * 12000;
-  const revFillPct = Math.min(100, (d / goalD * 100)).toFixed(1);
 
-  // #5/#6: second-to-last = last completed period (last = current incomplete)
   const prevIdx = ALL_D.leads.length >= 2 ? ALL_D.leads.length - 2 : 0;
-  const pL = ALL_D.leads[prevIdx] || 0;
-  const pA = ALL_D.appts[prevIdx] || 0;
   const pD = ALL_D.deals[prevIdx] || 0;
 
-  const l2a  = l > 0 ? (a / l * 100).toFixed(1) : '0.0';
-  const a2d  = a > 0 ? (d / a * 100).toFixed(1) : '0.0';
-  const pl2a = pL > 0 ? (pA / pL * 100).toFixed(1) : '0.0';
-  const pa2d = pA > 0 ? (pD / pA * 100).toFixed(1) : '0.0';
+  // Costo/Deal card — inverted (lower = green)
+  const spendNow  = ALL_D.spend.length > 0 ? ALL_D.spend[ALL_D.spend.length-1] : 0;
+  const spendPrev = ALL_D.spend.length >= 2 ? ALL_D.spend[prevIdx] : 0;
+  const cpdNow  = d > 0 && spendNow  > 0 ? Math.round(spendNow  / d)  : 0;
+  const cpdPrev = pD > 0 && spendPrev > 0 ? Math.round(spendPrev / pD) : 0;
+  const dCpd = cpdPrev > 0 && cpdNow > 0 ? Math.round((cpdNow - cpdPrev) / cpdPrev * 100) : null;
+  const cpdValEl = document.getElementById('kcpd-val');
+  if (cpdValEl) cpdValEl.textContent = cpdNow > 0 ? '$' + cpdNow.toLocaleString() : '—';
+  const cpdProjEl = document.getElementById('kcpd-proj');
+  if (cpdProjEl) cpdProjEl.textContent = cpdNow > 0 ? 'vs. período anterior (↓ = mejor)' : 'sin datos de inversión';
+  const cpdFillEl = document.getElementById('kcpd-fill');
+  if (cpdFillEl) cpdFillEl.style.width = cpdNow > 0 ? Math.min(100, (cpdNow / 5000) * 100).toFixed(1) + '%' : '0%';
+  const cpdDelta = document.getElementById('kdelta-cpd');
+  if (cpdDelta && dCpd !== null) {
+    cpdDelta.textContent = (dCpd <= 0 ? '↓ ' : '↑ +') + Math.abs(dCpd) + '%';
+    cpdDelta.className = 'delta ' + (dCpd <= 0 ? 'up' : 'dn');
+    cpdDelta.style.background = ''; cpdDelta.style.color = '';
+  } else if (cpdDelta) { cpdDelta.textContent = '—'; cpdDelta.className = 'delta'; cpdDelta.style.background = 'var(--bg3)'; cpdDelta.style.color = 'var(--txd)'; }
 
-  const dl2a = parseFloat(pl2a) > 0 ? Math.round((parseFloat(l2a) - parseFloat(pl2a)) / parseFloat(pl2a) * 100) : 0;
-  const da2d = parseFloat(pa2d) > 0 ? Math.round((parseFloat(a2d) - parseFloat(pa2d)) / parseFloat(pa2d) * 100) : 0;
-
-  // Revenue card
+  // Revenue Total card
+  const revTotal = window._REVENUE_TOTAL !== undefined && window._REVENUE_TOTAL > 0 ? window._REVENUE_TOTAL : d * 12000;
+  const revAvg   = d > 0 ? Math.round(revTotal / d) : 0;
+  const metaRev  = goalD * 12000;
+  const revFillPct = Math.min(100, (d / goalD * 100)).toFixed(1);
   const revEl = document.getElementById('krev');
-  if (revEl) revEl.textContent = '$' + rev.toLocaleString();
+  if (revEl) revEl.textContent = revTotal > 0 ? '$' + revTotal.toLocaleString() : '—';
   const projEl = document.getElementById('kprojrev');
-  if (projEl) projEl.textContent = d + ' deals × $12,000 ref.';
+  if (projEl) projEl.textContent = revAvg > 0 ? 'Promedio: $' + revAvg.toLocaleString() + ' / deal' : '—';
   const lblEl = document.getElementById('krevlbl');
-  if (lblEl) lblEl.textContent = d + ' / ' + goalD + ' meta · $' + (metaRev/1000).toFixed(0) + 'k meta';
+  if (lblEl) lblEl.textContent = d + ' / ' + goalD + ' meta · $' + (metaRev / 1000).toFixed(0) + 'k meta';
   const fillEl = document.getElementById('krevfill');
   if (fillEl) fillEl.style.width = revFillPct + '%';
   const dRevEl = document.getElementById('kdelta-rev');
@@ -856,39 +859,16 @@ function mkKpiCards() {
     dRevEl.className = 'delta ' + (dRev !== null && dRev >= 0 ? 'up' : 'dn');
   }
 
-  // L→A card
-  const l2aEl = document.getElementById('kl2a');
-  if (l2aEl) l2aEl.textContent = l2a + '%';
-  const pl2aEl = document.getElementById('kprojl2a');
-  if (pl2aEl) pl2aEl.textContent = a + ' / ' + l + ' · vs ' + pl2a + '% anterior';
-  const l2aFill = document.getElementById('kl2afill');
-  if (l2aFill) l2aFill.style.width = Math.min(100, parseFloat(l2a) / 20 * 100).toFixed(1) + '%';
-  const dl2aEl = document.getElementById('kdelta-l2a');
-  if (dl2aEl) { dl2aEl.textContent = (dl2a >= 0 ? '↑ +' : '↓ ') + Math.abs(dl2a) + '%'; dl2aEl.className = 'delta ' + (dl2a >= 0 ? 'up' : 'dn'); }
-
-  // Costo/Deal card — inverted (lower = green) #7
-  const spendNow = ALL_D.spend.length > 0 ? ALL_D.spend[ALL_D.spend.length-1] : 0;
-  const spendPrev = ALL_D.spend.length >= 2 ? ALL_D.spend[prevIdx] : 0;
-  const cpdNow = d > 0 && spendNow > 0 ? Math.round(spendNow/d) : 0;
-  const cpdPrev = pD > 0 && spendPrev > 0 ? Math.round(spendPrev/pD) : 0;
-  const dCpd = cpdPrev > 0 && cpdNow > 0 ? Math.round((cpdNow-cpdPrev)/cpdPrev*100) : null;
-  const cpdValEl = document.getElementById('kcpd-val');
-  if (cpdValEl) cpdValEl.textContent = cpdNow > 0 ? '$'+cpdNow.toLocaleString() : '—';
-  const cpdDelta = document.getElementById('kdelta-cpd');
-  if (cpdDelta && dCpd !== null) {
-    cpdDelta.textContent = (dCpd <= 0 ? '↓ ' : '↑ +') + Math.abs(dCpd) + '%';
-    cpdDelta.className = 'delta ' + (dCpd <= 0 ? 'up' : 'dn'); // inverted: ↓ is good
-  } else if (cpdDelta) { cpdDelta.textContent = '—'; cpdDelta.className = 'delta'; cpdDelta.style.background='var(--bg3)'; cpdDelta.style.color='var(--txd)'; }
-
-  // A→D card
-  const a2dEl = document.getElementById('ka2d');
-  if (a2dEl) a2dEl.textContent = a2d + '%';
-  const pa2dEl = document.getElementById('kproja2d');
-  if (pa2dEl) pa2dEl.textContent = d + ' / ' + a + ' · vs ' + pa2d + '% anterior';
-  const a2dFill = document.getElementById('ka2dfill');
-  if (a2dFill) a2dFill.style.width = Math.min(100, parseFloat(a2d) / 25 * 100).toFixed(1) + '%';
-  const da2dEl = document.getElementById('kdelta-a2d');
-  if (da2dEl) { da2dEl.textContent = (da2d >= 0 ? '↑ +' : '↓ ') + Math.abs(da2d) + '%'; da2dEl.className = 'delta ' + (da2d >= 0 ? 'up' : 'dn'); }
+  // Total Llamadas card
+  const totalCalls = SETTERS.reduce((sum, s) => sum + (s.calls || 0), 0);
+  const callsEl = document.getElementById('kcalls-val');
+  if (callsEl) callsEl.textContent = totalCalls > 0 ? totalCalls.toLocaleString() : '—';
+  const callsProjEl = document.getElementById('kcalls-proj');
+  if (callsProjEl) callsProjEl.textContent = totalCalls > 0 ? 'llamadas este período' : 'sin datos';
+  const callsFillEl = document.getElementById('kcalls-fill');
+  if (callsFillEl) callsFillEl.style.width = totalCalls > 0 ? Math.min(100, (totalCalls / 20000) * 100).toFixed(1) + '%' : '0%';
+  const callsLblEl = document.getElementById('kcalls-lbl');
+  if (callsLblEl) callsLblEl.textContent = totalCalls > 0 ? SETTERS.length + ' setters activos' : 'período en curso';
 }
 
 // ── PACING BARS + CHARTS
@@ -1340,6 +1320,7 @@ function applyData(d) {
       hot: 0, cold: 0
     }));
   }
+  if (d.revenue_total !== undefined) window._REVENUE_TOTAL = d.revenue_total;
   if (d.updated) {
     const updEl = document.getElementById('badge-upd');
     if (updEl) { updEl.textContent = 'Actualizado ' + d.updated; updEl.style.display = ''; }
