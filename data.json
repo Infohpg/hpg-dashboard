@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-09 14:49",
+  "updated": "2026-06-09 15:03",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -75,22 +75,22 @@
       0
     ],
     "spend": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
+      2776.98,
+      5623.3,
+      5927.51,
+      4265.01,
+      6428.06,
+      7720.41,
+      6089.59
     ],
     "cpr": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
+      7.21,
+      7.75,
+      5.56,
+      5.58,
+      5.44,
+      9.13,
+      22.72
     ]
   },
   "lead_status": {
@@ -236,5 +236,314 @@
     "citas": 33,
     "meta_total": 33000,
     "meta_expected": 27500
-  }
+  },
+  "meta": {
+    "spend": 6089.59,
+    "results": 268,
+    "cpr": 22.72,
+    "clicks": 2470,
+    "impressions": 241111
+  },
+  "campaigns": [
+    {
+      "name": "HPG-TOMAS / Roofing / Presentación / Clientes Potenciales / ABO",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "HPG / Presentación / Windows / Clientes Potenciales  / ABO / Español",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "HPG-TOMAS / Roofing / Inglés / Clientes Potenciales / ABO",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "HPG-DES / Roofing / Presentación / Inglés / Clientes Potenciales / ABO",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "HPG-DES / Roofing / Presentación / Español / Clientes Potenciales / ABO",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "HPG-DES / Roofing / Español / Lookalike /Presentación / Clientes Potenciales / ABO",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "FL || Roofing / Website / Esp / Friction Free",
+      "spend": 3644.78,
+      "res": 176,
+      "cpr": 20.70897727,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 1534,
+      "st": "amb"
+    },
+    {
+      "name": "Roofing / Website / Esp / Direct Sales",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "Roofing / Website / Ing / Friction Free",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "FL || Roofing / Website / Esp / Retargeting Friction Free",
+      "spend": 593.72,
+      "res": 41,
+      "cpr": 14.48097561,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 299,
+      "st": "amb"
+    },
+    {
+      "name": "Roofing / Website / ENG / Direct Sales",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "Roofing / Website / Ing / Retargeting Friction Free",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "FL || Windows | Friction Free | Leads | Website | Esp",
+      "spend": 805.8,
+      "res": 15,
+      "cpr": 53.72,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 218,
+      "st": "amb"
+    },
+    {
+      "name": "[2/Dic] || Roofing / Website / Esp / Friction Free",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "[3/Dic] || Retargeting / Roofing / Website / Esp / Friction Free",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "[3/Dic] Testing / Budget Per Ad",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "FL [10/Dic] || Roofing / Friction Free / Clientes Potenciales / Website / Esp",
+      "spend": 654.18,
+      "res": 26,
+      "cpr": 25.16076923,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 181,
+      "st": "amb"
+    },
+    {
+      "name": "[22/Dic] || Roofing / Friction Free / Clientes Potenciales / Website / Ing",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "[23/Dic] || Windows - RT  / Friction Free / Website / Esp",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "[26/Dic] || Windows / Friction Free / Clientes Potenciales / Website / Ing",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "[12/Feb] || Windows / Esp / FF / ABO",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "FL || [17/Feb] Roofing | Ing | Fríos",
+      "spend": 57.73,
+      "res": 1,
+      "cpr": 57.73,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 16,
+      "st": "amb"
+    },
+    {
+      "name": "Publicación de Instagram: Most roof problems...",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "CA | Roofing | EN | Test | Leads | Web Form | FL Creatives",
+      "spend": 0,
+      "res": 0,
+      "cpr": 0,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 0,
+      "st": "amb"
+    },
+    {
+      "name": "CA || Roofing | ES | Test | Leads | Web Form | FL Creatives",
+      "spend": 333.38,
+      "res": 9,
+      "cpr": 37.04222222,
+      "crm": 0,
+      "appts": 0,
+      "eff": 0,
+      "deals": 0,
+      "clicks": 222,
+      "st": "amb"
+    }
+  ]
 }
