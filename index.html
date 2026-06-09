@@ -359,18 +359,6 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
               <div class="sp-canvas"><canvas id="sp2"></canvas></div>
             </div>
           </div>
-          <div class="sp-row">
-            <div class="sp-card">
-              <div class="sp-top"><span class="sp-label" style="color:var(--grn)">Conv. Lead → Appt %</span><span class="sp-trend" id="tr3"></span></div>
-              <div class="sp-canvas"><canvas id="sp3"></canvas></div>
-            </div>
-          </div>
-          <div class="sp-row">
-            <div class="sp-card">
-              <div class="sp-top"><span class="sp-label sky">Conv. Appt → Deal %</span><span class="sp-trend" id="tr4"></span></div>
-              <div class="sp-canvas"><canvas id="sp4"></canvas></div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -1429,13 +1417,9 @@ function initAll() {
   if (PACING[0] && ALL_D.leads.length > 0 && ALL_D.leads[ALL_D.leads.length-1] === 0) ALL_D.leads[ALL_D.leads.length-1] = PACING[0].actual;
   if (PACING[1] && ALL_D.appts.length > 0 && ALL_D.appts[ALL_D.appts.length-1] === 0) ALL_D.appts[ALL_D.appts.length-1] = PACING[1].actual;
   if (PACING[2] && ALL_D.deals.length > 0 && ALL_D.deals[ALL_D.deals.length-1] === 0) ALL_D.deals[ALL_D.deals.length-1] = PACING[2].actual;
-  const rateL2A = ALL_D.leads.map((l,i) => l > 0 ? parseFloat((ALL_D.appts[i]/l*100).toFixed(1)) : null);
-  const rateA2D = ALL_D.appts.map((a,i) => a > 0 ? parseFloat((ALL_D.deals[i]/a*100).toFixed(1)) : null);
   mkSpark('sp0', ALL_D.leads, '#1D4ED8', 'rgba(29,78,216,.1)',  'tr0');
   mkSpark('sp1', ALL_D.appts, '#0369A1', 'rgba(3,105,161,.1)', 'tr1');
   mkSpark('sp2', ALL_D.deals, '#475569', 'rgba(71,85,105,.1)', 'tr2');
-  mkSpark('sp3', rateL2A,    '#059669', 'rgba(5,150,105,.1)',  'tr3', '%');
-  mkSpark('sp4', rateA2D,    '#0369A1', 'rgba(3,105,161,.06)', 'tr4', '%');
   mkFunnel();
   mkKpiCards();
   mkTasas(); // #10/#11
