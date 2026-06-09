@@ -28,6 +28,14 @@
     "spend":   [3800,4200,4500,5000,5200,5800,6100,7200,6800,7100,7605,0],
     "cpr":     [11.9,12.4,12.5,12.9,12.5,13.0,12.3,11.7,9.5,9.4,10.2,0]
   },
+  "product": [
+    {"label": "Roofing", "leads": 265, "deals": 3},
+    {"label": "Windows", "leads": 47,  "deals": 1}
+  ],
+  "geo": [
+    {"label": "Florida",    "leads": 195, "deals": 3},
+    {"label": "California", "leads": 117, "deals": 1}
+  ],
   "lead_status": {
     "labels": ["Call Later TODAY","Unreachable","Follow-Up Needed","Out of Range","Not Qualified","Do Not Call","Duplicate","Other Co. Sold"],
     "values": [265,120,114,82,56,48,38,22]

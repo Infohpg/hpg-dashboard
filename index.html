@@ -513,38 +513,21 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
   </div>
 
 
-  <!-- TENDENCIA HISTÓRICA -->
+
+  <!-- PRODUCTO ESTRELLA & GEO -->
   <div class="sec">
-    <div class="sec-hdr">
-      <span class="sec-title">Tendencia Histórica · 12 Períodos</span>
-      <div class="rs-shortcuts" style="margin-left:auto;display:flex;gap:6px;">
-        <button class="tf-btn" onclick="rsQuick(3)">Últ. 3</button>
-        <button class="tf-btn" onclick="rsQuick(6)">Últ. 6</button>
-        <button class="tf-btn on" onclick="rsQuick(0)">Todo</button>
-      </div>
-    </div>
+    <div class="sec-hdr"><span class="sec-title">Producto & Mercado</span><span class="sec-sub">período actual · leads y deals por categoría</span></div>
     <div class="grid2">
       <div class="card">
-        <div style="margin-bottom:6px;font-size:11px;font-weight:600;color:var(--txm);">Inversión y CPR</div>
-        <div class="hist-wrap"><canvas id="histSpend"></canvas></div>
+        <div style="font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;">Producto Estrella</div>
+        <div id="productBars"><div style="color:var(--txd);font-size:12px;">Sin datos</div></div>
       </div>
       <div class="card">
-        <div style="margin-bottom:6px;font-size:11px;font-weight:600;color:var(--txm);">Volumen · Leads / Appts / Deals</div>
-        <div class="hist-wrap"><canvas id="histVolume"></canvas></div>
-      </div>
-    </div>
-    <!-- Tabla por período -->
-    <div class="card" style="margin-top:16px;">
-      <div style="margin-bottom:12px;font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;">Detalle por período</div>
-      <div style="overflow-x:auto;">
-        <table class="tbl" id="periodTable">
-          <thead><tr><th>Período</th><th>Inversión</th><th>Leads</th><th>Appts</th><th>Deals</th><th>CPR</th><th>Lead→Appt</th><th>Appt→Deal</th></tr></thead>
-          <tbody id="periodTableBody"></tbody>
-        </table>
+        <div style="font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;">Geo · FL vs CA</div>
+        <div id="geoBars"><div style="color:var(--txd);font-size:12px;">Sin datos</div></div>
       </div>
     </div>
   </div>
-
 
 </div><!-- end t1 -->
 
@@ -698,6 +681,15 @@ const CAMPAIGNS = [
   {name:'Windows FF',  spend:0,res:0,crm:0,appts:0,eff:0,deals:0,cpr:0,st:'amb'},
   {name:'ENG Fríos',   spend:0,res:0,crm:0,appts:0,eff:0,deals:0,cpr:0,st:'amb'},
   {name:'CA Core',     spend:0,res:0,crm:0,appts:0,eff:0,deals:0,cpr:0,st:'amb'},
+];
+
+let PRODUCT = [
+  {label:'Roofing', leads:0, deals:0},
+  {label:'Windows', leads:0, deals:0},
+];
+let GEO = [
+  {label:'Florida',    leads:0, deals:0},
+  {label:'California', leads:0, deals:0},
 ];
 
 const SETTERS = [
@@ -1310,6 +1302,8 @@ function applyData(d) {
     }));
   }
   if (d.revenue_total !== undefined) window._REVENUE_TOTAL = d.revenue_total;
+  if (d.product && d.product.length) PRODUCT = d.product;
+  if (d.geo     && d.geo.length)     GEO     = d.geo;
   if (d.updated) {
     const updEl = document.getElementById('badge-upd');
     if (updEl) { updEl.textContent = 'Actualizado ' + d.updated; updEl.style.display = ''; }
@@ -1426,6 +1420,51 @@ function fmtPct(v) {
   return v + '%';
 }
 
+// ── PRODUCTO ESTRELLA & GEO BARS
+function mkCatBars(containerId, data) {
+  const el = document.getElementById(containerId);
+  if (!el || !data || !data.length) return;
+  const maxL = Math.max(...data.map(d => d.leads || 0)) || 1;
+  const maxD = Math.max(...data.map(d => d.deals || 0)) || 1;
+  const totL = data.reduce((s, d) => s + (d.leads || 0), 0) || 1;
+  const totD = data.reduce((s, d) => s + (d.deals || 0), 0) || 1;
+  const starL = data.reduce((best, d) => d.leads > best.leads ? d : best, data[0]).label;
+  const starD = data.reduce((best, d) => d.deals > best.deals ? d : best, data[0]).label;
+  el.innerHTML = data.map(item => {
+    const lPct  = totL > 0 ? Math.round(item.leads / totL * 100) : 0;
+    const dPct  = totD > 0 ? Math.round(item.deals / totD * 100) : 0;
+    const lFill = Math.round((item.leads || 0) / maxL * 100);
+    const dFill = Math.round((item.deals || 0) / maxD * 100);
+    const badges = [
+      item.label === starL ? '<span style="font-size:9px;background:var(--pril);color:var(--pri);padding:1px 6px;border-radius:8px;font-weight:700;">⭐ Leads</span>' : '',
+      item.label === starD ? '<span style="font-size:9px;background:#DCFCE7;color:#059669;padding:1px 6px;border-radius:8px;font-weight:700;">⭐ Deals</span>' : '',
+    ].join(' ');
+    return `<div style="margin-bottom:18px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <span style="font-size:13px;font-weight:700;color:var(--tx);">${item.label}</span>${badges}
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);margin-bottom:3px;">
+            <span>Leads</span><span style="font-weight:600;color:var(--pri);">${(item.leads||0).toLocaleString()} · ${lPct}%</span>
+          </div>
+          <div style="height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;">
+            <div style="width:${lFill}%;height:100%;background:var(--pri);border-radius:4px;transition:width .4s;"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);margin-bottom:3px;">
+            <span>Deals</span><span style="font-weight:600;color:#059669;">${(item.deals||0)} · ${dPct}%</span>
+          </div>
+          <div style="height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;">
+            <div style="width:${dFill}%;height:100%;background:#059669;border-radius:4px;transition:width .4s;"></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 // ── INIT
 function initAll() {
   // #9: inject current period PACING into last history index (replaces 0)
@@ -1460,8 +1499,9 @@ function initAll() {
       return '<tr><td>'+(ico[s.label]||'•')+' '+s.label+'</td><td class="num '+cls+'">'+(s.count||'—')+'</td><td class="dim">'+pct+'%</td></tr>';
     }).join('');
   }
-  buildRangeBar();
-  pmQuick(0, null); // #2 show all history by default
+  mkCatBars('productBars', PRODUCT);
+  mkCatBars('geoBars', GEO);
+  pmQuick(0, null);
   mkCpdChart();
   mkRoasCards();
   mkMetaChart();
