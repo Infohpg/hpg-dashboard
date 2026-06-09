@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-09 15:03",
+  "updated": "2026-06-09 15:50",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -11,7 +11,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 556,
+      "actual": 558,
       "expected": 458,
       "goal": 550,
       "color": "#1D4ED8"
@@ -32,7 +32,7 @@
     }
   ],
   "funnel": {
-    "leads": 556,
+    "leads": 558,
     "appts": 33,
     "deals": 6,
     "period": "May-Jun"
@@ -48,9 +48,9 @@
       "May-Jun"
     ],
     "leads": [
-      65,
+      64,
       600,
-      1576,
+      1575,
       670,
       767,
       766,
@@ -105,7 +105,7 @@
       "Recall - Short"
     ],
     "values": [
-      186,
+      190,
       47,
       38,
       33,
@@ -154,7 +154,7 @@
   "product": [
     {
       "label": "Roofing",
-      "leads": 510,
+      "leads": 512,
       "deals": 0
     },
     {
@@ -166,7 +166,7 @@
   "geo": [
     {
       "label": "Florida",
-      "leads": 517,
+      "leads": 519,
       "deals": 0
     },
     {
@@ -183,7 +183,7 @@
       "deals": 2,
       "meta": 3300,
       "meta_expected": 2750,
-      "leads": 61
+      "leads": 62
     },
     {
       "name": "Silvia",
