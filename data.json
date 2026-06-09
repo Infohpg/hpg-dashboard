@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-09 14:41",
+  "updated": "2026-06-09 14:48",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -107,10 +107,10 @@
     "values": [
       186,
       47,
-      39,
+      38,
       33,
       30,
-      29,
+      30,
       29,
       26
     ]
@@ -192,7 +192,7 @@
       "deals": 1,
       "meta": 6600,
       "meta_expected": 5500,
-      "leads": 103
+      "leads": 102
     },
     {
       "name": "Emmanuel",
@@ -210,7 +210,7 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5500,
-      "leads": 85
+      "leads": 86
     },
     {
       "name": "Daniela",
