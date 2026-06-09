@@ -205,7 +205,7 @@
     },
     {
       "name": "Pablo",
-      "calls": 3935,
+      "calls": 3942,
       "appts": 7,
       "deals": 0,
       "meta": 6600,
@@ -214,7 +214,7 @@
     },
     {
       "name": "Daniela",
-      "calls": 1120,
+      "calls": 1130,
       "appts": 0,
       "deals": 0,
       "meta": 6600,
@@ -232,7 +232,7 @@
     }
   ],
   "setter_calls_total": {
-    "calls": 14839,
+    "calls": 14856,
     "citas": 33,
     "meta_total": 33000,
     "meta_expected": 27500
