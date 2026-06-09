@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-09 06:24",
+  "updated": "2026-06-09 07:01",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -11,7 +11,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 685,
+      "actual": 550,
       "expected": 458,
       "goal": 550,
       "color": "#1D4ED8"
@@ -32,7 +32,7 @@
     }
   ],
   "funnel": {
-    "leads": 685,
+    "leads": 550,
     "appts": 30,
     "deals": 5,
     "period": "May-Jun"
@@ -48,12 +48,12 @@
       "May-Jun"
     ],
     "leads": [
-      0,
-      0,
-      999,
-      1086,
-      1098,
-      1132,
+      70,
+      600,
+      1577,
+      670,
+      767,
+      766,
       0
     ],
     "appts": [
@@ -95,24 +95,24 @@
   },
   "lead_status": {
     "labels": [
-      "No Answer - Active Recall",
-      "Out of Range",
-      "Lost - Not Interested",
-      "Duplicate",
-      "Future Buyer",
-      "Unreachable",
-      "Not Qualified",
-      "Recall - Short"
+      "1310 N Haverhill Rd",
+      "700 SW 9th St",
+      "123 Test Street, Testville, CA 90210",
+      "600 Cypress Pointe Dr E",
+      "19611 NW 7th Ave",
+      "910 N 26th Ave",
+      "2802 2nd St SW",
+      "6567 SW 20th Ct, Plantation, FL "
     ],
     "values": [
-      178,
-      46,
-      38,
-      30,
-      29,
-      29,
-      29,
-      27
+      3,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
     ]
   },
   "appts_breakdown": {
