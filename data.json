@@ -178,18 +178,18 @@
   "setter_calls": [
     {
       "name": "Oliver",
-      "calls": 2386,
+      "calls": 2399,
       "appts": 9,
-      "deals": 0,
+      "deals": 2,
       "meta": 3300,
       "meta_expected": 2750,
       "leads": 61
     },
     {
       "name": "Silvia",
-      "calls": 4459,
+      "calls": 4462,
       "appts": 8,
-      "deals": 0,
+      "deals": 1,
       "meta": 6600,
       "meta_expected": 5500,
       "leads": 103
@@ -198,14 +198,14 @@
       "name": "Emmanuel",
       "calls": 2262,
       "appts": 9,
-      "deals": 0,
+      "deals": 2,
       "meta": 6600,
       "meta_expected": 5500,
       "leads": 54
     },
     {
       "name": "Pablo",
-      "calls": 3942,
+      "calls": 3960,
       "appts": 7,
       "deals": 0,
       "meta": 6600,
@@ -214,7 +214,7 @@
     },
     {
       "name": "Daniela",
-      "calls": 1130,
+      "calls": 1140,
       "appts": 0,
       "deals": 0,
       "meta": 6600,
@@ -223,7 +223,7 @@
     },
     {
       "name": "Alejandro",
-      "calls": 677,
+      "calls": 678,
       "appts": 0,
       "deals": 0,
       "meta": 3300,
@@ -232,7 +232,7 @@
     }
   ],
   "setter_calls_total": {
-    "calls": 14856,
+    "calls": 14901,
     "citas": 33,
     "meta_total": 33000,
     "meta_expected": 27500
