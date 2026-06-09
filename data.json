@@ -178,7 +178,7 @@
   "setter_calls": [
     {
       "name": "Oliver",
-      "calls": 2409,
+      "calls": 2413,
       "appts": 9,
       "deals": 2,
       "meta": 3300,
@@ -214,7 +214,7 @@
     },
     {
       "name": "Daniela",
-      "calls": 1148,
+      "calls": 1155,
       "appts": 0,
       "deals": 0,
       "meta": 6600,
@@ -223,7 +223,7 @@
     },
     {
       "name": "Alejandro",
-      "calls": 683,
+      "calls": 686,
       "appts": 0,
       "deals": 0,
       "meta": 3300,
@@ -232,7 +232,7 @@
     }
   ],
   "setter_calls_total": {
-    "calls": 14924,
+    "calls": 14938,
     "citas": 33,
     "meta_total": 33000,
     "meta_expected": 27500
