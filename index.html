@@ -1306,7 +1306,7 @@ function applyData(d) {
   if (d.geo     && d.geo.length)     GEO     = d.geo;
   if (d.updated) {
     const updEl = document.getElementById('badge-upd');
-    if (updEl) { updEl.textContent = 'Actualizado ' + d.updated; updEl.style.display = ''; }
+    if (updEl) { updEl.textContent = 'Actualizado ' + d.updated; updEl.style.display = 'inline-block'; }
   }
 }
 
