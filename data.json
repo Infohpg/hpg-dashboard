@@ -81,7 +81,7 @@
       4265.01,
       6428.06,
       7720.41,
-      6089.59
+      6103.96
     ],
     "cpr": [
       7.21,
@@ -90,7 +90,7 @@
       5.58,
       5.44,
       9.13,
-      22.72
+      22.78
     ]
   },
   "lead_status": {
@@ -178,7 +178,7 @@
   "setter_calls": [
     {
       "name": "Oliver",
-      "calls": 2413,
+      "calls": 2439,
       "appts": 9,
       "deals": 2,
       "meta": 3300,
@@ -187,7 +187,7 @@
     },
     {
       "name": "Silvia",
-      "calls": 4462,
+      "calls": 4503,
       "appts": 8,
       "deals": 1,
       "meta": 6600,
@@ -205,7 +205,7 @@
     },
     {
       "name": "Pablo",
-      "calls": 3960,
+      "calls": 4009,
       "appts": 7,
       "deals": 0,
       "meta": 6600,
@@ -214,7 +214,7 @@
     },
     {
       "name": "Daniela",
-      "calls": 1155,
+      "calls": 1170,
       "appts": 0,
       "deals": 0,
       "meta": 6600,
@@ -223,7 +223,7 @@
     },
     {
       "name": "Alejandro",
-      "calls": 686,
+      "calls": 713,
       "appts": 0,
       "deals": 0,
       "meta": 3300,
@@ -232,17 +232,17 @@
     }
   ],
   "setter_calls_total": {
-    "calls": 14938,
+    "calls": 15096,
     "citas": 33,
     "meta_total": 33000,
     "meta_expected": 27500
   },
   "meta": {
-    "spend": 6089.59,
+    "spend": 6103.96,
     "results": 268,
-    "cpr": 22.72,
-    "clicks": 2470,
-    "impressions": 241111
+    "cpr": 22.78,
+    "clicks": 2475,
+    "impressions": 241588
   },
   "campaigns": [
     {
@@ -319,14 +319,14 @@
     },
     {
       "name": "FL || Roofing / Website / Esp / Friction Free",
-      "spend": 3644.78,
+      "spend": 3653.73,
       "res": 176,
-      "cpr": 20.70897727,
+      "cpr": 20.75982955,
       "crm": 0,
       "appts": 0,
       "eff": 0,
       "deals": 0,
-      "clicks": 1534,
+      "clicks": 1538,
       "st": "amb"
     },
     {
@@ -355,14 +355,14 @@
     },
     {
       "name": "FL || Roofing / Website / Esp / Retargeting Friction Free",
-      "spend": 593.72,
+      "spend": 594.87,
       "res": 41,
-      "cpr": 14.48097561,
+      "cpr": 14.50902439,
       "crm": 0,
       "appts": 0,
       "eff": 0,
       "deals": 0,
-      "clicks": 299,
+      "clicks": 300,
       "st": "amb"
     },
     {
@@ -391,9 +391,9 @@
     },
     {
       "name": "FL || Windows | Friction Free | Leads | Website | Esp",
-      "spend": 805.8,
+      "spend": 809.25,
       "res": 15,
-      "cpr": 53.72,
+      "cpr": 53.95,
       "crm": 0,
       "appts": 0,
       "eff": 0,
@@ -439,9 +439,9 @@
     },
     {
       "name": "FL [10/Dic] || Roofing / Friction Free / Clientes Potenciales / Website / Esp",
-      "spend": 654.18,
+      "spend": 655,
       "res": 26,
-      "cpr": 25.16076923,
+      "cpr": 25.19230769,
       "crm": 0,
       "appts": 0,
       "eff": 0,
