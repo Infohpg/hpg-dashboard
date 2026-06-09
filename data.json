@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-09 13:13",
+  "updated": "2026-06-09 13:24",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -95,24 +95,24 @@
   },
   "lead_status": {
     "labels": [
-      "1310 N Haverhill Rd",
-      "700 SW 9th St",
-      "123 Test Street, Testville, CA 90210",
-      "600 Cypress Pointe Dr E",
-      "19611 NW 7th Ave",
-      "910 N 26th Ave",
-      "2802 2nd St SW",
-      "6567 SW 20th Ct, Plantation, FL "
+      "No Answer - Active Recall",
+      "Out of Range",
+      "Lost - Not Interested",
+      "Duplicate",
+      "Unreachable",
+      "Not Qualified",
+      "Future Buyer",
+      "Recall - Short"
     ],
     "values": [
-      3,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2,
-      2
+      178,
+      47,
+      38,
+      33,
+      29,
+      29,
+      28,
+      26
     ]
   },
   "appts_breakdown": {
@@ -150,7 +150,7 @@
       }
     ]
   },
-  "revenue_total": 0,
+  "revenue_total": 143150,
   "product": [
     {
       "label": "Roofing",
@@ -166,12 +166,12 @@
   "geo": [
     {
       "label": "Florida",
-      "leads": 0,
+      "leads": 512,
       "deals": 0
     },
     {
       "label": "California",
-      "leads": 0,
+      "leads": 34,
       "deals": 0
     }
   ],
@@ -183,7 +183,7 @@
       "deals": 0,
       "meta": 3300,
       "meta_expected": 2750,
-      "leads": 0
+      "leads": 62
     },
     {
       "name": "Silvia",
@@ -192,7 +192,7 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5500,
-      "leads": 0
+      "leads": 97
     },
     {
       "name": "Emmanuel",
@@ -201,7 +201,7 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5500,
-      "leads": 0
+      "leads": 54
     },
     {
       "name": "Pablo",
@@ -210,7 +210,7 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5500,
-      "leads": 0
+      "leads": 79
     },
     {
       "name": "Daniela",
@@ -219,7 +219,7 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5500,
-      "leads": 0
+      "leads": 10
     },
     {
       "name": "Alejandro",
@@ -228,7 +228,7 @@
       "deals": 0,
       "meta": 3300,
       "meta_expected": 2750,
-      "leads": 0
+      "leads": 10
     }
   ],
   "setter_calls_total": {
