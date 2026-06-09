@@ -279,10 +279,10 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
     <div class="sec-hdr"><span class="sec-title">Resumen del Período</span><span class="sec-sub">16 mayo – 15 junio · Día 12/30 (40% completado)</span></div>
     <div class="kpi-row">
       <div class="kpi c-amb">
-        <div class="kpi-top"><span class="kpi-label">Inversión</span><span class="delta" style="background:var(--bg3);color:var(--txd)">Meta no conectada</span></div>
+        <div class="kpi-top"><span class="kpi-label">Inversión</span><span class="delta" id="kinv-delta" style="background:var(--bg3);color:var(--txd)">—</span></div>
         <div class="kpi-val" id="kinv-val">—</div>
-        <div class="kpi-proj">Conectar Meta API para ver datos reales</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill amb" style="width:0%"></div></div><div class="prog-label">sin datos</div></div>
+        <div class="kpi-proj" id="kinv-proj">—</div>
+        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill amb" id="kinv-fill" style="width:0%"></div></div><div class="prog-label" id="kinv-lbl">sin datos</div></div>
       </div>
       <div class="kpi c-vio">
         <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta" id="kdelta-cpd" style="background:var(--bg3);color:var(--txd)">—</span></div>
@@ -536,27 +536,27 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 
 
   <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Métricas Meta Ads — Período anterior (16 abr – 15 may)</span></div>
+    <div class="sec-hdr"><span class="sec-title" id="meta-sec-title">Métricas Meta Ads — Período actual</span></div>
     <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
       <div class="kpi c-amb">
-        <div class="kpi-top"><span class="kpi-label">Inversión Total</span><span class="delta up">—</span></div>
-        <div class="kpi-val">—</div>
-        <div class="kpi-proj">—</div>
+        <div class="kpi-top"><span class="kpi-label">Inversión Total</span><span class="delta" id="meta-inv-delta" style="background:var(--bg3);color:var(--txd)">—</span></div>
+        <div class="kpi-val" id="meta-inv">—</div>
+        <div class="kpi-proj" id="meta-inv-proj">—</div>
       </div>
       <div class="kpi c-pri">
-        <div class="kpi-top"><span class="kpi-label">Resultados Meta</span><span class="delta dn">—</span></div>
-        <div class="kpi-val">—</div>
-        <div class="kpi-proj">—</div>
+        <div class="kpi-top"><span class="kpi-label">Resultados Meta</span><span class="delta" id="meta-res-delta" style="background:var(--bg3);color:var(--txd)">—</span></div>
+        <div class="kpi-val" id="meta-res">—</div>
+        <div class="kpi-proj" id="meta-res-proj">—</div>
       </div>
       <div class="kpi c-sky">
-        <div class="kpi-top"><span class="kpi-label">ROAS Estimado</span><span class="delta up">—</span></div>
-        <div class="kpi-val">—</div>
-        <div class="kpi-proj">—</div>
+        <div class="kpi-top"><span class="kpi-label">ROAS Estimado</span><span class="delta" id="meta-roas-delta" style="background:var(--bg3);color:var(--txd)">—</span></div>
+        <div class="kpi-val" id="meta-roas">—</div>
+        <div class="kpi-proj" id="meta-roas-proj">—</div>
       </div>
       <div class="kpi c-vio">
-        <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta up">—</span></div>
-        <div class="kpi-val">—</div>
-        <div class="kpi-proj">—</div>
+        <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta" id="meta-cpd-delta" style="background:var(--bg3);color:var(--txd)">—</span></div>
+        <div class="kpi-val" id="meta-cpd">—</div>
+        <div class="kpi-proj" id="meta-cpd-proj">—</div>
       </div>
     </div>
   </div>
@@ -800,6 +800,26 @@ function mkKpiCards() {
 
   const prevIdx = ALL_D.leads.length >= 2 ? ALL_D.leads.length - 2 : 0;
   const pD = ALL_D.deals[prevIdx] || 0;
+
+  // Inversión card — from Meta spend
+  const invEl = document.getElementById('kinv-val');
+  if (invEl) invEl.textContent = spendNow > 0 ? '$' + Math.round(spendNow).toLocaleString() : '—';
+  const invProjEl = document.getElementById('kinv-proj');
+  if (invProjEl) invProjEl.textContent = spendNow > 0 ? 'Inversión acumulada · período actual' : 'sin datos de inversión';
+  const invFillEl = document.getElementById('kinv-fill');
+  if (invFillEl) invFillEl.style.width = spendNow > 0 ? Math.min(100, (spendNow / 10000) * 100).toFixed(1) + '%' : '0%';
+  const invLblEl = document.getElementById('kinv-lbl');
+  if (invLblEl) invLblEl.textContent = spendNow > 0 ? '$' + Math.round(spendNow).toLocaleString() + ' gastados' : 'sin datos';
+  const invDeltaEl = document.getElementById('kinv-delta');
+  if (invDeltaEl && spendNow > 0) {
+    const pSpend = ALL_D.spend[prevIdx] || 0;
+    const dInv = pSpend > 0 ? Math.round((spendNow - pSpend) / pSpend * 100) : null;
+    if (dInv !== null) {
+      invDeltaEl.textContent = (dInv >= 0 ? '↑ +' : '↓ ') + Math.abs(dInv) + '%';
+      invDeltaEl.className = 'delta ' + (dInv <= 0 ? 'up' : 'dn');
+      invDeltaEl.style.background = ''; invDeltaEl.style.color = '';
+    }
+  }
 
   // Costo/Deal card — inverted (lower = green)
   const spendNow  = ALL_D.spend.length > 0 ? ALL_D.spend[ALL_D.spend.length-1] : 0;
@@ -1304,6 +1324,12 @@ function applyData(d) {
   if (d.revenue_total !== undefined) window._REVENUE_TOTAL = d.revenue_total;
   if (d.product && d.product.length) PRODUCT = d.product;
   if (d.geo     && d.geo.length)     GEO     = d.geo;
+  if (d.campaigns && d.campaigns.length) CAMPAIGNS = d.campaigns;
+  if (d.meta) window._META = d.meta;
+  if (d.period && d.period.label) {
+    const mTitle = document.getElementById('meta-sec-title');
+    if (mTitle) mTitle.textContent = 'Métricas Meta Ads — ' + d.period.label;
+  }
   if (d.updated) {
     const updEl = document.getElementById('badge-upd');
     if (updEl) { updEl.textContent = 'Actualizado ' + d.updated; updEl.style.display = 'inline-block'; }
@@ -1465,6 +1491,36 @@ function mkCatBars(containerId, data) {
   }).join('');
 }
 
+// ── META KPI CARDS (Tab 2)
+function mkMetaKpis() {
+  const m = window._META;
+  if (!m || !m.spend) return;
+  const deals  = PACING[2].actual || 0;
+  const rev    = window._REVENUE_TOTAL || (deals * 12000);
+  const roas   = m.spend > 0 && rev > 0 ? (rev / m.spend).toFixed(1) : null;
+  const cpd    = m.spend > 0 && deals > 0 ? Math.round(m.spend / deals) : 0;
+  const setEl  = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
+  const setDelta = (id, txt, good) => {
+    const e = document.getElementById(id);
+    if (!e) return;
+    e.textContent = txt;
+    e.className = 'delta ' + (good ? 'up' : 'dn');
+    e.style.background = ''; e.style.color = '';
+  };
+  setEl('meta-inv',       m.spend   > 0 ? '$' + Math.round(m.spend).toLocaleString()   : '—');
+  setEl('meta-inv-proj',  m.cpr > 0 ? 'CPR: $' + m.cpr.toFixed(2) + ' · ' + (m.clicks||0).toLocaleString() + ' clicks' : '—');
+  setEl('meta-res',       m.results > 0 ? Math.round(m.results).toLocaleString() : '—');
+  setEl('meta-res-proj',  m.results > 0 && deals > 0 ? Math.round(m.results/deals) + ' resultados / deal' : deals > 0 ? '— resultados/deal' : '—');
+  setEl('meta-roas',      roas ? roas + 'x' : '—');
+  setEl('meta-roas-proj', roas ? 'Referencia: $12,000 USD / deal' : 'Sin revenue o sin inversión');
+  setEl('meta-cpd',       cpd  > 0 ? '$' + cpd.toLocaleString() : '—');
+  setEl('meta-cpd-proj',  cpd  > 0 ? 'Inversión total / deals cerrados' : 'Sin deals cerrados');
+  if (roas) setDelta('meta-roas-delta', roas + 'x ROAS', parseFloat(roas) >= 5);
+  if (cpd)  setDelta('meta-cpd-delta',  cpd <= 3000 ? 'Bueno' : cpd <= 6000 ? 'Regular' : 'Alto', cpd <= 3000);
+  if (m.results > 0) setDelta('meta-res-delta', Math.round(m.results) + ' resultados', true);
+  if (m.spend > 0)   setDelta('meta-inv-delta',  '$' + Math.round(m.spend).toLocaleString(), true);
+}
+
 // ── INIT
 function initAll() {
   // #9: inject current period PACING into last history index (replaces 0)
@@ -1502,6 +1558,7 @@ function initAll() {
   mkCatBars('productBars', PRODUCT);
   mkCatBars('geoBars', GEO);
   pmQuick(0, null);
+  mkMetaKpis();
   mkCpdChart();
   mkRoasCards();
   mkMetaChart();
