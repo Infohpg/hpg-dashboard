@@ -154,20 +154,20 @@
   "product": [
     {
       "label": "Roofing",
-      "leads": 0,
-      "deals": 0
+      "leads": 464,
+      "deals": 4
     },
     {
       "label": "Windows",
-      "leads": 0,
-      "deals": 0
+      "leads": 82,
+      "deals": 1
     }
   ],
   "geo": [
     {
       "label": "Florida",
       "leads": 512,
-      "deals": 0
+      "deals": 5
     },
     {
       "label": "California",
