@@ -18,7 +18,7 @@
     },
     {
       "label": "Appts Confirmados",
-      "actual": 30,
+      "actual": 31,
       "expected": 50,
       "goal": 60,
       "color": "#0369A1"
@@ -33,7 +33,7 @@
   ],
   "funnel": {
     "leads": 551,
-    "appts": 30,
+    "appts": 31,
     "deals": 5,
     "period": "May-Jun"
   },
@@ -117,12 +117,12 @@
   },
   "appts_breakdown": {
     "total": 71,
-    "confirmed": 30,
-    "cancelled": 29,
+    "confirmed": 31,
+    "cancelled": 30,
     "stages": [
       {
         "label": "Cancelled",
-        "count": 29
+        "count": 30
       },
       {
         "label": "Completed",
@@ -130,11 +130,11 @@
       },
       {
         "label": "Sale",
-        "count": 11
+        "count": 12
       },
       {
         "label": "Appointment Set",
-        "count": 7
+        "count": 5
       },
       {
         "label": "Still Working",
@@ -160,8 +160,8 @@
     },
     {
       "name": "Silvia",
-      "calls": 4380,
-      "citas": 7,
+      "calls": 4391,
+      "citas": 8,
       "deals": 0,
       "meta": 6600
     },
@@ -195,8 +195,8 @@
     }
   ],
   "setter_calls_total": {
-    "calls": 14391,
-    "citas": 30,
+    "calls": 14402,
+    "citas": 31,
     "meta_total": 39600
   }
 }
