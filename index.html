@@ -444,7 +444,8 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         <table class="tbl">
           <thead><tr><th>Etapa</th><th>Costo USD</th><th>∆ vs anterior</th></tr></thead>
           <tbody>
-            <tr><td>Contacto CRM</td><td class="num" id="cost-crm">—</td><td id="dcost-crm">—</td></tr>
+            <tr><td>Click (Meta)</td><td class="num" id="cost-click">—</td><td id="dcost-click">—</td></tr>
+            <tr><td>Lead CRM</td><td class="num" id="cost-crm">—</td><td id="dcost-crm">—</td></tr>
             <tr><td>Appt Confirmado</td><td class="num" id="cost-appt">—</td><td id="dcost-appt">—</td></tr>
             <tr><td><strong>Deal Cerrado</strong></td><td class="num" id="cost-deal"><strong>—</strong></td><td id="dcost-deal">—</td></tr>
           </tbody>
@@ -453,6 +454,11 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
       <div class="card">
         <div style="margin-bottom:12px;font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;">Tasas de conversión · Período actual</div>
         <div class="rate-grid">
+          <div class="rate-box">
+            <div class="rate-val" style="color:var(--amb)" id="rate-c2l">—</div>
+            <div class="rate-label">Click → Lead CRM</div>
+            <div class="prog8"><div class="prog8-fill" id="rate-c2l-fill" style="width:0%;background:var(--amb)"></div></div>
+          </div>
           <div class="rate-box">
             <div class="rate-val" style="color:var(--sky)" id="rate-l2a">—</div>
             <div class="rate-label">Lead → Appt Confirmado</div>
@@ -467,11 +473,6 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
             <div class="rate-val" style="color:var(--txm)" id="rate-l2d">—</div>
             <div class="rate-label">Lead → Deal (total)</div>
             <div class="prog8"><div class="prog8-fill" id="rate-l2d-fill" style="width:0%;background:var(--txm)"></div></div>
-          </div>
-          <div class="rate-box">
-            <div class="rate-val" style="color:var(--amb)" id="rate-cpd">—</div>
-            <div class="rate-label">Costo / Deal</div>
-            <div class="rate-sub" style="font-size:9px;color:var(--txd)">Coincide con KPI</div>
           </div>
         </div>
       </div>
@@ -1322,21 +1323,35 @@ function mkTasas() {
   const pl=ALL_D.leads[prIdx]||0, pa=ALL_D.appts[prIdx]||0, pd=ALL_D.deals[prIdx]||0;
   const spend=ALL_D.spend.length>0?ALL_D.spend[ALL_D.spend.length-1]:0;
   const pspend=ALL_D.spend.length>=2?ALL_D.spend[prIdx]:0;
+  const cpr_now=ALL_D.cpr.length>0?ALL_D.cpr[ALL_D.cpr.length-1]:0;
+  const cpr_prev=ALL_D.cpr.length>=2?ALL_D.cpr[prIdx]:0;
   const fmtR=v=>v!==null&&v!==undefined?(+v).toFixed(1)+'%':'—';
   const fmtC=v=>v>0?'$'+Math.round(v).toLocaleString():'—';
   const setEl=(id,val)=>{const e=document.getElementById(id);if(e)e.textContent=val;};
   const setFill=(id,pct)=>{const e=document.getElementById(id);if(e)e.style.width=Math.min(100,pct||0)+'%';};
+  const fmtDelta=(curr,prev,inv)=>{if(!curr||!prev)return'—';const p=Math.round((curr-prev)/prev*100);const good=inv?p<=0:p>=0;return'<span class="'+`dim ${good?'hi':'lo'}`+'">'+(p>=0?'+':'')+p+'%</span>';};
+
+  // Conversion rates (percentages only)
   const l2a=l>0?(a/l*100):null, a2d=a>0?(d/a*100):null, l2d=l>0?(d/l*100):null;
+  // Click→Lead: Meta results = spend/cpr; rate = crm_leads / meta_results * 100
+  const metaResults=cpr_now>0&&spend>0?spend/cpr_now:0;
+  const c2l=metaResults>0&&l>0?(l/metaResults*100):null;
+  setEl('rate-c2l',fmtR(c2l)); setFill('rate-c2l-fill',c2l&&Math.min(100,c2l));
   setEl('rate-l2a',fmtR(l2a)); setFill('rate-l2a-fill',l2a&&l2a/20*100);
   setEl('rate-a2d',fmtR(a2d)); setFill('rate-a2d-fill',a2d&&a2d/25*100);
   setEl('rate-l2d',fmtR(l2d)); setFill('rate-l2d-fill',l2d&&l2d/5*100);
-  const cpd=d>0&&spend>0?spend/d:0; setEl('rate-cpd',fmtC(cpd));
-  setEl('cost-crm',l>0&&spend>0?fmtC(spend/l):'—');
-  setEl('cost-appt',a>0&&spend>0?fmtC(spend/a):'—');
+
+  // Cost per stage
+  const cpd=d>0&&spend>0?spend/d:0;
+  setEl('cost-click', cpr_now>0?fmtC(cpr_now):'—');
+  setEl('cost-crm',   l>0&&spend>0?fmtC(spend/l):'—');
+  setEl('cost-appt',  a>0&&spend>0?fmtC(spend/a):'—');
   document.getElementById('cost-deal')&&(document.getElementById('cost-deal').innerHTML=cpd>0?'<strong>$'+Math.round(cpd).toLocaleString()+'</strong>':'—');
-  const fmtDelta=(curr,prev,inv)=>{if(!curr||!prev)return'—';const p=Math.round((curr-prev)/prev*100);const good=inv?p<=0:p>=0;return'<span class="'+`dim ${good?'hi':'lo'}`+'">'+(p>=0?'+':'')+p+'%</span>';};
+
+  // Deltas (cost per stage vs previous period)
   const ccrm=l>0&&spend>0?spend/l:0, pcrm=pl>0&&pspend>0?pspend/pl:0;
   const cappt=a>0&&spend>0?spend/a:0, pappt=pa>0&&pspend>0?pspend/pa:0;
+  document.getElementById('dcost-click')&&(document.getElementById('dcost-click').innerHTML=fmtDelta(cpr_now,cpr_prev,true));
   document.getElementById('dcost-crm')&&(document.getElementById('dcost-crm').innerHTML=fmtDelta(ccrm,pcrm,true));
   document.getElementById('dcost-appt')&&(document.getElementById('dcost-appt').innerHTML=fmtDelta(cappt,pappt,true));
   document.getElementById('dcost-deal')&&(document.getElementById('dcost-deal').innerHTML=fmtDelta(cpd,pd>0&&pspend>0?pspend/pd:0,true));
