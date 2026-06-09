@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-09 13:24",
+  "updated": "2026-06-09 13:59",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -11,7 +11,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 551,
+      "actual": 556,
       "expected": 458,
       "goal": 550,
       "color": "#1D4ED8"
@@ -32,7 +32,7 @@
     }
   ],
   "funnel": {
-    "leads": 551,
+    "leads": 556,
     "appts": 31,
     "deals": 5,
     "period": "May-Jun"
@@ -48,9 +48,9 @@
       "May-Jun"
     ],
     "leads": [
-      69,
+      65,
       600,
-      1577,
+      1576,
       670,
       767,
       766,
@@ -100,18 +100,18 @@
       "Lost - Not Interested",
       "Duplicate",
       "Unreachable",
-      "Not Qualified",
       "Future Buyer",
+      "Not Qualified",
       "Recall - Short"
     ],
     "values": [
-      178,
+      188,
       47,
       38,
       33,
+      30,
       29,
       29,
-      28,
       26
     ]
   },
@@ -166,8 +166,8 @@
   "geo": [
     {
       "label": "Florida",
-      "leads": 512,
-      "deals": 5
+      "leads": 517,
+      "deals": 0
     },
     {
       "label": "California",
@@ -183,7 +183,7 @@
       "deals": 0,
       "meta": 3300,
       "meta_expected": 2750,
-      "leads": 62
+      "leads": 61
     },
     {
       "name": "Silvia",
@@ -192,7 +192,7 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5500,
-      "leads": 97
+      "leads": 104
     },
     {
       "name": "Emmanuel",
@@ -210,7 +210,7 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5500,
-      "leads": 79
+      "leads": 83
     },
     {
       "name": "Daniela",
@@ -228,7 +228,7 @@
       "deals": 0,
       "meta": 3300,
       "meta_expected": 2750,
-      "leads": 10
+      "leads": 11
     }
   ],
   "setter_calls_total": {
