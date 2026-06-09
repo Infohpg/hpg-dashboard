@@ -18,7 +18,7 @@
     },
     {
       "label": "Appts Confirmados",
-      "actual": 32,
+      "actual": 33,
       "expected": 50,
       "goal": 60,
       "color": "#0369A1"
@@ -33,7 +33,7 @@
   ],
   "funnel": {
     "leads": 556,
-    "appts": 32,
+    "appts": 33,
     "deals": 6,
     "period": "May-Jun"
   },
@@ -117,7 +117,7 @@
   },
   "appts_breakdown": {
     "total": 74,
-    "confirmed": 32,
+    "confirmed": 33,
     "cancelled": 32,
     "stages": [
       {
@@ -133,15 +133,15 @@
         "count": 13
       },
       {
-        "label": "Appointment Set",
-        "count": 5
-      },
-      {
         "label": "Still Working",
-        "count": 5
+        "count": 6
       },
       {
         "label": "Pending Confirmation",
+        "count": 4
+      },
+      {
+        "label": "Appointment Set",
         "count": 4
       },
       {
@@ -178,7 +178,7 @@
   "setter_calls": [
     {
       "name": "Oliver",
-      "calls": 2377,
+      "calls": 2386,
       "appts": 9,
       "deals": 0,
       "meta": 3300,
@@ -187,7 +187,7 @@
     },
     {
       "name": "Silvia",
-      "calls": 4455,
+      "calls": 4459,
       "appts": 8,
       "deals": 0,
       "meta": 6600,
@@ -197,7 +197,7 @@
     {
       "name": "Emmanuel",
       "calls": 2262,
-      "appts": 8,
+      "appts": 9,
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5500,
@@ -205,7 +205,7 @@
     },
     {
       "name": "Pablo",
-      "calls": 3915,
+      "calls": 3935,
       "appts": 7,
       "deals": 0,
       "meta": 6600,
@@ -214,7 +214,7 @@
     },
     {
       "name": "Daniela",
-      "calls": 1097,
+      "calls": 1120,
       "appts": 0,
       "deals": 0,
       "meta": 6600,
@@ -232,8 +232,8 @@
     }
   ],
   "setter_calls_total": {
-    "calls": 14783,
-    "citas": 32,
+    "calls": 14839,
+    "citas": 33,
     "meta_total": 33000,
     "meta_expected": 27500
   }
