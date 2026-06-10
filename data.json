@@ -196,8 +196,8 @@
     },
     {
       "name": "Emmanuel",
-      "calls": 2262,
-      "appts": 9,
+      "calls": 2263,
+      "appts": 10,
       "deals": 2,
       "meta": 6600,
       "meta_expected": 5720,
@@ -232,8 +232,8 @@
     }
   ],
   "setter_calls_total": {
-    "calls": 15560,
-    "citas": 34,
+    "calls": 15561,
+    "citas": 35,
     "meta_total": 33000,
     "meta_expected": 28600
   },
