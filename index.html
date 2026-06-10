@@ -755,6 +755,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 
     <div class="card" style="margin-bottom:20px;">
       <div class="card-title">Resumen del Equipo</div>
+      <div id="setter-note" class="hist-note" style="display:none;">📌 Info de setters refleja el período actual · no hay datos detallados disponibles para períodos anteriores</div>
       <table class="tbl">
         <thead>
           <tr>
@@ -1319,6 +1320,8 @@ function renderCapa4(d){
 }
 
 function renderSetters(d){
+  const note=document.getElementById('setter-note');
+  if(note) note.style.display=d._setterHistorical?'':'none';
   const setters=(d.setter_calls||[]).filter(s=>s.name&&s.name!=='TOTAL');
   const sorted=[...setters].sort((a,b)=>b.appts-a.appts);
   const avCls=['av1','av2','av3','av4','av5'];
@@ -1381,7 +1384,6 @@ function buildView(d, spec) {
   if (spec.type === 'period') {
     const idx = spec.idx;
     if (idx >= n-1) return d;
-    const setters = h.setters?.[idx]||[];
     return {
       ...d,
       period: { label:`Período ${periods[idx]}`, short:periods[idx], day:30, total_days:30, pct:100 },
@@ -1389,15 +1391,17 @@ function buildView(d, spec) {
       meta: { spend:h.spend?.[idx]||0, cpr:h.cpr?.[idx]||0, clicks:h.clicks?.[idx]||0, lpv:h.lpv?.[idx]||0, results:0, impressions:0 },
       lead_status: h.lead_status?.[idx]||d.lead_status,
       appts_breakdown: h.appts_breakdown?.[idx]||d.appts_breakdown,
-      setter_calls: setters,
-      setter_calls_total: { calls:setters.reduce((s,x)=>s+(x.calls||0),0), citas:setters.reduce((s,x)=>s+(x.appts||0),0), meta_total:0, meta_expected:0 },
+      setter_calls: d.setter_calls,
+      setter_calls_total: d.setter_calls_total,
       product: h.product?.[idx]||d.product,
       geo: h.geo?.[idx]||d.geo,
       pacing: null,
       total_leads: h.leads?.[idx]||0,
-      revenue_total: 0, profit_total: 0,
+      revenue_total: h.revenue?.[idx]||0,
+      profit_total:  h.profit?.[idx]||0,
       _prevIdx: idx > 0 ? idx-1 : 0,
-      _isHistorical: true
+      _isHistorical: true,
+      _setterHistorical: true
     };
   }
 
@@ -1436,15 +1440,17 @@ function buildView(d, spec) {
     meta: { spend:totalSpend, cpr:totalLeads>0?totalSpend/totalLeads:0, clicks:totalClicks, lpv:totalLpv, results:0, impressions:0 },
     lead_status: { labels:lsSorted.map(e=>e[0]), values:lsSorted.map(e=>e[1]) },
     appts_breakdown: { total:abTot, confirmed:abConf, cancelled:abCanc, stages:Object.entries(abSt).sort((a,b)=>b[1]-a[1]).map(([label,count])=>({label,count})) },
-    setter_calls: mergedSt,
-    setter_calls_total: { calls:mergedSt.reduce((s,x)=>s+x.calls,0), citas:mergedSt.reduce((s,x)=>s+x.appts,0), meta_total:0, meta_expected:0 },
+    setter_calls: d.setter_calls,
+    setter_calls_total: d.setter_calls_total,
     product: Object.values(pMap).sort((a,b)=>b.leads-a.leads),
     geo: Object.values(gMap).sort((a,b)=>b.leads-a.leads),
     pacing: null,
     total_leads: totalLeads,
-    revenue_total: 0, profit_total: 0,
+    revenue_total: sumH('revenue'),
+    profit_total:  sumH('profit'),
     _prevIdx: null,
-    _isHistorical: true
+    _isHistorical: true,
+    _setterHistorical: true
   };
 }
 
