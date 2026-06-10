@@ -1019,7 +1019,6 @@ function renderPacing(d){
   });
 }
 
-let _sparkCharts=[];
 function renderSparklines(d){
   const col=document.getElementById('funnel-right'); if(!col)return;
   _sparkCharts.forEach(c=>c.destroy()); _sparkCharts=[];
