@@ -237,6 +237,9 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 .pac-v2-fill{height:100%;border-radius:5px;}
 .pac-v2-mark{position:absolute;top:-4px;width:2px;height:18px;background:#94A3B8;border-radius:1px;transform:translateX(-50%);}
 .pac-v2-lbls{display:flex;justify-content:space-between;font-size:10px;color:var(--txd);margin-bottom:16px;}
+
+/* STICKY NOTE */
+.hist-note{background:#FEF9C3;border:1px solid #EAB308;color:#713F12;font-size:11px;font-weight:600;padding:7px 12px;border-radius:6px;display:flex;align-items:center;gap:7px;margin-bottom:12px;}
 </style>
 </head>
 <body>
@@ -450,6 +453,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
     <div class="g21">
       <div class="card">
         <div class="card-title">Campañas — Período actual</div>
+        <div id="campaigns-note" class="hist-note" style="display:none;">📌 Esta sección solo muestra el período actual · no aplica a la selección de período</div>
         <table class="tbl">
           <thead><tr><th>Campaña</th><th>Spend</th><th>Resultados</th><th>Clics</th><th>CPR</th><th>ROAS est.</th></tr></thead>
           <tbody id="campaigns-tbody">
@@ -1094,6 +1098,8 @@ function renderCapa1(d){
 
 function renderCampaigns(d){
   const tb=document.getElementById('campaigns-tbody'); if(!tb)return;
+  const note=document.getElementById('campaigns-note');
+  if(note) note.style.display=d._isHistorical?'':'none';
   const camps=d.campaigns||[];
   const visible=camps.filter(c=>c.spend>0||c.res>0||c.clicks>0);
   if(!visible.length){tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--txd);padding:20px;font-style:italic;font-size:12px;">Sin datos de campañas</td></tr>';return;}
@@ -1302,7 +1308,7 @@ function renderCapa4(d){
   if(pb){
     const deals=d.funnel?.deals||0, rev=d.revenue_total||0, profit=d.profit_total||0;
     const avg=deals>0?rev/deals:null;
-    pb.innerHTML=`
+    pb.innerHTML=(d._isHistorical?`<div class="hist-note" style="margin-bottom:14px;">📌 Revenue solo disponible para el período actual · no aplica a la selección de período</div>`:'')+`
       <div class="profit-lbl">Revenue Total del Período</div>
       <div class="profit-val">${fmt$(rev)}</div>
       <div class="profit-sub">Campo <code style="background:rgba(255,255,255,.15);padding:1px 5px;border-radius:4px;font-size:10px;">amount</code> · avg ${avg!=null?fmt$(avg):'—'} / deal</div>
