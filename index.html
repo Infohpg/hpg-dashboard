@@ -3,646 +3,813 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HPG Dashboard | E-Leads</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<title>E-Leads Dashboard — Home Pro Guides</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-:root {
-  --bg:    #FFFFFF;
-  --bg2:   #F8FAFC;
-  --bg3:   #F1F5F9;
-  --brd:   #E2E8F0;
-  --tx:    #0F172A;
-  --txm:   #475569;
-  --txd:   #94A3B8;
-  --pri:   #1D4ED8;
-  --pril:  #DBEAFE;
-  --sky:   #0369A1;
-  --skyl:  #E0F2FE;
-  --grn:   #059669;
-  --grnl:  #D1FAE5;
-  --amb:   #0C2340;
-  --ambl:  #E8EDF5;
-  --vio:   #475569;
-  --viol:  #F1F5F9;
-  --red:   #DC2626;
-  --redl:  #FEE2E2;
-  --sdw:   0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  --r:     10px;
+:root{
+  --bg:#FFFFFF;--bg2:#F8FAFC;--bg3:#F1F5F9;--brd:#E2E8F0;
+  --tx:#0F172A;--txm:#475569;--txd:#94A3B8;
+  --c1:#0C2340;--c1l:#E8EDF5;
+  --c2:#1D4ED8;--c2l:#DBEAFE;
+  --c3:#0369A1;--c3l:#E0F2FE;
+  --c4:#059669;--c4l:#D1FAE5;
+  --red:#DC2626;--redl:#FEE2E2;
+  --ora:#D97706;--oral:#FEF3C7;
+  --grn:#059669;--grnl:#D1FAE5;
+  --sdw:0 1px 3px rgba(0,0,0,.06);--r:10px;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,'Inter','Segoe UI',sans-serif;font-size:14px;line-height:1.5;}
 
-/* ── HEADER */
-.hdr{background:var(--bg);border-bottom:1px solid var(--brd);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+/* HEADER */
+.hdr{background:var(--bg);border-bottom:1px solid var(--brd);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.04);}
 .hdr-l{display:flex;align-items:center;gap:14px;}
 .logo{background:linear-gradient(135deg,#0C2340,#1D4ED8);color:#fff;padding:6px 14px;border-radius:8px;font-size:11px;font-weight:800;letter-spacing:1.5px;}
 .hdr-title{font-size:16px;font-weight:700;}
 .hdr-sub{font-size:11px;color:var(--txm);}
-.hdr-r{display:flex;align-items:center;gap:10px;}
+.hdr-r{display:flex;align-items:center;gap:8px;}
 .badge{border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;}
-.badge-per{background:var(--pri);border:1px solid var(--pri);color:#fff;cursor:pointer;font-weight:700;}
-.badge-per:hover{background:#1a45c4;}
 .badge-upd{background:var(--bg3);border:1px solid var(--brd);color:var(--txm);}
-.badge-day{background:var(--pril);border:1px solid #C7D2FE;color:var(--pri);}
+.badge-per{background:var(--c2);color:#fff;font-weight:700;}
+.btn-pdf{background:var(--c1);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;}
+.btn-pdf:hover{opacity:.85;}
 
-/* ── TABS */
+/* FILTER BAR */
+.fbar{background:var(--bg);border-bottom:1px solid var(--brd);padding:9px 28px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.fl{font-size:10px;font-weight:700;color:var(--txd);text-transform:uppercase;letter-spacing:.07em;}
+.fsep{width:1px;height:20px;background:var(--brd);flex-shrink:0;}
+.fsel{background:var(--bg2);border:1px solid var(--brd);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:500;color:var(--tx);cursor:pointer;display:flex;align-items:center;gap:5px;}
+.fsel select{border:none;background:transparent;font-size:12px;font-weight:500;color:var(--tx);cursor:pointer;outline:none;}
+.fsel:hover,.fsel:focus-within{border-color:var(--c2);}
+.fbar-note{margin-left:auto;font-size:10px;color:var(--txd);font-style:italic;}
+
+/* TABS */
 .tabs{background:var(--bg);border-bottom:1px solid var(--brd);padding:0 28px;display:flex;}
-.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--txm);padding:12px 18px;cursor:pointer;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;transition:all .15s;}
-.tab:hover{color:var(--tx);}
-.tab.on{color:var(--pri);border-bottom-color:var(--pri);font-weight:600;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--txm);padding:11px 18px;cursor:pointer;font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;}
+.tab.on{color:var(--c2);border-bottom-color:var(--c2);font-weight:700;}
 
-/* ── PANES */
-.pane{display:none;padding:24px 28px;max-width:1440px;margin:0 auto;}
+/* PANES */
+.pane{display:none;padding:24px 28px 40px;max-width:1440px;margin:0 auto;}
 .pane.on{display:block;}
 
-/* ── SECTIONS */
-.sec{margin-bottom:28px;}
-.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.sec-title{font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.07em;}
-.sec-sub{font-size:11px;color:var(--txd);}
+/* EXECUTIVE SUMMARY BAR */
+.exec-bar{background:var(--c1);border-radius:var(--r);padding:18px 24px;display:grid;gap:1px;margin-bottom:28px;position:relative;overflow:hidden;}
+.exec-bar::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(29,78,216,.25),transparent);}
+.exec-item{padding:10px 16px;border-right:1px solid rgba(255,255,255,.08);position:relative;}
+.exec-item:last-child{border-right:none;}
+.exec-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+.exec-val{font-size:24px;font-weight:800;color:#fff;line-height:1;}
+.exec-sub{font-size:10px;color:rgba(255,255,255,.45);margin-top:3px;}
+.exec-delta{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;margin-top:4px;}
+.exec-delta.neu{background:rgba(255,255,255,.1);color:rgba(255,255,255,.5);}
+.exec-delta.up{background:rgba(5,150,105,.25);color:#34D399;}
+.exec-delta.dn{background:rgba(220,38,38,.25);color:#FCA5A5;}
 
-/* ── CARD */
-.card{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:20px;box-shadow:var(--sdw);}
+/* SECTION */
+.sec{margin-bottom:32px;}
+.layer-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--brd);}
+.layer-pill{font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;color:#fff;letter-spacing:.04em;}
+.lp1{background:var(--c1);}.lp2{background:var(--c2);}.lp3{background:var(--c3);}.lp4{background:var(--c4);}.lp-s{background:var(--txm);}
+.layer-name{font-size:13px;font-weight:700;}
+.layer-note{font-size:11px;color:var(--txd);margin-left:auto;}
 
-/* ── KPI ROW */
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+/* KPI CARDS */
+.krow{display:grid;gap:14px;margin-bottom:16px;}
+.k4{grid-template-columns:repeat(4,1fr);}
+.k5{grid-template-columns:repeat(5,1fr);}
+.k3{grid-template-columns:repeat(3,1fr);}
 .kpi{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sdw);position:relative;overflow:hidden;}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;}
-.kpi.c-amb::before{background:var(--amb);}
-.kpi.c-pri::before{background:var(--pri);}
-.kpi.c-sky::before{background:var(--sky);}
-.kpi.c-vio::before{background:var(--vio);}
-.kpi.c-grn::before{background:var(--grn);}
-.kpi-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
-.kpi-label{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;}
-.delta{display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:700;padding:2px 7px;border-radius:12px;}
-.delta.up{background:var(--grnl);color:var(--grn);}
-.delta.dn{background:var(--redl);color:var(--red);}
+.k-c1::before{background:var(--c1);}.k-c2::before{background:var(--c2);}.k-c3::before{background:var(--c3);}.k-c4::before{background:var(--c4);}
+.k-red::before{background:var(--red);}.k-ora::before{background:var(--ora);}.k-gray::before{background:var(--txd);}
+.kpi.dim{opacity:.55;}
+.kpi.dim::after{content:'⏳';position:absolute;top:10px;right:12px;font-size:14px;}
+.kpi-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.kpi-lbl{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;}
+.delta{font-size:11px;font-weight:700;padding:2px 7px;border-radius:12px;}
+.d-up{background:var(--grnl);color:var(--grn);}.d-dn{background:var(--redl);color:var(--red);}.d-neu{background:var(--bg3);color:var(--txd);}
 .kpi-val{font-size:26px;font-weight:800;color:var(--tx);line-height:1;margin-bottom:4px;}
-.kpi-proj{font-size:11px;color:var(--txd);}
-.kpi-prog{margin-top:10px;}
+.kpi-sub{font-size:11px;color:var(--txd);}
+.prog{margin-top:10px;}
 .prog-track{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
 .prog-fill{height:100%;border-radius:2px;}
-.prog-fill.amb{background:var(--amb);}
-.prog-fill.pri{background:var(--pri);}
-.prog-fill.sky{background:var(--sky);}
-.prog-fill.grn{background:var(--grn);}
-.prog-fill.vio{background:var(--vio);}
-.prog-label{font-size:10px;color:var(--txd);margin-top:4px;}
+.prog-lbl{font-size:10px;color:var(--txd);margin-top:4px;}
 
-/* ── FUNNEL SPLIT (3 stages) */
-.funnel-split{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sdw);overflow:hidden;}
-.funnel-left{padding:20px 20px 20px 24px;border-right:1px solid var(--brd);}
-.funnel-right{padding:20px 24px 20px 20px;}
-.fn-col-title{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
-.fn-rows{display:flex;flex-direction:column;gap:10px;}
-.fn-row{height:130px;display:flex;align-items:center;}
-.fn-bar-wrap{width:100%;display:flex;justify-content:center;}
-.fn-bar{height:118px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;border-radius:8px;color:#fff;}
-.fn-bar-l{display:flex;flex-direction:column;gap:2px;}
-.fn-bar-stage{font-size:10px;font-weight:600;opacity:.85;}
-.fn-bar-num{font-size:28px;font-weight:800;line-height:1;}
-.fn-bar-num_placeholder{font-size:22px;font-weight:800;line-height:1;}
-.fn-bar-r{text-align:right;}
-.fn-bar-pct{font-size:13px;font-weight:700;}
-.fn-bar-sub{font-size:9px;opacity:.75;margin-top:2px;}
-.fn-b1{background:linear-gradient(135deg,#1D4ED8,#2563EB);}
-.fn-b2{background:linear-gradient(135deg,#0369A1,#0891B2);}
-.fn-b3{background:linear-gradient(135deg,#334155,#475569);}
-.sp-rows{display:flex;flex-direction:column;gap:10px;}
-.sp-row{height:130px;display:flex;align-items:center;}
-.sp-card{flex:1;height:118px;background:var(--bg2);border:1px solid var(--brd);border-radius:8px;padding:6px 10px 4px;display:flex;flex-direction:column;}
-.sp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;}
-.sp-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
-.sp-label.pri{color:var(--pri);}
-.sp-label.sky{color:var(--sky);}
-.sp-label.grn{color:var(--sky);}
-.sp-label.vio{color:var(--vio);}
-.sp-trend{font-size:9px;font-weight:700;}
-.sp-trend.up{color:var(--grn);}
-.sp-trend.dn{color:var(--red);}
-.sp-canvas{flex:1;position:relative;min-height:0;}
-.sp-canvas canvas{position:absolute;top:0;left:0;width:100%!important;height:100%!important;}
+/* CARD */
+.card{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:20px;box-shadow:var(--sdw);}
+.card-title{font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;}
 
-/* ── PACING SECTION (3 charts) */
-.pacing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.pacing-card{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:20px;box-shadow:var(--sdw);}
-.pacing-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.pacing-label{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;}
-.pacing-delta{font-size:12px;font-weight:700;padding:3px 9px;border-radius:12px;}
-.pacing-delta.up{background:var(--grnl);color:var(--grn);}
-.pacing-delta.dn{background:var(--redl);color:var(--red);}
-.pacing-nums{margin-bottom:14px;}
-.pacing-actual{font-size:32px;font-weight:800;line-height:1;}
-.pacing-sub{font-size:11px;color:var(--txm);margin-top:4px;}
-.pacing-bar-wrap{position:relative;height:10px;background:var(--bg3);border-radius:5px;overflow:visible;margin-bottom:8px;}
-.pacing-bar-fill{height:100%;border-radius:5px;transition:width .4s;}
-.pacing-marker{position:absolute;top:-3px;width:3px;height:16px;background:#94A3B8;border-radius:2px;transform:translateX(-50%);}
-.pacing-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--txd);}
-.pacing-chart-wrap{height:90px;position:relative;}
+/* GRID LAYOUTS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:20px;}
 
-/* ── 2-COL GRID */
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+/* PRODUCT / GEO MINI-CARDS */
+.prod-card{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:16px 18px;}
+.prod-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.prod-name{font-size:13px;font-weight:700;}
+.prod-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;}
+.pb-roof{background:#DBEAFE;color:#1E40AF;}.pb-win{background:#E0F2FE;color:#0369A1;}
+.pb-fl{background:#D1FAE5;color:#065F46;}.pb-ca{background:#FEF3C7;color:#92400E;}
+.prod-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--brd);}
+.prod-row:last-child{border-bottom:none;}
+.prod-metric{font-size:11px;color:var(--txm);}
+.prod-val{font-size:15px;font-weight:800;color:var(--tx);}
+.mini-bar-outer{height:5px;background:var(--bg3);border-radius:2px;margin-top:8px;}
 
-/* ── TABLE */
+/* PIPELINE HEALTH */
+.status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.status-item{background:var(--bg2);border:1px solid var(--brd);border-radius:8px;padding:10px 12px;}
+.status-name{font-size:10px;font-weight:600;color:var(--txm);margin-bottom:4px;}
+.status-val{font-size:18px;font-weight:800;color:var(--tx);}
+.status-bar{height:3px;background:var(--bg3);border-radius:2px;margin-top:6px;}
+.status-fill{height:100%;border-radius:2px;background:var(--c2);}
+
+/* TABLE */
 .tbl{width:100%;border-collapse:collapse;}
-.tbl th{text-align:left;padding:9px 14px;font-size:11px;font-weight:600;color:var(--txm);text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--brd);background:var(--bg2);}
-.tbl td{padding:9px 14px;font-size:13px;border-bottom:1px solid var(--brd);color:var(--tx);}
+.tbl th{text-align:left;padding:9px 13px;font-size:11px;font-weight:600;color:var(--txm);text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid var(--brd);background:var(--bg2);}
+.tbl td{padding:9px 13px;font-size:13px;border-bottom:1px solid var(--brd);}
 .tbl tr:last-child td{border-bottom:none;}
 .tbl tr:hover td{background:var(--bg2);}
 .num{font-weight:700;font-variant-numeric:tabular-nums;}
-.dim{color:var(--txm);}
-.hi{color:var(--grn);font-weight:700;}
-.lo{color:var(--red);font-weight:700;}
-.md{color:var(--amb);font-weight:700;}
+.hi{color:var(--grn);font-weight:700;}.lo{color:var(--red);font-weight:700;}.dim{color:var(--txd);}
 
-/* ── RATE BOXES */
-.rate-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.rate-box{background:var(--bg2);border:1px solid var(--brd);border-radius:8px;padding:14px 16px;}
-.rate-val{font-size:22px;font-weight:800;color:var(--tx);line-height:1;}
-.rate-label{font-size:11px;color:var(--txm);margin-top:4px;}
-.rate-sub{font-size:10px;color:var(--txd);margin-top:3px;}
-.prog8{height:6px;background:var(--bg3);border-radius:3px;margin-top:8px;overflow:hidden;}
-.prog8-fill{height:100%;border-radius:3px;}
+/* AVATAR */
+.av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
+.av1{background:#059669;}.av2{background:#0284C7;}.av3{background:#7C3AED;}.av4{background:#DB2777;}.av5{background:#D97706;}
 
-/* ── DONUT */
-.donut-area{display:flex;gap:0;align-items:center;justify-content:space-around;width:100%;padding:8px 0;}
-.donut-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;}
-.donut-cw{width:175px;height:175px;position:relative;}
-.donut-cw canvas{width:100%!important;height:100%!important;}
-.donut-lbl{font-size:13px;font-weight:700;color:var(--txm);text-align:center;}
-
-/* ── LEAD STATUS */
-.lead-chart-wrap{height:240px;position:relative;}
-
-/* ── TREND SECTION */
-.trend-filters{display:flex;gap:8px;align-items:center;}
-.tf-btn{background:var(--bg3);border:1px solid var(--brd);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--txm);cursor:pointer;transition:all .15s;}
-.tf-btn:hover{border-color:var(--pri);color:var(--pri);}
-.tf-btn.on{background:var(--pri);border-color:var(--pri);color:#fff;}
-.hist-wrap{height:200px;position:relative;}
-.period-table-wrap{margin-top:16px;overflow-x:auto;}
-
-/* ── RANGE SELECTOR BAR */
-.rs-outer{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sdw);margin-bottom:16px;}
-.rs-label{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;}
-.rs-label span{font-size:11px;font-weight:600;color:var(--pri);text-transform:none;letter-spacing:0;}
-.rs-bar{display:flex;gap:3px;align-items:stretch;user-select:none;}
-.rs-seg{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:6px 2px 5px;border-radius:6px;transition:background .1s,color .1s;}
-.rs-seg:hover .rs-lbl{color:var(--tx);}
-.rs-seg:hover .rs-tick{background:var(--pri);}
-.rs-tick{height:28px;width:100%;border-radius:4px;background:var(--bg3);transition:background .1s;}
-.rs-lbl{font-size:8.5px;font-weight:600;color:var(--txd);writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;line-height:1;}
-.rs-seg.rs-on  .rs-tick{background:var(--pri);}
-.rs-seg.rs-on  .rs-lbl{color:var(--pri);font-weight:800;}
-.rs-seg.rs-in  .rs-tick{background:var(--pril);}
-.rs-seg.rs-in  .rs-lbl{color:var(--pri);}
-.rs-shortcuts{display:flex;gap:6px;margin-top:10px;}
-
-/* ── CAMPAIGN CARDS */
-.camp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.camp-card{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:16px;box-shadow:var(--sdw);}
-.camp-card-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.camp-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-.dot-grn{background:var(--grn);}
-.dot-amb{background:var(--amb);}
-.dot-red{background:var(--red);}
-.camp-name{font-size:14px;font-weight:700;}
-.camp-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:auto;}
-.tag-grn{background:var(--grnl);color:var(--grn);}
-.tag-amb{background:var(--ambl);color:var(--amb);}
-.tag-red{background:var(--redl);color:var(--red);}
-.camp-desc{font-size:12px;color:var(--txm);line-height:1.5;}
-.camp-stats{display:flex;gap:16px;margin-top:10px;}
-.camp-stat-val{font-size:16px;font-weight:700;color:var(--tx);}
-.camp-stat-lbl{font-size:10px;color:var(--txd);}
-
-/* ── SETTER */
-.podium{display:flex;align-items:flex-end;justify-content:center;gap:10px;margin-bottom:20px;}
-.pd-item{display:flex;flex-direction:column;align-items:center;gap:6px;}
-.pd-block{width:90px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:8px;gap:4px;border-radius:8px 8px 0 0;}
-.pd-1{height:96px;background:linear-gradient(160deg,#F59E0B,#EAB308);}
-.pd-2{height:72px;background:linear-gradient(160deg,#94A3B8,#CBD5E1);}
-.pd-3{height:58px;background:linear-gradient(160deg,#A16207,#CA8A04);}
-.pd-rank{font-size:18px;}
-.pd-name{font-size:12px;font-weight:600;color:var(--tx);}
-.pd-val{font-size:11px;color:var(--txm);}
-.av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
-.av-g{background:#059669;} .av-s{background:#0284C7;} .av-b{background:#7C3AED;} .av-p{background:#DB2777;} .av-t{background:#D97706;}
+/* PHASE PILL */
 .phase{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;}
 .ph-hero{background:#FEF3C7;color:#92400E;border:1px solid #FCD34D;}
 .ph-ldr{background:#DBEAFE;color:#1E40AF;border:1px solid #93C5FD;}
 .ph-rsc{background:#FEE2E2;color:#991B1B;border:1px solid #FCA5A5;}
-.ph-lsr{background:#F3F4F6;color:#4B5563;border:1px solid #D1D5DB;}
+
+/* PROFIT BOX */
+.profit-box{background:linear-gradient(135deg,#0C2340,#1D4ED8);border-radius:var(--r);padding:22px 26px;color:#fff;}
+.profit-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;opacity:.6;margin-bottom:6px;}
+.profit-val{font-size:36px;font-weight:800;line-height:1;}
+.profit-sub{font-size:11px;opacity:.55;margin-top:5px;}
+
+/* PACING BLOCK */
+.pac-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px;}
+.pac-item{background:var(--bg2);border:1px solid var(--brd);border-radius:var(--r);padding:14px 16px;}
+.pac-lbl{font-size:11px;font-weight:600;color:var(--txm);margin-bottom:8px;display:flex;justify-content:space-between;}
+.pac-nums{display:flex;align-items:baseline;gap:6px;margin-bottom:8px;}
+.pac-act{font-size:22px;font-weight:800;}
+.pac-goal{font-size:12px;color:var(--txd);}
+.pac-track{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;}
+.pac-fill{height:100%;border-radius:4px;}
+.pac-note{font-size:10px;color:var(--txd);margin-top:5px;}
+
+/* APPOINTMENT STAGES */
+.appt-stage-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--brd);}
+.appt-stage-row:last-child{border-bottom:none;}
+.appt-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.appt-stage-name{font-size:12px;font-weight:600;flex:1;}
+.appt-bar-outer{flex:2;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.appt-bar-fill{height:100%;border-radius:3px;}
+.appt-count{font-size:13px;font-weight:800;width:32px;text-align:right;}
+.appt-pct{font-size:11px;color:var(--txd);width:38px;text-align:right;}
+
+/* FUNNEL LAYOUT — 50/50 */
+.funnel-wrap{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);box-shadow:var(--sdw);margin-bottom:32px;overflow:hidden;}
+.funnel-header{font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.07em;display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--brd);}
+.funnel-header span{font-size:11px;font-weight:400;color:var(--txd);text-transform:none;letter-spacing:0;}
+.funnel-layout{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;}
+.funnel-col-l{padding:20px 20px 20px 24px;border-right:1px solid var(--brd);}
+.funnel-col-r{padding:20px 24px 20px 20px;}
+.fn-col-title{font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
+
+/* FUNNEL STEPS */
+.sp-rows{display:flex;flex-direction:column;gap:10px;}
+.sp-row{height:130px;display:flex;align-items:center;}
+.fn-step{width:var(--fw);margin-left:auto;margin-right:0;border-radius:8px;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;color:#fff;height:118px;}
+.fn-step.s1{background:linear-gradient(90deg,#0C2340,#1e3a5f);--fw:100%;}
+.fn-step.s2{background:linear-gradient(90deg,#1D4ED8,#2563EB);--fw:80%;}
+.fn-step.s3{background:linear-gradient(90deg,#0369A1,#0284C7);--fw:55%;}
+.fn-step.s4{background:linear-gradient(90deg,#059669,#10B981);--fw:32%;}
+.fn-step-left{display:flex;align-items:center;gap:14px;}
+.fn-num{font-size:10px;font-weight:800;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.fn-label{font-size:13px;font-weight:700;}
+.fn-sub{font-size:11px;opacity:.65;margin-top:1px;}
+.fn-right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.fn-val{font-size:26px;font-weight:800;line-height:1;}
+.fn-pct{font-size:11px;opacity:.65;}
+/* MoM % badge */
+.fn-mom{font-size:9px;font-weight:700;padding:2px 7px;border-radius:8px;line-height:1.4;order:-1;}
+.fn-mom.neu{background:rgba(255,255,255,.12);color:rgba(255,255,255,.55);}
+.fn-mom.up{background:rgba(5,150,105,.3);color:#34D399;}
+.fn-mom.dn{background:rgba(220,38,38,.3);color:#FCA5A5;}
+
+/* PODIUM */
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:12px;padding:16px 0 4px;}
+.pd-item{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.pd-block{width:96px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:10px;gap:5px;border-radius:10px 10px 0 0;}
+.pd-1{height:96px;background:linear-gradient(160deg,#F59E0B,#EAB308);}
+.pd-2{height:72px;background:linear-gradient(160deg,#94A3B8,#CBD5E1);}
+.pd-3{height:58px;background:linear-gradient(160deg,#A16207,#CA8A04);}
+.pd-rank{font-size:20px;}
+.pd-name{font-size:13px;font-weight:700;color:var(--tx);}
+.pd-val{font-size:11px;color:var(--txm);}
+
+/* SPARKLINES */
+.sp-card{flex:1;height:118px;background:var(--bg2);border:1px solid var(--brd);border-radius:8px;padding:6px 10px 4px;display:flex;flex-direction:column;}
+.sp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;}
+.sp-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.sp-label.c1{color:var(--c1);}.sp-label.c2{color:var(--c2);}.sp-label.c3{color:var(--c3);}.sp-label.c4{color:var(--c4);}
+.sp-trend{font-size:9px;font-weight:700;}
+.sp-empty-state{flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--txd);font-style:italic;}
 </style>
 </head>
 <body>
 
-<!-- ── HEADER -->
+<!-- HEADER -->
 <header class="hdr">
   <div class="hdr-l">
     <span class="logo">HPG</span>
     <div>
       <div class="hdr-title">E-Leads Dashboard</div>
-      <div class="hdr-sub">Marketing Operations</div>
+      <div class="hdr-sub">Marketing Operations — Home Pro Guides</div>
     </div>
   </div>
   <div class="hdr-r">
-    <span class="badge badge-upd" id="badge-upd" style="display:none"></span>
-    <span class="badge badge-day">Día 20 / 31 · 64%</span>
-    <button class="badge badge-per" id="badge-per-btn" onclick="togglePeriodMenu(event)">16 mayo – 15 junio 2026 ▾</button>
-    <div id="period-menu" style="display:none;position:absolute;top:52px;right:28px;background:#fff;border:1px solid var(--brd);border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:200;min-width:200px;padding:6px 0;">
-      <div style="padding:8px 14px;font-size:10px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--brd);">RANGO DE ANÁLISIS</div>
-      <div id="pm-periods" style="max-height:200px;overflow-y:auto;padding:4px 0;"></div>
-      <div style="border-top:1px solid var(--brd);padding:6px 8px;display:flex;gap:4px;flex-wrap:wrap;">
-        <button onclick="pmQuick(3,this)" style="flex:1;font-size:10px;font-weight:600;padding:4px 6px;border:1px solid var(--brd);border-radius:5px;cursor:pointer;background:var(--bg3);color:var(--txm);">Últimos 3</button>
-        <button onclick="pmQuick(6,this)" style="flex:1;font-size:10px;font-weight:600;padding:4px 6px;border:1px solid var(--brd);border-radius:5px;cursor:pointer;background:var(--bg3);color:var(--txm);">Últimos 6</button>
-        <button onclick="pmQuick(0,this)" id="pm-all" style="flex:1;font-size:10px;font-weight:600;padding:4px 6px;border:1px solid var(--pri);border-radius:5px;cursor:pointer;background:var(--pri);color:#fff;">Todo</button>
-      </div>
-    </div>
+    <span class="badge badge-upd">Sin datos</span>
+    <span class="badge badge-per">— período HPG</span>
+    <button class="btn-pdf" id="pdf-btn" onclick="downloadPDF()">⬇ Descargar PDF</button>
   </div>
 </header>
 
-<!-- ── TABS -->
+<!-- FILTER BAR -->
+<div class="fbar">
+  <span class="fl">Filtros</span><div class="fsep"></div>
+  <span class="fl">Período</span>
+  <div class="fsel"><select><option>Período HPG (16–15)</option><option>Esta semana</option><option>Este mes</option><option>Rango custom…</option></select></div>
+  <div class="fsep"></div>
+  <span class="fl">Setter</span>
+  <div class="fsel"><select><option>Todos</option><option>Oliver</option><option>Silvia</option><option>Emmanuel</option><option>Pablo</option><option>Daniela</option><option>Alejandro</option></select></div>
+  <div class="fsep"></div>
+  <span class="fl">Fuente</span>
+  <div class="fsel"><select><option>Todas</option><option>Meta Ads</option><option>Google Ads ⏳</option><option>Orgánico</option></select></div>
+  <div class="fsep"></div>
+  <button style="background:var(--bg2);border:1px solid var(--brd);border-radius:7px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;color:var(--txm);">⬇ CSV</button>
+  <span class="fbar-note">Filtros setter/fuente · pendiente backend</span>
+</div>
+
+<!-- TABS -->
 <nav class="tabs">
-  <button class="tab on" onclick="sw('t1',this)">📊 Finanzas &amp; Funnel</button>
-  <button class="tab" onclick="sw('t2',this)">📣 Meta Ads</button>
-  <button class="tab" onclick="sw('t3',this)">👤 Setters</button>
+  <button class="tab on" onclick="sw('t1',this)">📊 Marketing</button>
+  <button class="tab" onclick="sw('t2',this)">👥 Setters</button>
 </nav>
 
 
-<!-- ══════════ TAB 1 — FINANZAS & FUNNEL ══════════ -->
+<!-- ═══════════ TAB 1 — MARKETING ═══════════ -->
 <div id="t1" class="pane on">
 
-  <!-- KPI ROW -->
-  <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Resumen del Período</span><span class="sec-sub">16 mayo – 15 junio · Día 12/30 (40% completado)</span></div>
-    <div class="kpi-row">
-      <div class="kpi c-amb">
-        <div class="kpi-top"><span class="kpi-label">Inversión</span><span class="delta" id="kinv-delta" style="background:var(--bg3);color:var(--txd)">—</span></div>
-        <div class="kpi-val" id="kinv-val">—</div>
-        <div class="kpi-proj" id="kinv-proj">—</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill amb" id="kinv-fill" style="width:0%"></div></div><div class="prog-label" id="kinv-lbl">sin datos</div></div>
-      </div>
-      <div class="kpi c-vio">
-        <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta" id="kdelta-cpd" style="background:var(--bg3);color:var(--txd)">—</span></div>
-        <div class="kpi-val" id="kcpd-val">—</div>
-        <div class="kpi-proj" id="kcpd-proj">vs. período anterior (↓ = mejor)</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill vio" id="kcpd-fill" style="width:0%"></div></div><div class="prog-label">menor = mejor</div></div>
-      </div>
-      <div class="kpi c-pri">
-        <div class="kpi-top"><span class="kpi-label">Revenue Total</span><span class="delta up" id="kdelta-rev">—</span></div>
-        <div class="kpi-val" id="krev">—</div>
-        <div class="kpi-proj" id="kprojrev">—</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill pri" id="krevfill" style="width:0%"></div></div><div class="prog-label" id="krevlbl">— / 9 meta</div></div>
-      </div>
-      <div class="kpi c-sky">
-        <div class="kpi-top"><span class="kpi-label">Total Llamadas</span><span class="delta" id="kdelta-calls" style="background:var(--bg3);color:var(--txd)">—</span></div>
-        <div class="kpi-val" id="kcalls-val">—</div>
-        <div class="kpi-proj" id="kcalls-proj">llamadas este período</div>
-        <div class="kpi-prog"><div class="prog-track"><div class="prog-fill sky" id="kcalls-fill" style="width:0%"></div></div><div class="prog-label" id="kcalls-lbl">período en curso</div></div>
-      </div>
+  <!-- EXEC BAR — 4 tarjetas financieras -->
+  <div id="exec-bar" class="exec-bar" style="grid-template-columns:repeat(4,1fr);">
+    <div class="exec-item">
+      <div class="exec-label">Inversión Total</div>
+      <div class="exec-val">—</div>
+      <div class="exec-sub">Meta Ads · acumulado período</div>
+      <span class="exec-delta neu">—</span>
+    </div>
+    <div class="exec-item">
+      <div class="exec-label">Costo por Deal</div>
+      <div class="exec-val">—</div>
+      <div class="exec-sub">Inversión ÷ deals</div>
+      <span class="exec-delta neu">—</span>
+    </div>
+    <div class="exec-item">
+      <div class="exec-label">Revenue Total</div>
+      <div class="exec-val">—</div>
+      <div class="exec-sub">deals cerrados · período</div>
+      <span class="exec-delta neu">—</span>
+    </div>
+    <div class="exec-item" style="border-right:none;">
+      <div class="exec-label">Promedio por Deal</div>
+      <div class="exec-val">—</div>
+      <div class="exec-sub">Revenue ÷ deals</div>
+      <span class="exec-delta neu">—</span>
     </div>
   </div>
 
-  <!-- FUNNEL (3 etapas) + SPARKLINES -->
-  <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Funnel de Conversión</span><span class="sec-sub">Período actual en curso — 16 mayo – 15 junio · Día 20/31</span></div>
-    <div class="funnel-split">
-      <div class="funnel-left" style="align-self:flex-start;">
-        <div class="fn-col-title">Volumen por etapa</div>
-        <div class="fn-rows" style="display:flex;flex-direction:column;gap:8px;">
-          <div class="fn-row">
-            <div class="fn-bar-wrap">
-              <div id="fn-b0" class="fn-bar fn-b1" style="width:100%">
-                <div class="fn-bar-l"><span class="fn-bar-stage">Leads</span><span class="fn-bar-num" id="fn-n0">312</span></div>
-                <div class="fn-bar-r"><div class="fn-bar-pct">100%</div><div class="fn-bar-sub" id="fn-d0">—</div></div>
-              </div>
-            </div>
-          </div>
-          <div class="fn-row">
-            <div class="fn-bar-wrap">
-              <div id="fn-b1" class="fn-bar fn-b2" style="width:100%">
-                <div class="fn-bar-l"><span class="fn-bar-stage">Appts Confirmados</span><span class="fn-bar-num" id="fn-n1">38</span></div>
-                <div class="fn-bar-r"><div class="fn-bar-pct" id="fn-p1">12.2%</div><div class="fn-bar-sub">de leads</div></div>
-              </div>
-            </div>
-          </div>
-          <div class="fn-row">
-            <div class="fn-bar-wrap">
-              <div id="fn-b2" class="fn-bar fn-b3" style="width:100%">
-                <div class="fn-bar-l"><span class="fn-bar-stage">Deals Cerrados</span><span class="fn-bar-num" id="fn-n2">4</span></div>
-                <div class="fn-bar-r"><div class="fn-bar-pct" id="fn-p2">10.5%</div><div class="fn-bar-sub" id="fn-d2">—</div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="funnel-right">
-        <div class="fn-col-title">Tendencia histórica · 12 períodos</div>
+  <!-- EMBUDO + TENDENCIA HISTÓRICA -->
+  <div class="funnel-wrap">
+    <div class="funnel-header">
+      Embudo de Conversión — Período actual
+      <span>Cada paso muestra qué % del anterior avanzó · cuello de botella marcado en rojo</span>
+    </div>
+
+    <div class="funnel-layout">
+
+      <!-- IZQUIERDA: Embudo alineado a la derecha, crece hacia el centro -->
+      <div id="funnel-left" class="funnel-col-l">
+        <div class="fn-col-title">Embudo de conversión — período actual</div>
         <div class="sp-rows">
-          <div class="sp-row">
-            <div class="sp-card">
-              <div class="sp-top"><span class="sp-label pri">Leads</span><span class="sp-trend" id="tr0"></span></div>
-              <div class="sp-canvas"><canvas id="sp0"></canvas></div>
-            </div>
-          </div>
-          <div class="sp-row">
-            <div class="sp-card">
-              <div class="sp-top"><span class="sp-label grn">Appts Confirmados</span><span class="sp-trend" id="tr1"></span></div>
-              <div class="sp-canvas"><canvas id="sp1"></canvas></div>
-            </div>
-          </div>
-          <div class="sp-row">
-            <div class="sp-card">
-              <div class="sp-top"><span class="sp-label vio">Deals Cerrados</span><span class="sp-trend" id="tr2"></span></div>
-              <div class="sp-canvas"><canvas id="sp2"></canvas></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- PACING vs META -->
+          <div class="sp-row">
+            <div class="fn-step s1" style="width:100%;">
+              <div class="fn-step-left">
+                <span class="fn-num">1</span>
+                <div><div class="fn-label">Clics en anuncios</div><div class="fn-sub">Meta Ads · Link clicks</div></div>
+              </div>
+              <div class="fn-right">
+                <span class="fn-mom neu">↔ — vs ant.</span>
+                <div class="fn-val">—</div>
+                <div class="fn-pct">100% · entrada</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sp-row">
+            <div class="fn-step s2" style="width:80%;">
+              <div class="fn-step-left">
+                <span class="fn-num">2</span>
+                <div><div class="fn-label">Leads Operativos</div><div class="fn-sub">Nombre + teléfono + status activo</div></div>
+              </div>
+              <div class="fn-right">
+                <span class="fn-mom neu">↔ — vs ant.</span>
+                <div class="fn-val">—</div>
+                <div class="fn-pct">—% de clics</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sp-row">
+            <div class="fn-step s3" style="width:55%;">
+              <div class="fn-step-left">
+                <span class="fn-num">3</span>
+                <div><div class="fn-label">Citas Efectivas</div><div class="fn-sub">Still W + Completed + Sale</div></div>
+              </div>
+              <div class="fn-right">
+                <span class="fn-mom neu">↔ — vs ant.</span>
+                <div class="fn-val">—</div>
+                <div class="fn-pct">—% de leads</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sp-row">
+            <div class="fn-step s4" style="width:32%;">
+              <div class="fn-step-left">
+                <span class="fn-num">4</span>
+                <div><div class="fn-label">Deals</div><div class="fn-sub">Revenue total período</div></div>
+              </div>
+              <div class="fn-right">
+                <span class="fn-mom neu">↔ — vs ant.</span>
+                <div class="fn-val">—</div>
+                <div class="fn-pct">—% de leads</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /col-l -->
+
+      <!-- DERECHA: 4 sparklines de tendencia histórica -->
+      <div id="funnel-right" class="funnel-col-r">
+        <div class="fn-col-title">Tendencia histórica · 7 períodos</div>
+        <div class="sp-rows">
+          <div class="sp-row"><div class="sp-card">
+            <div class="sp-top"><span class="sp-label c2">Leads Operativos</span><span class="sp-trend dim">—</span></div>
+            <div class="sp-empty-state">Sin datos · pendiente de conexión</div>
+          </div></div>
+          <div class="sp-row"><div class="sp-card">
+            <div class="sp-top"><span class="sp-label c3">Citas Efectivas</span><span class="sp-trend dim">—</span></div>
+            <div class="sp-empty-state">Sin datos · pendiente de conexión</div>
+          </div></div>
+          <div class="sp-row"><div class="sp-card">
+            <div class="sp-top"><span class="sp-label c4">Deals</span><span class="sp-trend dim">—</span></div>
+            <div class="sp-empty-state">Sin datos · pendiente de conexión</div>
+          </div></div>
+          <div class="sp-row"><div class="sp-card">
+            <div class="sp-top"><span class="sp-label c1">CPR — Costo / Resultado</span><span class="sp-trend dim">—</span></div>
+            <div class="sp-empty-state">Sin datos · pendiente de conexión</div>
+          </div></div>
+        </div>
+      </div><!-- /col-r -->
+
+    </div><!-- /funnel-layout -->
+  </div><!-- /funnel-wrap -->
+
+
+  <!-- CAPA 1 — TRÁFICO PAGADO -->
   <div class="sec">
-    <div class="sec-hdr">
-      <span class="sec-title">Pacing vs Meta — Período Actual</span>
-      <span class="sec-sub">Día 12/30 · Se esperaba el 40% de la meta acumulado</span>
+    <div class="layer-row">
+      <span class="layer-pill lp1">CAPA 1</span>
+      <span class="layer-name">Tráfico Pagado</span>
+      <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:var(--c4l);color:var(--c4);font-weight:600;">● Meta Ads</span>
+      <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:var(--bg3);color:var(--txd);font-weight:600;">● Google Ads ⏳</span>
+      <span class="layer-note">Inversión → Tráfico generado</span>
     </div>
-    <div class="pacing-grid">
 
-      <!-- Leads pacing -->
-      <div class="pacing-card">
-        <div class="pacing-hdr">
-          <span class="pacing-label" style="color:var(--pri)">Leads</span>
-          <span class="pacing-delta up" id="pdelta0">↑ +4%</span>
-        </div>
-        <div class="pacing-nums">
-          <div class="pacing-actual" style="color:var(--pri)" id="pval0">312</div>
-          <div class="pacing-sub" id="psub0">de <strong>300</strong> esperados · Meta: <strong>750</strong></div>
-        </div>
-        <div style="height:10px;background:var(--bg3);border-radius:5px;margin-bottom:8px;overflow:visible;position:relative;">
-          <div id="pfill0b" style="height:100%;border-radius:5px;background:var(--pri);"></div>
-          <div id="pmark0b" style="position:absolute;top:-4px;width:2px;height:18px;background:#94A3B8;border-radius:1px;transform:translateX(-50%);"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);">
-          <span>0</span><span id="pexp0">Esp: 300</span><span id="pgoal0">Meta: 750</span>
-        </div>
-        <div style="margin-top:12px;height:80px;position:relative;"><canvas id="pc0"></canvas></div>
+    <div id="c1-kpis" class="krow k4">
+      <div class="kpi k-c1">
+        <div class="kpi-top"><span class="kpi-lbl">Inversión</span><span class="delta d-neu">Meta</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">Acumulado período actual</div>
+        <div class="prog"><div class="prog-track"><div class="prog-fill" style="width:0%;background:var(--c1)"></div></div><div class="prog-lbl">Día — / 30</div></div>
       </div>
-
-      <!-- Appointments pacing -->
-      <div class="pacing-card">
-        <div class="pacing-hdr">
-          <span class="pacing-label" style="color:var(--sky)">Appts Confirmados</span>
-          <span class="pacing-delta up" id="pdelta1">↑ +6%</span>
-        </div>
-        <div class="pacing-nums">
-          <div class="pacing-actual" style="color:var(--sky)" id="pval1">38</div>
-          <div class="pacing-sub" id="psub1">de <strong>36</strong> esperados · Meta: <strong>90</strong></div>
-        </div>
-        <div style="height:10px;background:var(--bg3);border-radius:5px;margin-bottom:8px;overflow:visible;position:relative;">
-          <div id="pfill1b" style="height:100%;border-radius:5px;background:var(--sky);"></div>
-          <div id="pmark1b" style="position:absolute;top:-4px;width:2px;height:18px;background:#94A3B8;border-radius:1px;transform:translateX(-50%);"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);">
-          <span>0</span><span id="pexp1">Esp: 36</span><span id="pgoal1">Meta: 90</span>
-        </div>
-        <div style="margin-top:12px;height:80px;position:relative;"><canvas id="pc1"></canvas></div>
+      <div class="kpi k-c1">
+        <div class="kpi-top"><span class="kpi-lbl">Impresiones</span><span class="delta d-neu">Meta</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">Total · período</div>
       </div>
-
-      <!-- Deals pacing -->
-      <div class="pacing-card">
-        <div class="pacing-hdr">
-          <span class="pacing-label" style="color:var(--vio)">Deals Cerrados</span>
-          <span class="pacing-delta up" id="pdelta2">↑ +11%</span>
-        </div>
-        <div class="pacing-nums">
-          <div class="pacing-actual" style="color:var(--vio)" id="pval2">4</div>
-          <div class="pacing-sub" id="psub2">de <strong>3.6</strong> esperados · Meta: <strong>9</strong></div>
-        </div>
-        <div style="height:10px;background:var(--bg3);border-radius:5px;margin-bottom:8px;overflow:visible;position:relative;">
-          <div id="pfill2b" style="height:100%;border-radius:5px;background:var(--vio);"></div>
-          <div id="pmark2b" style="position:absolute;top:-4px;width:2px;height:18px;background:#94A3B8;border-radius:1px;transform:translateX(-50%);"></div>
-        </div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);">
-          <span>0</span><span id="pexp2">Esp: 3.6</span><span id="pgoal2">Meta: 9</span>
-        </div>
-        <div style="margin-top:12px;height:80px;position:relative;"><canvas id="pc2"></canvas></div>
+      <div class="kpi k-c1">
+        <div class="kpi-top"><span class="kpi-lbl">Clics</span><span class="delta d-neu">Meta</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">Link clicks · CTR —%</div>
       </div>
-
+      <div class="kpi k-c1">
+        <div class="kpi-top"><span class="kpi-lbl">CPR — Costo / Resultado</span><span class="delta d-neu">Meta</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">— resultados · pixel Meta</div>
+      </div>
     </div>
-  </div>
 
-  <!-- TASAS DE CONVERSIÓN DEL FUNNEL -->
-  <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Tasas de Conversión del Funnel</span></div>
-    <div class="grid2">
+    <div class="g21">
       <div class="card">
-        <div style="font-size:10px;font-weight:700;color:var(--txd);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Costo por etapa · Período actual</div>
+        <div class="card-title">Campañas — Período actual</div>
         <table class="tbl">
-          <thead><tr><th>Etapa</th><th>Costo USD</th><th>∆ vs anterior</th></tr></thead>
-          <tbody>
-            <tr><td>Click (Meta)</td><td class="num" id="cost-click">—</td><td id="dcost-click">—</td></tr>
-            <tr><td>Lead CRM</td><td class="num" id="cost-crm">—</td><td id="dcost-crm">—</td></tr>
-            <tr><td>Appt Confirmado</td><td class="num" id="cost-appt">—</td><td id="dcost-appt">—</td></tr>
-            <tr><td><strong>Deal Cerrado</strong></td><td class="num" id="cost-deal"><strong>—</strong></td><td id="dcost-deal">—</td></tr>
+          <thead><tr><th>Campaña</th><th>Spend</th><th>Resultados</th><th>Clics</th><th>CPR</th><th>ROAS est.</th></tr></thead>
+          <tbody id="campaigns-tbody">
+            <tr><td colspan="6" style="text-align:center;color:var(--txd);padding:20px;font-style:italic;font-size:12px;">Sin datos · período no configurado</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="card">
-        <div style="margin-bottom:12px;font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;">Tasas de conversión · Período actual</div>
-        <div class="rate-grid">
-          <div class="rate-box">
-            <div class="rate-val" style="color:var(--amb)" id="rate-c2l">—</div>
-            <div class="rate-label">Click → Lead CRM</div>
-            <div class="prog8"><div class="prog8-fill" id="rate-c2l-fill" style="width:0%;background:var(--amb)"></div></div>
-          </div>
-          <div class="rate-box">
-            <div class="rate-val" style="color:var(--sky)" id="rate-l2a">—</div>
-            <div class="rate-label">Lead → Appt Confirmado</div>
-            <div class="prog8"><div class="prog8-fill" id="rate-l2a-fill" style="width:0%;background:var(--sky)"></div></div>
-          </div>
-          <div class="rate-box">
-            <div class="rate-val" style="color:var(--vio)" id="rate-a2d">—</div>
-            <div class="rate-label">Appt → Deal</div>
-            <div class="prog8"><div class="prog8-fill" id="rate-a2d-fill" style="width:0%;background:var(--vio)"></div></div>
-          </div>
-          <div class="rate-box">
-            <div class="rate-val" style="color:var(--txm)" id="rate-l2d">—</div>
-            <div class="rate-label">Lead → Deal (total)</div>
-            <div class="prog8"><div class="prog8-fill" id="rate-l2d-fill" style="width:0%;background:var(--txm)"></div></div>
-          </div>
+      <div id="lpv-area" style="display:flex;flex-direction:column;gap:14px;">
+        <div class="kpi k-gray dim" style="flex:1;">
+          <div class="kpi-top"><span class="kpi-lbl">Visitas al Landing</span></div>
+          <div class="kpi-val">—</div>
+          <div class="kpi-sub">Requiere GA4 / Meta Landing Views</div>
+        </div>
+        <div class="kpi k-gray dim" style="flex:1;">
+          <div class="kpi-top"><span class="kpi-lbl">ROAS por Ad Set</span></div>
+          <div class="kpi-val">—</div>
+          <div class="kpi-sub">Requiere ad_set_id en sync n8n</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- DISTRIBUCIÓN DE LEADS -->
-  <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Distribución de Leads por Status</span><span class="sec-sub">Período anterior · 755 contactos</span></div>
-    <div class="card"><div class="lead-chart-wrap"><canvas id="leadStatusChart"></canvas></div></div>
-  </div>
 
-  <!-- APPOINTMENTS BREAKDOWN -->
-  <!-- APPOINTMENTS BREAKDOWN -->
+  <!-- CAPA 2 — LEADS OPERATIVOS -->
   <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Appointments: Composición por Etapa</span><span class="sec-sub" id="appt-sub">—</span></div>
-    <div class="grid2">
+    <div class="layer-row">
+      <span class="layer-pill lp2">CAPA 2</span>
+      <span class="layer-name">Leads Operativos en CRM</span>
+      <span class="layer-note">Filtro: firstName + phone + status activo · Excluye Unreachable / DNC / OOR</span>
+    </div>
+
+    <div id="c2-kpis" class="krow k3" style="margin-bottom:20px;">
+      <div class="kpi k-c2">
+        <div class="kpi-top"><span class="kpi-lbl">Leads Operativos</span><span class="delta d-neu">Filtrado</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">de — totales · — excluidos (DNC, OOR, Unreachable)</div>
+        <div class="prog"><div class="prog-track"><div class="prog-fill" style="width:0%;background:var(--c2)"></div></div><div class="prog-lbl">—% del total son operativos</div></div>
+      </div>
+      <div class="kpi k-c2">
+        <div class="kpi-top"><span class="kpi-lbl">CPL Real</span><span class="delta d-neu">key KPI</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">Inversión / leads operativos</div>
+        <div class="prog"><div class="prog-track"><div class="prog-fill" style="width:0%;background:var(--c2)"></div></div><div class="prog-lbl">—</div></div>
+      </div>
+      <div class="kpi k-c2">
+        <div class="kpi-top"><span class="kpi-lbl">Tasa Clic → Lead Op.</span><span class="delta d-neu">—</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">leads op. / clics</div>
+      </div>
+    </div>
+
+    <div class="g2" style="margin-bottom:20px;">
       <div class="card">
-        <div class="donut-area">
-          <div class="donut-wrap">
-            <div class="donut-cw"><canvas id="donut1"></canvas></div>
-            <div class="donut-lbl">Confirmados<br><span id="donut1-lbl">—</span></div>
+        <div class="card-title">Por Producto</div>
+        <div id="product-cards" class="g2" style="gap:12px;">
+          <div class="prod-card">
+            <div class="prod-header"><span class="prod-name">Roofing</span><span class="prod-badge pb-roof">—</span></div>
+            <div class="prod-row"><span class="prod-metric">Leads</span><span class="prod-val dim">—</span></div>
+            <div class="prod-row"><span class="prod-metric">Deals</span><span class="prod-val dim">—</span></div>
+            <div class="prod-row"><span class="prod-metric">CPL Roofing</span><span class="prod-val dim">—</span></div>
+            <div class="mini-bar-outer"><div style="width:0%;background:var(--c2);height:100%;border-radius:2px;"></div></div>
           </div>
-          <div class="donut-wrap">
-            <div class="donut-cw"><canvas id="donut2"></canvas></div>
-            <div class="donut-lbl">Cancelados<br><span id="donut2-lbl">—</span></div>
+          <div class="prod-card">
+            <div class="prod-header"><span class="prod-name">Windows</span><span class="prod-badge pb-win">—</span></div>
+            <div class="prod-row"><span class="prod-metric">Leads</span><span class="prod-val dim">—</span></div>
+            <div class="prod-row"><span class="prod-metric">Deals</span><span class="prod-val dim">—</span></div>
+            <div class="prod-row"><span class="prod-metric">CPL Windows</span><span class="prod-val dim">—</span></div>
+            <div class="mini-bar-outer"><div style="width:0%;background:var(--c3);height:100%;border-radius:2px;"></div></div>
           </div>
         </div>
       </div>
       <div class="card">
-        <div style="margin-bottom:12px;font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;">Pipeline Stage</div>
-        <table class="tbl">
-          <thead><tr><th>Stage</th><th>Cantidad</th><th>% del total</th></tr></thead>
-          <tbody id="apptStageBody"><tr><td colspan="3" style="color:var(--txd)">Cargando...</td></tr></tbody>
-        </table>
+        <div class="card-title">Por Mercado Geográfico</div>
+        <div id="geo-cards" class="g2" style="gap:12px;">
+          <div class="prod-card">
+            <div class="prod-header"><span class="prod-name">Florida</span><span class="prod-badge pb-fl">—</span></div>
+            <div class="prod-row"><span class="prod-metric">Leads</span><span class="prod-val dim">—</span></div>
+            <div class="prod-row"><span class="prod-metric">Deals</span><span class="prod-val dim">—</span></div>
+            <div class="prod-row"><span class="prod-metric">Conv. Rate</span><span class="prod-val dim">—</span></div>
+            <div class="mini-bar-outer"><div style="width:0%;background:var(--c4);height:100%;border-radius:2px;"></div></div>
+          </div>
+          <div class="prod-card">
+            <div class="prod-header"><span class="prod-name">California</span><span class="prod-badge pb-ca">—</span></div>
+            <div class="prod-row"><span class="prod-metric">Leads</span><span class="prod-val dim">—</span></div>
+            <div class="prod-row"><span class="prod-metric">Deals</span><span class="prod-val dim">—</span></div>
+            <div class="prod-row"><span class="prod-metric">Conv. Rate</span><span class="prod-val dim">—</span></div>
+            <div class="mini-bar-outer"><div style="width:0%;background:var(--ora);height:100%;border-radius:2px;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="margin-bottom:12px;">Salud del Pipeline — Distribución de Lead Status <span style="font-weight:400;font-style:italic;color:var(--txd);text-transform:none;letter-spacing:0;float:right;">Leads activos en el CRM al día de hoy</span></div>
+      <div id="status-grid" class="status-grid">
+        <div class="status-item"><div class="status-name">No Answer - Active Recall</div><div class="status-val dim">—</div><div class="status-bar"><div class="status-fill" style="width:0%"></div></div></div>
+        <div class="status-item"><div class="status-name">Out of Range</div><div class="status-val dim">—</div><div class="status-bar"><div class="status-fill" style="width:0%;background:var(--txd)"></div></div></div>
+        <div class="status-item"><div class="status-name">Lost - Not Interested</div><div class="status-val dim">—</div><div class="status-bar"><div class="status-fill" style="width:0%;background:var(--red)"></div></div></div>
+        <div class="status-item"><div class="status-name">Duplicate</div><div class="status-val dim">—</div><div class="status-bar"><div class="status-fill" style="width:0%;background:var(--txd)"></div></div></div>
+        <div class="status-item"><div class="status-name">Unreachable</div><div class="status-val dim">—</div><div class="status-bar"><div class="status-fill" style="width:0%;background:var(--red)"></div></div></div>
+        <div class="status-item"><div class="status-name">Not Qualified</div><div class="status-val dim">—</div><div class="status-bar"><div class="status-fill" style="width:0%;background:var(--txd)"></div></div></div>
+        <div class="status-item"><div class="status-name">Future Buyer</div><div class="status-val dim">—</div><div class="status-bar"><div class="status-fill" style="width:0%;background:var(--ora)"></div></div></div>
+        <div class="status-item"><div class="status-name">Recall - Short</div><div class="status-val dim">—</div><div class="status-bar"><div class="status-fill" style="width:0%;background:var(--c2)"></div></div></div>
       </div>
     </div>
   </div>
 
 
-
-  <!-- PRODUCTO ESTRELLA & GEO -->
+  <!-- CAPA 3 — APPOINTMENTS -->
   <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Producto & Mercado</span><span class="sec-sub">período actual · leads y deals por categoría</span></div>
-    <div class="grid2">
-      <div class="card">
-        <div style="font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;">Producto Estrella</div>
-        <div id="productBars"><div style="color:var(--txd);font-size:12px;">Sin datos</div></div>
+    <div class="layer-row">
+      <span class="layer-pill lp3">CAPA 3</span>
+      <span class="layer-name">Appointments (Citas)</span>
+      <span class="layer-note">Agendadas total · % efectividad</span>
+    </div>
+
+    <div id="c3-kpis" class="krow k5" style="margin-bottom:20px;">
+      <div class="kpi k-c3">
+        <div class="kpi-top"><span class="kpi-lbl">Agendadas</span><span class="delta d-neu">Total</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">Creadas en el período</div>
       </div>
-      <div class="card">
-        <div style="font-size:11px;font-weight:700;color:var(--txm);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;">Geo · FL vs CA</div>
-        <div id="geoBars"><div style="color:var(--txd);font-size:12px;">Sin datos</div></div>
+      <div class="kpi k-c3">
+        <div class="kpi-top"><span class="kpi-lbl">Citas Efectivas</span><span class="delta d-neu">—</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">—% de las agendadas</div>
+        <div class="prog"><div class="prog-track"><div class="prog-fill" style="width:0%;background:var(--c3)"></div></div><div class="prog-lbl">— / — meta período</div></div>
+      </div>
+      <div class="kpi k-red">
+        <div class="kpi-top"><span class="kpi-lbl">Canceladas</span><span class="delta d-neu">—%</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">Tasa cancelación —%</div>
+      </div>
+      <div class="kpi k-c3">
+        <div class="kpi-top"><span class="kpi-lbl">Lead Op. → Cita Ef.</span><span class="delta d-neu">—</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">— ef. / — leads op.</div>
+      </div>
+      <div class="kpi k-c3">
+        <div class="kpi-top"><span class="kpi-lbl">Costo / Cita Ef.</span><span class="delta d-neu">—</span></div>
+        <div class="kpi-val">—</div>
+        <div class="kpi-sub">Inversión / citas efectivas</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Desglose por Stage de Appointment</div>
+      <div id="stage-list" style="padding:4px 0;">
+        <div class="appt-stage-row">
+          <div class="appt-dot" style="background:#DC2626"></div>
+          <div class="appt-stage-name">Cancelled</div>
+          <div class="appt-bar-outer"><div class="appt-bar-fill" style="width:0%;background:#DC2626"></div></div>
+          <div class="appt-count dim">—</div><div class="appt-pct dim">—</div>
+        </div>
+        <div class="appt-stage-row">
+          <div class="appt-dot" style="background:#059669"></div>
+          <div class="appt-stage-name">Completed ✓ efectiva</div>
+          <div class="appt-bar-outer"><div class="appt-bar-fill" style="width:0%;background:#059669"></div></div>
+          <div class="appt-count dim">—</div><div class="appt-pct dim">—</div>
+        </div>
+        <div class="appt-stage-row">
+          <div class="appt-dot" style="background:#10B981"></div>
+          <div class="appt-stage-name">Sale ✓ efectiva</div>
+          <div class="appt-bar-outer"><div class="appt-bar-fill" style="width:0%;background:#10B981"></div></div>
+          <div class="appt-count dim">—</div><div class="appt-pct dim">—</div>
+        </div>
+        <div class="appt-stage-row">
+          <div class="appt-dot" style="background:#0369A1"></div>
+          <div class="appt-stage-name">Appointment Set</div>
+          <div class="appt-bar-outer"><div class="appt-bar-fill" style="width:0%;background:#0369A1"></div></div>
+          <div class="appt-count dim">—</div><div class="appt-pct dim">—</div>
+        </div>
+        <div class="appt-stage-row">
+          <div class="appt-dot" style="background:#6366F1"></div>
+          <div class="appt-stage-name">Still Working ✓ efectiva</div>
+          <div class="appt-bar-outer"><div class="appt-bar-fill" style="width:0%;background:#6366F1"></div></div>
+          <div class="appt-count dim">—</div><div class="appt-pct dim">—</div>
+        </div>
+        <div class="appt-stage-row">
+          <div class="appt-dot" style="background:#94A3B8"></div>
+          <div class="appt-stage-name">Pending Confirmation</div>
+          <div class="appt-bar-outer"><div class="appt-bar-fill" style="width:0%;background:#94A3B8"></div></div>
+          <div class="appt-count dim">—</div><div class="appt-pct dim">—</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:8px 12px;background:var(--c4l);border-radius:7px;font-size:11px;color:var(--c4);">
+        ✓ <strong>Efectivas = Completed + Sale + Still Working</strong> · stages: 1998960329 + 3502094039 + 1985917637
       </div>
     </div>
   </div>
 
-</div><!-- end t1 -->
+
+  <!-- CAPA 4 — DEALS -->
+  <div class="sec">
+    <div class="layer-row">
+      <span class="layer-pill lp4">CAPA 4</span>
+      <span class="layer-name">Deals</span>
+      <span class="layer-note">Uso administrativo · profit_per_deal pendiente en HubSpot</span>
+    </div>
+
+    <div id="pac-row" class="pac-row" style="margin-bottom:20px;">
+      <div class="pac-item">
+        <div class="pac-lbl"><span>Leads</span><span style="color:var(--c2);font-size:11px;">— / —</span></div>
+        <div class="pac-nums"><span class="pac-act dim" style="color:var(--c2)">—</span><span class="pac-goal">meta —</span></div>
+        <div class="pac-track"><div class="pac-fill" style="width:0%;background:var(--c2)"></div></div>
+        <div class="pac-note">Sin datos</div>
+      </div>
+      <div class="pac-item">
+        <div class="pac-lbl"><span>Citas Efectivas</span><span style="color:var(--c3);font-size:11px;">— / —</span></div>
+        <div class="pac-nums"><span class="pac-act dim" style="color:var(--c3)">—</span><span class="pac-goal">meta —</span></div>
+        <div class="pac-track"><div class="pac-fill" style="width:0%;background:var(--c3)"></div></div>
+        <div class="pac-note">Sin datos</div>
+      </div>
+      <div class="pac-item">
+        <div class="pac-lbl"><span>Deals</span><span style="color:var(--c4);font-size:11px;">— / —</span></div>
+        <div class="pac-nums"><span class="pac-act dim" style="color:var(--c4)">—</span><span class="pac-goal">meta —</span></div>
+        <div class="pac-track"><div class="pac-fill" style="width:0%;background:var(--c4)"></div></div>
+        <div class="pac-note">Sin datos</div>
+      </div>
+    </div>
+
+    <div class="g2">
+      <div id="c4-kpis" class="krow k3" style="margin:0;">
+        <div class="kpi k-c4">
+          <div class="kpi-top"><span class="kpi-lbl">Deals</span><span class="delta d-neu">—</span></div>
+          <div class="kpi-val">—</div>
+          <div class="kpi-sub">vs — esperados día —</div>
+        </div>
+        <div class="kpi k-c4">
+          <div class="kpi-top"><span class="kpi-lbl">Costo / Deal</span><span class="delta d-neu">—</span></div>
+          <div class="kpi-val">—</div>
+          <div class="kpi-sub">Inversión / deals</div>
+        </div>
+        <div class="kpi k-c4">
+          <div class="kpi-top"><span class="kpi-lbl">Valor Promedio</span><span class="delta d-neu">amount</span></div>
+          <div class="kpi-val">—</div>
+          <div class="kpi-sub">Revenue / deals</div>
+        </div>
+      </div>
+      <div id="profit-box" class="profit-box">
+        <div class="profit-lbl">Revenue Total del Período</div>
+        <div class="profit-val">—</div>
+        <div class="profit-sub">Campo <code style="background:rgba(255,255,255,.15);padding:1px 5px;border-radius:4px;font-size:10px;">amount</code> · avg — / deal</div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15);">
+          <div class="profit-lbl">Profit Total del Período</div>
+          <div style="font-size:24px;font-weight:800;color:rgba(255,255,255,.35);margin-top:4px;">—</div>
+          <div class="profit-sub">Requiere <code style="background:rgba(255,255,255,.1);padding:1px 5px;border-radius:4px;font-size:10px;">profit_per_deal</code> en HubSpot + sync n8n</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /t1 -->
 
 
+<!-- ═══════════ TAB 2 — SETTERS ═══════════ -->
 <div id="t2" class="pane">
 
-
+  <!-- PODIUM TOP 3 -->
   <div class="sec">
-    <div class="sec-hdr"><span class="sec-title" id="meta-sec-title">Métricas Meta Ads — Período actual</span></div>
-    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
-      <div class="kpi c-amb">
-        <div class="kpi-top"><span class="kpi-label">Inversión Total</span><span class="delta" id="meta-inv-delta" style="background:var(--bg3);color:var(--txd)">—</span></div>
-        <div class="kpi-val" id="meta-inv">—</div>
-        <div class="kpi-proj" id="meta-inv-proj">—</div>
-      </div>
-      <div class="kpi c-pri">
-        <div class="kpi-top"><span class="kpi-label">Resultados Meta</span><span class="delta" id="meta-res-delta" style="background:var(--bg3);color:var(--txd)">—</span></div>
-        <div class="kpi-val" id="meta-res">—</div>
-        <div class="kpi-proj" id="meta-res-proj">—</div>
-      </div>
-      <div class="kpi c-sky">
-        <div class="kpi-top"><span class="kpi-label">ROAS Estimado</span><span class="delta" id="meta-roas-delta" style="background:var(--bg3);color:var(--txd)">—</span></div>
-        <div class="kpi-val" id="meta-roas">—</div>
-        <div class="kpi-proj" id="meta-roas-proj">—</div>
-      </div>
-      <div class="kpi c-vio">
-        <div class="kpi-top"><span class="kpi-label">Costo / Deal</span><span class="delta" id="meta-cpd-delta" style="background:var(--bg3);color:var(--txd)">—</span></div>
-        <div class="kpi-val" id="meta-cpd">—</div>
-        <div class="kpi-proj" id="meta-cpd-proj">—</div>
-      </div>
+    <div class="layer-row" style="margin-bottom:0;border-bottom:none;">
+      <span class="layer-pill lp-s">TOP 3</span>
+      <span class="layer-name">Líderes del Período</span>
+      <span class="layer-note">Ordenado por Citas Efectivas</span>
     </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Rendimiento por Campaña</span></div>
     <div class="card">
-      <table class="tbl">
-        <thead>
-          <tr><th>Línea</th><th>Spend</th><th>Resultados</th><th>CRM</th><th>Appts</th><th>Eff.</th><th>Deals</th><th>CPR</th><th>Eff→Deal</th></tr>
-        </thead>
-        <tbody id="campTable"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-hdr">
-      <span class="sec-title">Eficiencia por Campaña</span>
-      <span class="sec-sub">ROAS estimado a $12,000 USD por deal · solo campañas con deals activos</span>
-    </div>
-    <div class="grid2">
-      <div class="card">
-        <div style="margin-bottom:8px;font-size:12px;font-weight:600;color:var(--txm);">Costo por Deal — ranking</div>
-        <div style="height:210px;position:relative;"><canvas id="cpdChart"></canvas></div>
-      </div>
-      <div class="card">
-        <div style="margin-bottom:12px;font-size:12px;font-weight:600;color:var(--txm);">ROAS Estimado por Campaña</div>
-        <div id="roasCards" style="display:flex;flex-direction:column;gap:8px;"></div>
-        <div style="margin-top:14px;padding:10px 12px;background:var(--bg3);border-radius:7px;font-size:11px;color:var(--txm);">
-          ROAS &gt;10x <span style="color:var(--pri);font-weight:700;">●</span> &nbsp;
-          ROAS 5–10x <span style="color:var(--sky);font-weight:700;">●</span> &nbsp;
-          ROAS &lt;5x o sin deals <span style="color:var(--vio);font-weight:700;">●</span>
+      <div id="podium" class="podium">
+        <!-- 2do lugar — izquierda -->
+        <div class="pd-item">
+          <div class="pd-2 pd-block"><span class="pd-rank">🥈</span></div>
+          <div class="pd-name">—</div>
+          <div class="pd-val">— citas ef.</div>
+          <span class="phase" style="background:var(--bg3);color:var(--txd);border:1px solid var(--brd);">—</span>
+        </div>
+        <!-- 1er lugar — centro -->
+        <div class="pd-item">
+          <div class="pd-1 pd-block"><span class="pd-rank">🥇</span></div>
+          <div class="pd-name">—</div>
+          <div class="pd-val">— citas ef.</div>
+          <span class="phase" style="background:var(--bg3);color:var(--txd);border:1px solid var(--brd);">—</span>
+        </div>
+        <!-- 3er lugar — derecha -->
+        <div class="pd-item">
+          <div class="pd-3 pd-block"><span class="pd-rank">🥉</span></div>
+          <div class="pd-name">—</div>
+          <div class="pd-val">— citas ef.</div>
+          <span class="phase" style="background:var(--bg3);color:var(--txd);border:1px solid var(--brd);">—</span>
         </div>
       </div>
     </div>
   </div>
 
   <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Tendencia Histórica — CPD y ROAS Estimado</span><span class="sec-sub">11 períodos · precio referencia $12,000 USD/deal</span></div>
-    <div class="card"><div style="height:210px;position:relative;"><canvas id="metaChart"></canvas></div></div>
-  </div>
+    <div class="layer-row">
+      <span class="layer-pill lp-s">SETTERS</span>
+      <span class="layer-name">Rendimiento Individual — Período actual</span>
+      <span class="layer-note">Llamadas desde Dialpad/HubSpot · Citas desde pipeline Appointments</span>
+    </div>
 
-</div><!-- /t2 -->
-
-
-<!-- ══════════ TAB 3 — SETTERS ══════════ -->
-<div id="t3" class="pane">
-
-  <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Top 3 del Período</span></div>
-    <div class="card"><div class="podium" id="podium"></div></div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Rendimiento Individual</span></div>
-    <div class="card">
+    <div class="card" style="margin-bottom:20px;">
+      <div class="card-title">Resumen del Equipo</div>
       <table class="tbl">
         <thead>
-          <tr><th>Setter</th><th>Leads</th><th>Llamadas</th><th>Appts</th><th>Deals</th><th>Conv. %</th><th>Fase</th><th>Bono Est.</th><th>Hacia E-Hero</th></tr>
+          <tr>
+            <th>Setter</th>
+            <th>Llamadas</th>
+            <th>C. Agendadas</th>
+            <th>C. Efectivas <span style="font-size:9px;font-weight:400;opacity:.6;">(Still W+Compl+Sale)</span></th>
+            <th>C. Canceladas</th>
+            <th>Conv. %</th>
+            <th>Deals</th>
+            <th>Fase</th>
+            <th>Bono Est.</th>
+          </tr>
         </thead>
-        <tbody id="setterTable"></tbody>
+        <tbody id="setters-tbody">
+          <tr>
+            <td><span style="display:flex;align-items:center;gap:8px;"><span class="av av1">S</span><strong>Silvia</strong></span></td>
+            <td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td>
+            <td class="num dim">—</td><td class="num dim">—</td>
+            <td><span class="phase" style="background:var(--bg3);color:var(--txd);border:1px solid var(--brd);">—</span></td><td class="num dim">—</td>
+          </tr>
+          <tr>
+            <td><span style="display:flex;align-items:center;gap:8px;"><span class="av av5">E</span><strong>Emmanuel</strong></span></td>
+            <td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td>
+            <td class="num dim">—</td><td class="num dim">—</td>
+            <td><span class="phase" style="background:var(--bg3);color:var(--txd);border:1px solid var(--brd);">—</span></td><td class="num dim">—</td>
+          </tr>
+          <tr>
+            <td><span style="display:flex;align-items:center;gap:8px;"><span class="av av3">O</span><strong>Oliver</strong></span></td>
+            <td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td>
+            <td class="num dim">—</td><td class="num dim">—</td>
+            <td><span class="phase" style="background:var(--bg3);color:var(--txd);border:1px solid var(--brd);">—</span></td><td class="num dim">—</td>
+          </tr>
+          <tr>
+            <td><span style="display:flex;align-items:center;gap:8px;"><span class="av av4">P</span><strong>Pablo</strong></span></td>
+            <td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td>
+            <td class="num dim">—</td><td class="num dim">—</td>
+            <td><span class="phase" style="background:var(--bg3);color:var(--txd);border:1px solid var(--brd);">—</span></td><td class="num dim">—</td>
+          </tr>
+          <tr>
+            <td><span style="display:flex;align-items:center;gap:8px;"><span class="av av2">D</span><strong>Daniela</strong></span></td>
+            <td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td>
+            <td class="num dim">—</td><td class="num dim">—</td>
+            <td><span class="phase" style="background:var(--bg3);color:var(--txd);border:1px solid var(--brd);">—</span></td><td class="num dim">—</td>
+          </tr>
+          <tr>
+            <td><span style="display:flex;align-items:center;gap:8px;"><span class="av av2">A</span><strong>Alejandro</strong></span></td>
+            <td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td>
+            <td class="num dim">—</td><td class="num dim">—</td>
+            <td><span class="phase" style="background:var(--bg3);color:var(--txd);border:1px solid var(--brd);">—</span></td><td class="num dim">—</td>
+          </tr>
+          <tr style="background:var(--bg2);font-weight:700;">
+            <td><strong>TOTAL</strong></td>
+            <td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td><td class="num dim">—</td>
+            <td class="num dim">—</td><td class="num dim">—</td><td class="dim">—</td><td class="num dim">—</td>
+          </tr>
+        </tbody>
       </table>
+      <div style="margin-top:12px;padding:8px 12px;background:var(--oral);border-radius:7px;font-size:11px;color:var(--ora);">
+        ⚠ <strong>Deals por setter</strong> pendiente — depende de workflow que popule <code>appointment_setter_attribution</code> en deals
+      </div>
     </div>
-  </div>
 
-  <div class="sec">
-    <div class="sec-hdr"><span class="sec-title">Plan de Comisiones</span></div>
     <div class="card">
+      <div class="card-title">Plan de Comisiones</div>
       <table class="tbl">
-        <thead><tr><th>Fase</th><th>Appts</th><th>Deals req.</th><th>Bono/Appt</th><th>Hot Sale</th><th>Cold Sale %</th><th>Cold Sale est.</th></tr></thead>
+        <thead><tr><th>Fase</th><th>Requisito Citas Ef.</th><th>Deals req.</th><th>Bono/Cita</th><th>Hot Sale</th><th>Cold Sale %</th></tr></thead>
         <tbody>
-          <tr><td><span class="phase ph-lsr">E-LOSER</span></td><td>—</td><td class="lo">0 deals</td><td>$0</td><td>$0</td><td>—</td><td>—</td></tr>
-          <tr><td><span class="phase ph-rsc">RESCUE-E1</span></td><td>&lt;10 o sin mín. llamadas</td><td class="lo">sin umbral</td><td>$0</td><td>$0</td><td>—</td><td>—</td></tr>
-          <tr><td><span class="phase ph-ldr">E-LEADER</span></td><td>10-20 + mín. llamadas</td><td>≥1</td><td class="num">$5</td><td class="num">$19</td><td>0.8%</td><td class="num">~$419</td></tr>
-          <tr><td><span class="phase ph-hero">E-HERO ⭐</span></td><td>&gt;20 + mín. llamadas</td><td>≥1</td><td class="num hi">$7</td><td class="num hi">$29</td><td>1.0%</td><td class="num hi">~$524</td></tr>
+          <tr><td><span class="phase ph-rsc">RESCUE-E1</span></td><td class="dim">Sin umbral mínimo</td><td class="lo">0</td><td>$0</td><td>$0</td><td>—</td></tr>
+          <tr><td><span class="phase ph-ldr">E-LEADER</span></td><td>10–20 + mín. llamadas</td><td>≥1</td><td class="num">$5</td><td class="num">$19</td><td>0.8%</td></tr>
+          <tr><td><span class="phase ph-hero">E-HERO ⭐</span></td><td>&gt;20 + mín. llamadas</td><td>≥1</td><td class="num hi">$7</td><td class="num hi">$29</td><td>1.0%</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
-</div><!-- /t3 -->
-
+</div><!-- /t2 -->
 
 <script>
-// ── TAB SWITCH
 function sw(id, btn) {
   document.querySelectorAll('.pane').forEach(p => p.classList.remove('on'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
@@ -650,930 +817,506 @@ function sw(id, btn) {
   btn.classList.add('on');
 }
 
-// ── DATA — populated from data.json, mock fallback
-let ALL_PER = ['Jun-Jul','Jul-Ago','Ago-Sep','Sep-Oct','Oct-Nov','Nov-Dic','Dic-Ene','Ene-Feb','Feb-Mar','Mar-Abr','Abr-May'];
-let ALL_D = {
-  leads:  [318,338,358,386,415,445,496,614,716,755,748],
-  appts:  [18,20,22,23,26,27,31,40,47,51,60],
-  deals:  [2,3,3,3,4,4,5,6,7,7,9],
-  spend:  [3800,4200,4500,5000,5200,5800,6100,7200,6800,7100,7605],
-  cpr:    [11.9,12.4,12.5,12.9,12.5,13.0,12.3,11.7,9.5,9.4,10.2]
-};
-let PACING = [
-  { label:'Leads',        actual:312, expected:300, goal:750, color:'#1D4ED8' },
-  { label:'Appts Confirmados', actual:38, expected:36,  goal:90,  color:'#0369A1' },
-  { label:'Deals Cerrados',   actual:4,   expected:3.6, goal:9,   color:'#475569' }
-];
-let FUNNEL = { leads:748, appts:60, deals:9, period:'Abr-May' };
-let LEAD_STATUS = {
-  labels: ['Call Later TODAY','Unreachable','Follow-Up Needed','Out of Range','Not Qualified','Do Not Call','Duplicate','Other Co. Sold'],
-  values: [265,120,114,82,56,48,38,22]
-};
-let APPTS_BREAKDOWN = {
-  total:90, confirmed:60, cancelled:30,
-  stages:[{label:'Completed',count:40},{label:'Canceled',count:30},{label:'Still Working',count:13},{label:'Sale',count:6},{label:'Scheduled',count:1}]
-};
+// ── Formatters ──
+function fmt$(v){ if(v==null||isNaN(v))return '—'; const a=Math.abs(v); return '$'+(a>=1e6?(v/1e6).toFixed(1)+'M':a>=1e3?(v/1e3).toFixed(1)+'K':Number(v).toFixed(0)); }
+function fmtCPR(v){ if(!v||isNaN(v))return '—'; return '$'+Number(v).toFixed(2); }
+function fmtN(v){ if(v==null||isNaN(v))return '—'; const a=Math.abs(Number(v)); return a>=1e6?(Number(v)/1e6).toFixed(1)+'M':a>=1e3?(Number(v)/1e3).toFixed(1)+'K':String(Math.round(Number(v))); }
+function fmtPct(v){ if(v==null||isNaN(v))return '—'; return Number(v).toFixed(1)+'%'; }
+function pct(a,b){ return b>0?Number(a)/Number(b)*100:0; }
 
-let CAMPAIGNS = [
-  {name:'Sugerencias', spend:0,res:0,crm:0,appts:0,eff:0,deals:0,cpr:0,st:'amb'},
-  {name:'Retargeting', spend:0,res:0,crm:0,appts:0,eff:0,deals:0,cpr:0,st:'amb'},
-  {name:'Detallado',   spend:0,res:0,crm:0,appts:0,eff:0,deals:0,cpr:0,st:'amb'},
-  {name:'Windows FF',  spend:0,res:0,crm:0,appts:0,eff:0,deals:0,cpr:0,st:'amb'},
-  {name:'ENG Fríos',   spend:0,res:0,crm:0,appts:0,eff:0,deals:0,cpr:0,st:'amb'},
-  {name:'CA Core',     spend:0,res:0,crm:0,appts:0,eff:0,deals:0,cpr:0,st:'amb'},
-];
-
-let PRODUCT = [
-  {label:'Roofing', leads:0, deals:0},
-  {label:'Windows', leads:0, deals:0},
-];
-let GEO = [
-  {label:'Florida',    leads:0, deals:0},
-  {label:'California', leads:0, deals:0},
-];
-
-let SETTERS = [
-  {name:'Oliver',   init:'O', av:'av-b', leads:0, calls:2214, appts:7,  deals:0, hot:0, cold:0},
-  {name:'Silvia',   init:'S', av:'av-s', leads:0, calls:3538, appts:7,  deals:0, hot:0, cold:0},
-  {name:'Emmanuel', init:'E', av:'av-t', leads:0, calls:1933, appts:8,  deals:0, hot:0, cold:0},
-  {name:'Pablo',    init:'P', av:'av-p', leads:0, calls:3150, appts:5,  deals:0, hot:0, cold:0},
-  {name:'Daniela',  init:'D', av:'av-g', leads:0, calls:529,  appts:0,  deals:0, hot:0, cold:0},
-  {name:'Alejandro',init:'A', av:'av-b', leads:0, calls:293,  appts:0,  deals:0, hot:0, cold:0},
-]; // Datos reales del período actual (sheet setter_calls 2026-06-05)
-const BNS={pAL:5,pAH:7,hL:19,hH:29,cL:.008,cH:.01,avg:52381};
-
-// ── CHART REFS
-let chartSpend = null, chartVolume = null;
-let currentRange = 11;
-let rsA = 0, rsB = 0, rsDrag = false, rsAnchor = 0;
-
-// ── SPARKLINES (períodos históricos completos, sin período actual)
-function mkSpark(id, data, color, fillColor, trId, unit) {
-  const canvas = document.getElementById(id);
-  if (!canvas) return;
-  const labels = ALL_PER;
-  new Chart(canvas, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        data, borderColor: color, backgroundColor: fillColor, fill: true, tension: 0.4,
-        pointRadius: 3,
-        pointBackgroundColor: color,
-        pointBorderColor: '#fff',
-        pointBorderWidth: 1.5,
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false, animation: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          enabled: true,
-          callbacks: {
-            title: ctx => ctx[0].label,
-            label: ctx => ' ' + (ctx.parsed.y !== null ? ctx.parsed.y + (unit||'') : '—')
-          }
-        }
-      },
-      scales: {
-        x: {
-          display: true,
-          grid: { display: false },
-          ticks: {
-            color: '#94A3B8',
-            font: { size: 8 },
-            maxRotation: 90,
-            minRotation: 90,
-            autoSkip: false
-          }
-        },
-        y: { display: false }
-      }
-    }
-  });
-  const tr = document.getElementById(trId);
-  if (tr) {
-    const valid = data.filter(v => v !== null && v !== undefined && v > 0);
-    if (valid.length >= 2) {
-      const first = valid[0], last = valid[valid.length-1];
-      const pct = first > 0 ? Math.round((last - first) / first * 100) : null;
-      if (pct !== null) {
-        tr.textContent = (pct >= 0 ? '↑ +' : '↓ ') + Math.abs(pct) + (unit||'');
-        tr.className = 'sp-trend ' + (pct >= 0 ? 'up' : 'dn');
-      }
-    }
-  }
+function momBadge(cur,prev,invert){
+  if(!prev||Number(prev)===0)return '<span class="fn-mom neu">↔ — vs ant.</span>';
+  const p=(Number(cur)-Number(prev))/Number(prev)*100;
+  const good=invert?p<0:p>0, cls=p===0?'neu':good?'up':'dn';
+  return `<span class="fn-mom ${cls}">${p>0?'↑':p<0?'↓':'↔'} ${Math.abs(p).toFixed(1)}% vs ant.</span>`;
+}
+function execDelta(cur,prev,invert){
+  if(!prev||Number(prev)===0)return '<span class="exec-delta neu">—</span>';
+  const p=(Number(cur)-Number(prev))/Number(prev)*100;
+  const good=invert?p<0:p>0, cls=p===0?'neu':good?'up':'dn';
+  return `<span class="exec-delta ${cls}">${p>0?'↑':'↓'} ${Math.abs(p).toFixed(1)}% vs ant.</span>`;
+}
+function deltaBadge(cur,prev,invert){
+  if(!prev||Number(prev)===0)return '<span class="delta d-neu">—</span>';
+  const p=(Number(cur)-Number(prev))/Number(prev)*100;
+  const good=invert?p<0:p>0, cls=good?'d-up':'d-dn';
+  return `<span class="delta ${cls}">${p>0?'↑':'↓'}${Math.abs(p).toFixed(1)}%</span>`;
+}
+function progBlock(act,goal,color,lbl){
+  const w=goal>0?Math.min(100,Math.round(Number(act)/Number(goal)*100)):0;
+  return `<div class="prog"><div class="prog-track"><div class="prog-fill" style="width:${w}%;background:${color}"></div></div><div class="prog-lbl">${lbl}</div></div>`;
+}
+function sparkSVG(vals,color){
+  const nz=(vals||[]).filter(v=>v>0); if(nz.length<2)return '';
+  const mn=Math.min(...nz),mx=Math.max(...nz),W=200,H=60;
+  const pts=vals.map((v,i)=>{
+    const x=(i/(vals.length-1))*W;
+    const y=mx===mn?H/2:H-((v-mn)/(mx-mn)*(H-12)+6);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  return `<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="flex:1;display:block;"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+}
+function setterPhase(appts,calls,metaExp){
+  if(appts>20&&calls>=metaExp*0.8)return '<span class="phase ph-hero">E-HERO ⭐</span>';
+  if(appts>=10&&calls>=metaExp*0.7)return '<span class="phase ph-ldr">E-LEADER</span>';
+  return '<span class="phase ph-rsc">RESCUE-E1</span>';
+}
+function bonusEst(appts,calls,metaExp,deals){
+  if(!deals||deals<1)return '<span class="dim">$0</span>';
+  if(appts>20&&calls>=metaExp*0.8)return `<span class="hi">$${appts*7}+</span>`;
+  if(appts>=10&&calls>=metaExp*0.7)return `<span>$${appts*5}+</span>`;
+  return '<span class="dim">$0</span>';
 }
 
-// ── FUNNEL BARS (dinámico desde PACING)
-function mkFunnel() {
-  const l = PACING[0].actual, a = PACING[1].actual, d = PACING[2].actual;
-  const l2a = l > 0 ? (a / l * 100).toFixed(1) : null;
-  const a2d = a > 0 ? (d / a * 100).toFixed(1) : null;
-  const n0 = document.getElementById('fn-n0'); if (n0) n0.textContent = fmtNum(l);
-  const n1 = document.getElementById('fn-n1'); if (n1) n1.textContent = fmtNum(a);
-  const n2 = document.getElementById('fn-n2'); if (n2) n2.textContent = fmtNum(d);
-  const p1 = document.getElementById('fn-p1'); if (p1) p1.textContent = fmtPct(l2a);
-  const p2 = document.getElementById('fn-p2'); if (p2) p2.textContent = fmtPct(a2d);
-  // #8 delta vs previous period
-  const prv2 = ALL_D.leads.length >= 2 ? ALL_D.leads.length - 2 : 0;
-  const pl2 = ALL_D.leads[prv2]||0, pa2 = ALL_D.appts[prv2]||0, pd2 = ALL_D.deals[prv2]||0; // #2 also used for badge chips
-  const setFnDelta = (id, curr, prev) => {
-    const el = document.getElementById(id); if (!el) return;
-    if (!prev || !curr) { el.textContent = '—'; return; }
-    const pct = Math.round((curr-prev)/prev*100);
-    el.textContent = (pct>=0?'▲ +':'▼ ')+Math.abs(pct)+'% vs ant.';
-    el.style.fontSize='9px'; el.style.opacity='.8';
-  };
-  setFnDelta('fn-d0', l, pl2);
-  setFnDelta('fn-d2', d, pd2);
-
-
+// ── Section renders ──
+function renderHeader(d){
+  const upd=document.querySelector('.badge-upd');
+  const per=document.querySelector('.badge-per');
+  if(upd) upd.textContent='Act. '+(d.updated||'—');
+  if(per) per.textContent=(d.period?.short||'—')+' · período HPG';
 }
 
-// ── KPI CARDS (dinámico desde PACING y ALL_D)
-function mkKpiCards() {
-  const d = PACING[2].actual;
-  const goalD = PACING[2].goal || 9;
-
-  const prevIdx = ALL_D.leads.length >= 2 ? ALL_D.leads.length - 2 : 0;
-  const pD = ALL_D.deals[prevIdx] || 0;
-  const spendNow  = ALL_D.spend.length > 0 ? ALL_D.spend[ALL_D.spend.length-1] : 0;
-  const spendPrev = ALL_D.spend.length >= 2 ? ALL_D.spend[prevIdx] : 0;
-
-  // Inversión card — from Meta spend
-  const invEl = document.getElementById('kinv-val');
-  if (invEl) invEl.textContent = spendNow > 0 ? '$' + Math.round(spendNow).toLocaleString() : '—';
-  const invProjEl = document.getElementById('kinv-proj');
-  if (invProjEl) invProjEl.textContent = spendNow > 0 ? 'Inversión acumulada · período actual' : 'sin datos de inversión';
-  const invFillEl = document.getElementById('kinv-fill');
-  if (invFillEl) invFillEl.style.width = spendNow > 0 ? Math.min(100, (spendNow / 10000) * 100).toFixed(1) + '%' : '0%';
-  const invLblEl = document.getElementById('kinv-lbl');
-  if (invLblEl) invLblEl.textContent = spendNow > 0 ? '$' + Math.round(spendNow).toLocaleString() + ' gastados' : 'sin datos';
-  const invDeltaEl = document.getElementById('kinv-delta');
-  if (invDeltaEl && spendNow > 0) {
-    const pSpend = ALL_D.spend[prevIdx] || 0;
-    const dInv = pSpend > 0 ? Math.round((spendNow - pSpend) / pSpend * 100) : null;
-    if (dInv !== null) {
-      invDeltaEl.textContent = (dInv >= 0 ? '↑ +' : '↓ ') + Math.abs(dInv) + '%';
-      invDeltaEl.className = 'delta ' + (dInv <= 0 ? 'up' : 'dn');
-      invDeltaEl.style.background = ''; invDeltaEl.style.color = '';
-    }
-  }
-
-  // Costo/Deal card — inverted (lower = green)
-  const cpdNow  = d > 0 && spendNow  > 0 ? Math.round(spendNow  / d)  : 0;
-  const cpdPrev = pD > 0 && spendPrev > 0 ? Math.round(spendPrev / pD) : 0;
-  const dCpd = cpdPrev > 0 && cpdNow > 0 ? Math.round((cpdNow - cpdPrev) / cpdPrev * 100) : null;
-  const cpdValEl = document.getElementById('kcpd-val');
-  if (cpdValEl) cpdValEl.textContent = cpdNow > 0 ? '$' + cpdNow.toLocaleString() : '—';
-  const cpdProjEl = document.getElementById('kcpd-proj');
-  if (cpdProjEl) cpdProjEl.textContent = cpdNow > 0 ? 'vs. período anterior (↓ = mejor)' : 'sin datos de inversión';
-  const cpdFillEl = document.getElementById('kcpd-fill');
-  if (cpdFillEl) cpdFillEl.style.width = cpdNow > 0 ? Math.min(100, (cpdNow / 5000) * 100).toFixed(1) + '%' : '0%';
-  const cpdDelta = document.getElementById('kdelta-cpd');
-  if (cpdDelta && dCpd !== null) {
-    cpdDelta.textContent = (dCpd <= 0 ? '↓ ' : '↑ +') + Math.abs(dCpd) + '%';
-    cpdDelta.className = 'delta ' + (dCpd <= 0 ? 'up' : 'dn');
-    cpdDelta.style.background = ''; cpdDelta.style.color = '';
-  } else if (cpdDelta) { cpdDelta.textContent = '—'; cpdDelta.className = 'delta'; cpdDelta.style.background = 'var(--bg3)'; cpdDelta.style.color = 'var(--txd)'; }
-
-  // Revenue Total card
-  const revTotal = window._REVENUE_TOTAL !== undefined && window._REVENUE_TOTAL > 0 ? window._REVENUE_TOTAL : d * 12000;
-  const revAvg   = d > 0 ? Math.round(revTotal / d) : 0;
-  const metaRev  = goalD * 12000;
-  const revFillPct = Math.min(100, (d / goalD * 100)).toFixed(1);
-  const revEl = document.getElementById('krev');
-  if (revEl) revEl.textContent = revTotal > 0 ? '$' + revTotal.toLocaleString() : '—';
-  const projEl = document.getElementById('kprojrev');
-  if (projEl) projEl.textContent = revAvg > 0 ? 'Promedio: $' + revAvg.toLocaleString() + ' / deal' : '—';
-  const lblEl = document.getElementById('krevlbl');
-  if (lblEl) lblEl.textContent = d + ' / ' + goalD + ' meta · $' + (metaRev / 1000).toFixed(0) + 'k meta';
-  const fillEl = document.getElementById('krevfill');
-  if (fillEl) fillEl.style.width = revFillPct + '%';
-  const dRevEl = document.getElementById('kdelta-rev');
-  if (dRevEl) {
-    const dRev = pD > 0 ? Math.round((d - pD) / pD * 100) : null;
-    dRevEl.textContent = dRev !== null ? (dRev >= 0 ? '↑ +' : '↓ ') + Math.abs(dRev) + '%' : '—';
-    dRevEl.className = 'delta ' + (dRev !== null && dRev >= 0 ? 'up' : 'dn');
-  }
-
-  // Total Llamadas card
-  const totalCalls = SETTERS.reduce((sum, s) => sum + (s.calls || 0), 0);
-  const callsEl = document.getElementById('kcalls-val');
-  if (callsEl) callsEl.textContent = totalCalls > 0 ? totalCalls.toLocaleString() : '—';
-  const callsProjEl = document.getElementById('kcalls-proj');
-  if (callsProjEl) callsProjEl.textContent = totalCalls > 0 ? 'llamadas este período' : 'sin datos';
-  const callsFillEl = document.getElementById('kcalls-fill');
-  if (callsFillEl) callsFillEl.style.width = totalCalls > 0 ? Math.min(100, (totalCalls / 20000) * 100).toFixed(1) + '%' : '0%';
-  const callsLblEl = document.getElementById('kcalls-lbl');
-  if (callsLblEl) callsLblEl.textContent = totalCalls > 0 ? SETTERS.length + ' setters activos' : 'período en curso';
-}
-
-// ── PACING BARS + CHARTS
-function mkPacing() {
-  PACING.forEach((p, i) => {
-    const pct    = p.actual / p.goal;
-    const expPct = p.expected / p.goal;
-    const ahead  = p.actual >= p.expected;
-    const diff   = p.expected > 0 ? Math.round((p.actual - p.expected) / p.expected * 100) : 0;
-
-    // Número actual
-    const valEl = document.getElementById('pval' + i);
-    if (valEl) valEl.textContent = p.actual;
-    // Sub texto
-    const subEl = document.getElementById('psub' + i);
-    if (subEl) subEl.innerHTML = `de <strong>${p.expected}</strong> esperados · Meta: <strong>${p.goal}</strong>`;
-    // Labels bajo la barra
-    const expEl  = document.getElementById('pexp'  + i);
-    const goalEl = document.getElementById('pgoal' + i);
-    if (expEl)  expEl.textContent  = 'Esp: '  + p.expected;
-    if (goalEl) goalEl.textContent = 'Meta: ' + p.goal;
-    // Bar fill
-    const fill = document.getElementById('pfill' + i + 'b');
-    if (fill) { fill.style.width = Math.min(100, pct * 100).toFixed(1) + '%'; fill.style.background = ahead ? p.color : '#DC2626'; }
-    // Expected marker
-    const mark = document.getElementById('pmark' + i + 'b');
-    if (mark) mark.style.left = Math.min(99, expPct * 100).toFixed(1) + '%';
-    // Delta badge
-    const del = document.getElementById('pdelta' + i);
-    if (del) { del.textContent = (ahead ? '↑ +' : '↓ ') + Math.abs(diff) + '%'; del.className = 'pacing-delta ' + (ahead ? 'up' : 'dn'); }
-
-    // Mini bar chart: [Expected, Actual, Goal]
-    const canvas = document.getElementById('pc' + i);
-    if (!canvas) return;
-    new Chart(canvas, {
-      type: 'bar',
-      data: {
-        labels: ['Esperado', 'Actual', 'Meta'],
-        datasets: [{
-          data: [p.expected, p.actual, p.goal],
-          backgroundColor: ['rgba(148,163,184,.4)', ahead ? p.color : '#DC2626', 'rgba(148,163,184,.2)'],
-          borderColor: ['#94A3B8', ahead ? p.color : '#DC2626', '#CBD5E1'],
-          borderWidth: [1.5, 2, 1.5],
-          borderRadius: 4
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false, animation: false,
-        plugins: { legend: { display: false },
-          tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y } }
-        },
-        scales: {
-          x: { grid: { display: false }, ticks: { font: { size: 9 }, color: '#94A3B8' } },
-          y: { display: false }
-        }
-      }
-    });
-  });
-}
-
-// ── LEAD STATUS
-function mkLeadStatus() {
-  const labels = LEAD_STATUS.labels;
-  const values = LEAD_STATUS.values;
-  const total = values.reduce((s,v) => s+v, 0);
-  const palette = ['#1D4ED8','#DC2626','#0369A1','#3B82F6','#64748B','#334155','#94A3B8','#CBD5E1','#059669','#D97706'];
-  const colors = labels.map((_,i) => palette[i % palette.length]);
-  new Chart(document.getElementById('leadStatusChart'), {
-    type: 'bar',
-    data: { labels, datasets: [{ data: values, backgroundColor: colors, borderRadius: 4 }] },
-    options: {
-      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false },
-        tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.x + ' (' + Math.round(ctx.parsed.x/755*100) + '%)' } }
-      },
-      scales: {
-        x: { grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 11 } } },
-        y: { grid: { display: false }, ticks: { color: '#0F172A', font: { size: 12 } } }
-      }
-    }
-  });
-}
-
-// ── DONUTS
-function mkDonut(id, val, color) {
-  new Chart(document.getElementById(id), {
-    type: 'doughnut',
-    data: { datasets: [{ data: [val, 100-val], backgroundColor: [color, '#F1F5F9'], borderWidth: 0 }] },
-    options: { cutout: '76%', responsive: true, maintainAspectRatio: false, animation: false, plugins: { legend: { display: false }, tooltip: { enabled: false } } }
-  });
-}
-
-// ── HISTORICAL CHARTS
-function getRange(n, si) {
-  const start = si !== undefined ? si : ALL_PER.length - n;
-  const end   = start + n;
-  const labels = ALL_PER.slice(start, end);
-  const d = {};
-  Object.keys(ALL_D).forEach(k => d[k] = ALL_D[k].slice(start, end));
-  return { labels, d };
-}
-
-const X_SCALE = {
-  grid: { color: '#F1F5F9' },
-  ticks: {
-    color: '#64748B',
-    font: { size: 9 },
-    maxRotation: 90,
-    minRotation: 45,
-    autoSkip: false
-  }
-};
-
-function mkHistCharts(n, si) {
-  const startIdx = si !== undefined ? si : (n !== undefined ? ALL_PER.length - n : rsA);
-  const count    = n  !== undefined ? n  : (rsB - rsA + 1);
-  const { labels, d } = getRange(count, startIdx);
-
-  const spendCfg = {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [
-        { type: 'bar',  label: 'Inversión $', data: d.spend, backgroundColor: 'rgba(12,35,64,.12)', borderColor: '#0C2340', borderWidth: 1.5, borderRadius: 4, yAxisID: 'yL' },
-        { type: 'line', label: 'CPR $',       data: d.cpr,   borderColor: '#475569', backgroundColor: 'transparent', tension: 0.4, pointRadius: 3, pointBackgroundColor: '#475569', borderWidth: 2, yAxisID: 'yR' }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'top', labels: { font: { size: 11 }, padding: 10, boxWidth: 10 } } },
-      scales: {
-        x:  X_SCALE,
-        yL: { position: 'left',  grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 }, callback: v => '$' + (v >= 1000 ? (v/1000).toFixed(0)+'k' : v) } },
-        yR: { position: 'right', grid: { display: false },    ticks: { color: '#475569', font: { size: 10 }, callback: v => '$' + v } }
-      }
-    }
-  };
-  const volCfg = {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [
-        { label: 'Leads', data: d.leads, borderColor: '#1D4ED8', backgroundColor: 'rgba(29,78,216,.05)', fill: true, tension: 0.4, pointRadius: 3, borderWidth: 2,   yAxisID: 'yL' },
-        { label: 'Appts', data: d.appts, borderColor: '#0369A1', backgroundColor: 'transparent',          tension: 0.4, pointRadius: 3, borderWidth: 2,               yAxisID: 'yL' },
-        { label: 'Deals', data: d.deals, borderColor: '#475569', backgroundColor: 'rgba(71,85,105,.05)', fill: true, tension: 0.4, pointRadius: 3, borderWidth: 2.5, yAxisID: 'yR' }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'top', labels: { font: { size: 11 }, padding: 10, boxWidth: 10 } } },
-      scales: {
-        x:  X_SCALE,
-        yL: { position: 'left',  grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 } } },
-        yR: { position: 'right', grid: { display: false },    ticks: { color: '#475569', font: { size: 10 } } }
-      }
-    }
-  };
-  if (chartSpend)  chartSpend.destroy();
-  if (chartVolume) chartVolume.destroy();
-  chartSpend  = new Chart(document.getElementById('histSpend'),  spendCfg);
-  chartVolume = new Chart(document.getElementById('histVolume'), volCfg);
-  mkPeriodTable(count, startIdx);
-}
-
-// ── RANGE SELECTOR BAR
-function buildRangeBar() {
-  rsA = 0; rsB = ALL_PER.length - 1;
-  const bar = document.getElementById('rsBar');
-  if (!bar) return;
-  bar.innerHTML = '';
-  ALL_PER.forEach((lbl, i) => {
-    const seg = document.createElement('div');
-    seg.className = 'rs-seg'; seg.dataset.i = i;
-    seg.innerHTML = `<div class="rs-tick"></div><div class="rs-lbl">${lbl}</div>`;
-    bar.appendChild(seg);
-  });
-  paintRangeBar();
-
-  bar.addEventListener('mousedown', e => {
-    const seg = e.target.closest('.rs-seg'); if (!seg) return;
-    rsDrag = true; rsAnchor = +seg.dataset.i;
-    rsA = rsB = rsAnchor; paintRangeBar(); e.preventDefault();
-  });
-  bar.addEventListener('mouseover', e => {
-    if (!rsDrag) return;
-    const seg = e.target.closest('.rs-seg'); if (!seg) return;
-    const i = +seg.dataset.i;
-    rsA = Math.min(rsAnchor, i); rsB = Math.max(rsAnchor, i); paintRangeBar();
-  });
-  document.addEventListener('mouseup', () => {
-    if (!rsDrag) return; rsDrag = false;
-    mkHistCharts(rsB - rsA + 1, rsA);
-    mkPeriodTable(rsB - rsA + 1, rsA);
-    document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('on'));
-  });
-
-  bar.addEventListener('touchstart', e => {
-    const t = e.touches[0];
-    const seg = document.elementFromPoint(t.clientX, t.clientY)?.closest('.rs-seg'); if (!seg) return;
-    rsDrag = true; rsAnchor = +seg.dataset.i; rsA = rsB = rsAnchor; paintRangeBar();
-  }, {passive:true});
-  bar.addEventListener('touchmove', e => {
-    if (!rsDrag) return;
-    const t = e.touches[0];
-    const seg = document.elementFromPoint(t.clientX, t.clientY)?.closest('.rs-seg'); if (!seg) return;
-    const i = +seg.dataset.i;
-    rsA = Math.min(rsAnchor, i); rsB = Math.max(rsAnchor, i); paintRangeBar();
-  }, {passive:true});
-  document.addEventListener('touchend', () => {
-    if (!rsDrag) return; rsDrag = false;
-    mkHistCharts(rsB - rsA + 1, rsA);
-    document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('on'));
-  });
-}
-
-function paintRangeBar() {
-  document.querySelectorAll('.rs-seg').forEach((s, i) => {
-    s.classList.toggle('rs-on', i === rsA || i === rsB);
-    s.classList.toggle('rs-in', i > rsA && i < rsB);
-  });
-  const lbl = document.getElementById('rsRangeLabel');
-  if (lbl) lbl.textContent = ALL_PER[rsA] + ' → ' + ALL_PER[rsB] + '  (' + (rsB - rsA + 1) + ' períodos)';
-}
-
-function rsQuick(n) {
-  rsA = ALL_PER.length - n; rsB = ALL_PER.length - 1;
-  paintRangeBar();
-  mkHistCharts(n, rsA);
-  document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('on'));
-  event.target.classList.add('on');
-}
-
-function setRange(n, btn) {
-  rsA = ALL_PER.length - n; rsB = ALL_PER.length - 1;
-  currentRange = n;
-  document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  paintRangeBar();
-  mkHistCharts(n);
-}
-
-// ── PERIOD TABLE
-function mkPeriodTable(n, si) {
-  const { labels, d } = getRange(n, si);
-  const tbody = document.getElementById('periodTableBody');
-  tbody.innerHTML = '';
-  labels.forEach((lbl, i) => {
-    const la = d.appts[i], ll = d.leads[i], ld = d.deals[i];
-    const laR = ll > 0 ? (la/ll*100).toFixed(1) : '0.0';
-    const ldR = la > 0 ? (ld/la*100).toFixed(1) : '0.0';
-    const spendVal = d.spend[i] > 0 ? '$'+d.spend[i].toLocaleString() : '—';
-    const cprVal   = d.cpr[i]   > 0 ? '$'+d.cpr[i]                   : '—';
-    tbody.innerHTML += `<tr>
-      <td><strong>${lbl}</strong></td>
-      <td class="num">${spendVal}</td>
-      <td class="num">${ll > 0 ? ll : '—'}</td>
-      <td class="num">${la > 0 ? la : '—'}</td>
-      <td class="num ${ld >= 7 ? 'hi' : ld >= 4 ? 'md' : 'lo'}">${ld > 0 ? ld : '—'}</td>
-      <td class="num">${cprVal}</td>
-      <td class="dim">${ll > 0 && la > 0 ? laR+'%' : '—'}</td>
-      <td class="dim">${la > 0 && ld > 0 ? ldR+'%' : '—'}</td>
-    </tr>`;
-  });
-}
-
-// ── CPD BAR CHART (por campaña, solo con deals)
-function mkCpdChart() {
-  const withDeals = CAMPAIGNS.filter(c => c.deals > 0 && c.spend > 0);
-  const cpd = withDeals.map(c => Math.round(c.spend / c.deals));
-  const roas = withDeals.map(c => (c.deals * 12000) / c.spend);
-  const colors = roas.map(r => r >= 10 ? '#1D4ED8' : r >= 5 ? '#0369A1' : '#475569');
-  new Chart(document.getElementById('cpdChart'), {
-    type: 'bar',
-    data: {
-      labels: withDeals.map(c => c.name),
-      datasets: [{ data: cpd, backgroundColor: colors.map(c => c + '22'), borderColor: colors, borderWidth: 2, borderRadius: 5 }]
-    },
-    options: {
-      indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: ctx => {
-          const r = roas[ctx.dataIndex];
-          return ` $${ctx.parsed.x.toLocaleString()} CPD · ROAS ${r.toFixed(1)}x`;
-        }}}
-      },
-      scales: {
-        x: { grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 }, callback: v => '$' + v.toLocaleString() } },
-        y: { grid: { display: false }, ticks: { color: '#0F172A', font: { size: 12 } } }
-      }
-    }
-  });
-}
-
-// ── ROAS CARDS (por campaña)
-function mkRoasCards() {
-  const container = document.getElementById('roasCards');
-  const sorted = [...CAMPAIGNS].sort((a, b) => {
-    const ra = a.deals > 0 ? (a.deals * 12000) / a.spend : -1;
-    const rb = b.deals > 0 ? (b.deals * 12000) / b.spend : -1;
-    return rb - ra;
-  });
-  sorted.forEach(c => {
-    const hasDeal = c.deals > 0;
-    const roas = hasDeal ? ((c.deals * 12000) / c.spend) : 0;
-    const cpd = hasDeal ? Math.round(c.spend / c.deals) : null;
-    const color = hasDeal ? (roas >= 10 ? '#1D4ED8' : roas >= 5 ? '#0369A1' : '#475569') : '#94A3B8';
-    const roasTxt = hasDeal ? roas.toFixed(1) + 'x' : '—';
-    const cpdTxt  = hasDeal ? '$' + cpd.toLocaleString() : 'Sin deals';
-    const pct     = hasDeal ? Math.min(100, (roas / 20) * 100) : 0;
-    container.innerHTML += `<div style="display:flex;align-items:center;gap:12px;">
-      <div style="flex:0 0 110px;font-size:12px;font-weight:600;color:var(--tx);">${c.name}</div>
-      <div style="flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;">
-        <div style="height:100%;width:${pct}%;background:${color};border-radius:4px;"></div>
-      </div>
-      <div style="flex:0 0 44px;text-align:right;font-size:13px;font-weight:700;color:${color};">${roasTxt}</div>
-      <div style="flex:0 0 72px;text-align:right;font-size:11px;color:var(--txm);">${cpdTxt}</div>
+function renderExecBar(d){
+  const bar=document.getElementById('exec-bar'); if(!bar)return;
+  const h=d.history||{}, n=(h.periods||[]).length;
+  const ps=h.spend?.[n-2]||0, pd=h.deals?.[n-2]||0;
+  const spend=d.meta?.spend||0, deals=d.funnel?.deals||0;
+  const cpd=deals>0?spend/deals:null, pCpd=pd>0?ps/pd:null;
+  const rev=d.revenue_total||0, avg=deals>0?rev/deals:null;
+  bar.innerHTML=`
+    <div class="exec-item">
+      <div class="exec-label">Inversión Total</div>
+      <div class="exec-val">${fmt$(spend)}</div>
+      <div class="exec-sub">Meta Ads · acumulado período</div>
+      ${execDelta(spend,ps)}
+    </div>
+    <div class="exec-item">
+      <div class="exec-label">Costo por Deal</div>
+      <div class="exec-val">${cpd!=null?fmtCPR(cpd):'—'}</div>
+      <div class="exec-sub">Inversión ÷ deals</div>
+      ${cpd!=null&&pCpd?execDelta(cpd,pCpd,true):'<span class="exec-delta neu">—</span>'}
+    </div>
+    <div class="exec-item">
+      <div class="exec-label">Revenue Total</div>
+      <div class="exec-val">${fmt$(rev)}</div>
+      <div class="exec-sub">deals cerrados · período</div>
+      <span class="exec-delta neu">—</span>
+    </div>
+    <div class="exec-item" style="border-right:none;">
+      <div class="exec-label">Promedio por Deal</div>
+      <div class="exec-val">${avg!=null?fmt$(avg):'—'}</div>
+      <div class="exec-sub">Revenue ÷ deals</div>
+      <span class="exec-delta neu">—</span>
     </div>`;
-  });
 }
 
-// ── META CHART — CPD + ROAS histórico
-function mkMetaChart() {
-  const cpd  = ALL_D.deals.map((d,i) => d > 0 && ALL_D.spend[i] > 0 ? Math.round(ALL_D.spend[i] / d) : null);
-  const roas = ALL_D.deals.map((d,i) => d > 0 && ALL_D.spend[i] > 0 ? +((d * 12000) / ALL_D.spend[i]).toFixed(1) : null);
-  new Chart(document.getElementById('metaChart'), {
-    type: 'bar',
-    data: {
-      labels: ALL_PER,
-      datasets: [
-        { type: 'bar',  label: 'Inversión $', data: ALL_D.spend, backgroundColor: 'rgba(12,35,64,.10)', borderColor: '#0C2340', borderWidth: 1.5, borderRadius: 4, yAxisID: 'yL' },
-        { type: 'line', label: 'CPD $',       data: cpd,  borderColor: '#475569', backgroundColor: 'transparent', tension: 0.4, pointRadius: 4, pointBackgroundColor: '#475569', borderWidth: 2, yAxisID: 'yL', borderDash: [] },
-        { type: 'line', label: 'ROAS (x)',    data: roas, borderColor: '#1D4ED8', backgroundColor: 'rgba(29,78,216,.06)', fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#1D4ED8', borderWidth: 2.5, yAxisID: 'yR' }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { position: 'top', labels: { font: { size: 11 }, padding: 12, boxWidth: 10 } },
-        tooltip: { callbacks: { label: ctx => {
-          if (ctx.dataset.label === 'CPD $') return ` $${ctx.parsed.y?.toLocaleString()} CPD`;
-          if (ctx.dataset.label === 'ROAS (x)') return ` ${ctx.parsed.y}x ROAS`;
-          return ` $${ctx.parsed.y?.toLocaleString()}`;
-        }}}
-      },
-      scales: {
-        yL: { position: 'left', grid: { color: '#F1F5F9' }, ticks: { color: '#64748B', font: { size: 10 }, callback: v => '$' + (v >= 1000 ? (v/1000).toFixed(0)+'k' : v) } },
-        yR: { position: 'right', grid: { display: false }, ticks: { color: '#1D4ED8', font: { size: 10 }, callback: v => v + 'x' } }
-      }
-    }
-  });
+function renderFunnel(d){
+  const col=document.getElementById('funnel-left'); if(!col)return;
+  const h=d.history||{}, n=(h.periods||[]).length;
+  const pClk=h.clicks?.[n-2]||0, pLd=h.leads?.[n-2]||0;
+  const pAp=h.appts?.[n-2]||0, pDl=h.deals?.[n-2]||0;
+  const clk=d.meta?.clicks||0, lds=d.funnel?.leads||0;
+  const apt=d.funnel?.appts||0, dls=d.funnel?.deals||0;
+  const steps=[
+    {n:1,label:'Clics en anuncios',sub:'Meta Ads · Link clicks',cur:clk,prev:pClk,ref:clk,refLbl:'entrada',cls:'s1',w:'100%'},
+    {n:2,label:'Leads Operativos',sub:'Nombre + teléfono + status activo',cur:lds,prev:pLd,ref:clk,refLbl:'de clics',cls:'s2',w:'80%'},
+    {n:3,label:'Citas Efectivas',sub:'Still W + Completed + Sale',cur:apt,prev:pAp,ref:lds,refLbl:'de leads',cls:'s3',w:'55%'},
+    {n:4,label:'Deals',sub:'Revenue total período',cur:dls,prev:pDl,ref:apt,refLbl:'de citas',cls:'s4',w:'32%'},
+  ];
+  col.innerHTML='<div class="fn-col-title">Embudo de conversión — período actual</div><div class="sp-rows">'
+    +steps.map(s=>`<div class="sp-row"><div class="fn-step ${s.cls}" style="width:${s.w};">
+      <div class="fn-step-left"><span class="fn-num">${s.n}</span>
+        <div><div class="fn-label">${s.label}</div><div class="fn-sub">${s.sub}</div></div></div>
+      <div class="fn-right">
+        ${momBadge(s.cur,s.prev)}
+        <div class="fn-val">${fmtN(s.cur)}</div>
+        <div class="fn-pct">${s.n===1||!s.ref?'100% · entrada':fmtPct(pct(s.cur,s.ref))+' '+s.refLbl}</div>
+      </div></div></div>`).join('')+'</div>';
 }
 
-// ── CAMPAIGN TABLE
-function mkCampTable() {
-  const tbody = document.getElementById('campTable');
-  CAMPAIGNS.forEach(c => {
-    const dr = c.eff > 0 && c.deals > 0 ? (c.deals/c.eff*100).toFixed(0) : null;
-    const f = v => v > 0 ? v : '—';
-    tbody.innerHTML += `<tr>
-      <td><span style="display:inline-flex;align-items:center;gap:6px;"><span class="camp-dot dot-${c.st}"></span><strong>${c.name}</strong></span></td>
-      <td class="num">${c.spend > 0 ? '$'+c.spend.toLocaleString() : '—'}</td>
-      <td class="num">${f(c.res)}</td>
-      <td class="num">${f(c.crm)}</td>
-      <td class="num">${f(c.appts)}</td>
-      <td class="num">${f(c.eff)}</td>
-      <td class="num">${f(c.deals)}</td>
-      <td class="num">${c.cpr > 0 ? '$'+c.cpr : '—'}</td>
-      <td class="dim">${dr !== null ? dr+'%' : '—'}</td>
-    </tr>`;
-  });
+function renderSparklines(d){
+  const col=document.getElementById('funnel-right'); if(!col)return;
+  const h=d.history||{};
+  const items=[
+    {label:'Leads Operativos',cls:'c2',color:'#1D4ED8',vals:h.leads||[]},
+    {label:'Citas Efectivas',cls:'c3',color:'#0369A1',vals:h.appts||[]},
+    {label:'Deals',cls:'c4',color:'#059669',vals:h.deals||[]},
+    {label:'CPR — Costo / Resultado',cls:'c1',color:'#0C2340',vals:h.cpr||[]},
+  ];
+  col.innerHTML='<div class="fn-col-title">Tendencia histórica · últimos períodos</div><div class="sp-rows">'
+    +items.map(it=>{
+      const svg=sparkSVG(it.vals,it.color);
+      const len=it.vals.length, cur=it.vals[len-2]||0, prev=it.vals[len-3]||0;
+      const tr=cur-prev, tCls=tr>0?'hi':tr<0?'lo':'dim';
+      return `<div class="sp-row"><div class="sp-card" style="display:flex;flex-direction:column;gap:2px;">
+        <div class="sp-top"><span class="sp-label ${it.cls}">${it.label}</span><span class="sp-trend ${tCls}">${tr>0?'+':''}${tr}</span></div>
+        ${svg||'<span class="sp-empty-state">Sin historial suficiente</span>'}
+      </div></div>`;
+    }).join('')+'</div>';
 }
 
-// ── SETTER HELPERS
-function getPhase(a,calls,metaExp) {
-  if(calls < metaExp) return{l:'RESCUE-E1',c:'ph-rsc'};
-  if(a<10)  return{l:'RESCUE-E1',c:'ph-rsc'};
-  if(a>20)  return{l:'E-HERO ⭐',c:'ph-hero'};
-  return{l:'E-LEADER',c:'ph-ldr'};
-}
-function calcBonus(s) {
-  const ph=getPhase(s.appts,s.calls,s.meta_expected);
-  if(ph.c==='ph-rsc') return 0;
-  const h=ph.c==='ph-hero';
-  return Math.round(s.appts*(h?BNS.pAH:BNS.pAL)+(s.hot||0)*(h?BNS.hH:BNS.hL)+(s.cold||0)*BNS.avg*(h?BNS.cH:BNS.cL));
-}
-
-function mkPodium() {
-  const sorted = [...SETTERS].sort((a,b) => b.appts - a.appts);
-  const order = [1,0,2];
-  const hts = ['pd-2','pd-1','pd-3'];
-  const rnks = ['🥈','🥇','🥉'];
-  let html = '';
-  order.forEach((idx,pos) => {
-    const s = sorted[idx]; if(!s) return;
-    const ph = getPhase(s.appts,s.calls,s.meta_expected);
-    html += `<div class="pd-item"><div class="${hts[pos]} pd-block"><span class="pd-rank">${rnks[pos]}</span></div><div class="pd-name">${s.name}</div><div class="pd-val">${s.appts} appts</div><span class="phase ${ph.c}">${ph.l}</span></div>`;
-  });
-  document.getElementById('podium').innerHTML = html;
-}
-
-function mkSetterTable() {
-  const tbody = document.getElementById('setterTable');
-  const sorted = [...SETTERS].sort((a,b) => b.appts - a.appts);
-  sorted.forEach(s => {
-    const ph = getPhase(s.appts,s.calls,s.meta_expected);
-    const bonus = calcBonus(s);
-    const conv = s.calls > 0 ? (s.appts/s.calls*100).toFixed(1) : '0.0';
-    const pct = Math.min(100, Math.round(s.appts/20*100));
-    const barColor = s.appts>20?'#059669':s.appts>=10?'#0EA5E9':'#94A3B8';
-    tbody.innerHTML += `<tr>
-      <td><span style="display:inline-flex;align-items:center;gap:8px;"><span class="av ${s.av}" style="width:28px;height:28px;font-size:11px;">${s.init}</span><strong>${s.name}</strong></span></td>
-      <td class="num">${fmtNum(s.leads)}</td>
-      <td class="num">${s.calls > 0 ? s.calls.toLocaleString() : '—'}</td>
-      <td class="num ${s.appts>0?'hi':''}">${fmtNum(s.appts)}</td>
-      <td class="num ${s.deals>0?'hi':'lo'}">${fmtNum(s.deals)}</td>
-      <td class="num">${conv}%</td>
-      <td><span class="phase ${ph.c}">${ph.l}</span></td>
-      <td class="num ${bonus>0?'hi':''}">${bonus>0?'$'+bonus.toLocaleString():'—'}</td>
-      <td style="min-width:110px;"><div style="height:6px;background:var(--bg3);border-radius:3px;margin-bottom:3px;overflow:hidden;"><div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;"></div></div><div style="font-size:10px;color:var(--txd)">${s.appts}/20 (${pct}%)</div></td>
-    </tr>`;
-  });
+function renderCapa1(d){
+  const row=document.getElementById('c1-kpis'); if(!row)return;
+  const m=d.meta||{}, h=d.history||{}, n=(h.periods||[]).length;
+  const ps=h.spend?.[n-2]||0, pc=h.cpr?.[n-2]||0;
+  const ctr=m.impressions>0?pct(m.clicks,m.impressions):0;
+  row.innerHTML=`
+    <div class="kpi k-c1">
+      <div class="kpi-top"><span class="kpi-lbl">Inversión</span>${deltaBadge(m.spend||0,ps)}</div>
+      <div class="kpi-val">${fmt$(m.spend)}</div>
+      <div class="kpi-sub">Acumulado período actual</div>
+      ${progBlock(d.period?.day||0,30,'var(--c1)','Día '+(d.period?.day||'—')+' / 30')}
+    </div>
+    <div class="kpi k-c1">
+      <div class="kpi-top"><span class="kpi-lbl">Impresiones</span><span class="delta d-neu">Meta</span></div>
+      <div class="kpi-val">${fmtN(m.impressions)}</div>
+      <div class="kpi-sub">Total · período</div>
+    </div>
+    <div class="kpi k-c1">
+      <div class="kpi-top"><span class="kpi-lbl">Clics</span><span class="delta d-neu">Meta</span></div>
+      <div class="kpi-val">${fmtN(m.clicks)}</div>
+      <div class="kpi-sub">Link clicks · CTR ${fmtPct(ctr)}</div>
+    </div>
+    <div class="kpi k-c1">
+      <div class="kpi-top"><span class="kpi-lbl">CPR — Costo / Resultado</span>${deltaBadge(m.cpr||0,pc,true)}</div>
+      <div class="kpi-val">${fmtCPR(m.cpr)}</div>
+      <div class="kpi-sub">${fmtN(m.results)} resultados · pixel Meta</div>
+    </div>`;
 }
 
-// ── APPLY live data from data.json
-function applyData(d) {
-  if (d.history && d.history.periods && d.history.periods.length) {
-    ALL_PER       = d.history.periods;
-    ALL_D.leads   = d.history.leads;
-    ALL_D.appts   = d.history.appts;
-    ALL_D.deals   = d.history.deals;
-    if (d.history.spend) ALL_D.spend = d.history.spend;
-    if (d.history.cpr)   ALL_D.cpr   = d.history.cpr;
-  }
-  if (d.pacing) { PACING = d.pacing; window._PACING_ORIG = JSON.parse(JSON.stringify(d.pacing)); }
-  if (d.funnel) FUNNEL = d.funnel;
-  if (d.lead_status) LEAD_STATUS = d.lead_status;
-  if (d.appts_breakdown) APPTS_BREAKDOWN = d.appts_breakdown;
-  if (d.period) {
-    document.querySelectorAll('.badge-per').forEach(el => el.textContent = d.period.label);
-    document.querySelectorAll('.badge-day').forEach(el => el.textContent = `Día ${d.period.day} / ${d.period.total_days} · ${d.period.pct}%`);
-    document.querySelectorAll('.badge-mock').forEach(el => el.remove());
-  }
-  if (d.setter_calls && d.setter_calls.length) {
-    const AV_MAP = {Oliver:'av-b',Silvia:'av-s',Emmanuel:'av-p',Pablo:'av-t',Daniela:'av-g',Alejandro:'av-b'};
-    SETTERS = d.setter_calls.map(s => ({
-      name: s.name, init: s.name.charAt(0), av: AV_MAP[s.name] || 'av-b',
-      leads: s.leads || 0, calls: s.calls || 0, appts: s.appts || 0,
-      deals: s.deals || 0, meta: s.meta || 6600, meta_expected: s.meta_expected || 0,
-      hot: 0, cold: 0
-    }));
-  }
-  if (d.revenue_total !== undefined) window._REVENUE_TOTAL = d.revenue_total;
-  if (d.product && d.product.length) PRODUCT = d.product;
-  if (d.geo     && d.geo.length)     GEO     = d.geo;
-  if (d.campaigns && d.campaigns.length) CAMPAIGNS = d.campaigns;
-  if (d.meta) window._META = d.meta;
-  if (d.period && d.period.label) {
-    const mTitle = document.getElementById('meta-sec-title');
-    if (mTitle) mTitle.textContent = 'Métricas Meta Ads — ' + d.period.label;
-  }
-  if (d.updated) {
-    const updEl = document.getElementById('badge-upd');
-    if (updEl) { updEl.textContent = 'Actualizado ' + d.updated; updEl.style.display = 'inline-block'; }
-  }
+function renderCampaigns(d){
+  const tb=document.getElementById('campaigns-tbody'); if(!tb)return;
+  const camps=d.campaigns||[];
+  if(!camps.length){tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--txd);padding:20px;font-style:italic;font-size:12px;">Sin datos de campañas</td></tr>';return;}
+  tb.innerHTML=camps.map(c=>`<tr>
+    <td>${c.name}</td>
+    <td class="num">${fmt$(c.spend)}</td>
+    <td class="num">${fmtN(c.res||0)}</td>
+    <td class="num">${fmtN(c.clicks||0)}</td>
+    <td class="num">${fmtCPR(c.cpr)}</td>
+    <td class="num dim">—</td>
+  </tr>`).join('');
 }
 
-// ── TASAS DE CONVERSIÓN (dynamic) #10/#11
-function mkTasas() {
-  const l=PACING[0].actual, a=PACING[1].actual, d=PACING[2].actual;
-  const prIdx=ALL_D.leads.length>=2?ALL_D.leads.length-2:0;
-  const pl=ALL_D.leads[prIdx]||0, pa=ALL_D.appts[prIdx]||0, pd=ALL_D.deals[prIdx]||0;
-  const spend=ALL_D.spend.length>0?ALL_D.spend[ALL_D.spend.length-1]:0;
-  const pspend=ALL_D.spend.length>=2?ALL_D.spend[prIdx]:0;
-  const cpr_now=ALL_D.cpr.length>0?ALL_D.cpr[ALL_D.cpr.length-1]:0;
-  const cpr_prev=ALL_D.cpr.length>=2?ALL_D.cpr[prIdx]:0;
-  const fmtR=v=>v!==null&&v!==undefined?(+v).toFixed(1)+'%':'—';
-  const fmtC=v=>v>0?'$'+Math.round(v).toLocaleString():'—';
-  const setEl=(id,val)=>{const e=document.getElementById(id);if(e)e.textContent=val;};
-  const setFill=(id,pct)=>{const e=document.getElementById(id);if(e)e.style.width=Math.min(100,pct||0)+'%';};
-  const fmtDelta=(curr,prev,inv)=>{if(!curr||!prev)return'—';const p=Math.round((curr-prev)/prev*100);const good=inv?p<=0:p>=0;return'<span class="'+`dim ${good?'hi':'lo'}`+'">'+(p>=0?'+':'')+p+'%</span>';};
-
-  // Conversion rates (percentages only)
-  const l2a=l>0?(a/l*100):null, a2d=a>0?(d/a*100):null, l2d=l>0?(d/l*100):null;
-  // Click→Lead: Meta results = spend/cpr; rate = crm_leads / meta_results * 100
-  const metaResults=cpr_now>0&&spend>0?spend/cpr_now:0;
-  const c2l=metaResults>0&&l>0?(l/metaResults*100):null;
-  setEl('rate-c2l',fmtR(c2l)); setFill('rate-c2l-fill',c2l&&Math.min(100,c2l));
-  setEl('rate-l2a',fmtR(l2a)); setFill('rate-l2a-fill',l2a&&l2a/20*100);
-  setEl('rate-a2d',fmtR(a2d)); setFill('rate-a2d-fill',a2d&&a2d/25*100);
-  setEl('rate-l2d',fmtR(l2d)); setFill('rate-l2d-fill',l2d&&l2d/5*100);
-
-  // Cost per stage
-  const cpd=d>0&&spend>0?spend/d:0;
-  setEl('cost-click', cpr_now>0?fmtC(cpr_now):'—');
-  setEl('cost-crm',   l>0&&spend>0?fmtC(spend/l):'—');
-  setEl('cost-appt',  a>0&&spend>0?fmtC(spend/a):'—');
-  document.getElementById('cost-deal')&&(document.getElementById('cost-deal').innerHTML=cpd>0?'<strong>$'+Math.round(cpd).toLocaleString()+'</strong>':'—');
-
-  // Deltas (cost per stage vs previous period)
-  const ccrm=l>0&&spend>0?spend/l:0, pcrm=pl>0&&pspend>0?pspend/pl:0;
-  const cappt=a>0&&spend>0?spend/a:0, pappt=pa>0&&pspend>0?pspend/pa:0;
-  document.getElementById('dcost-click')&&(document.getElementById('dcost-click').innerHTML=fmtDelta(cpr_now,cpr_prev,true));
-  document.getElementById('dcost-crm')&&(document.getElementById('dcost-crm').innerHTML=fmtDelta(ccrm,pcrm,true));
-  document.getElementById('dcost-appt')&&(document.getElementById('dcost-appt').innerHTML=fmtDelta(cappt,pappt,true));
-  document.getElementById('dcost-deal')&&(document.getElementById('dcost-deal').innerHTML=fmtDelta(cpd,pd>0&&pspend>0?pspend/pd:0,true));
+function renderLpv(d){
+  const area=document.getElementById('lpv-area'); if(!area)return;
+  const lpv=d.meta?.lpv||0;
+  const isEmpty=!lpv;
+  area.innerHTML=`
+    <div class="kpi ${isEmpty?'k-gray dim':'k-c1'}" style="flex:1;">
+      <div class="kpi-top"><span class="kpi-lbl">Visitas al Landing</span></div>
+      <div class="kpi-val">${fmtN(lpv)||'—'}</div>
+      <div class="kpi-sub">Meta Landing Page Views</div>
+    </div>
+    <div class="kpi k-gray dim" style="flex:1;">
+      <div class="kpi-top"><span class="kpi-lbl">ROAS por Ad Set</span></div>
+      <div class="kpi-val">—</div>
+      <div class="kpi-sub">Requiere ad_set_id en sync n8n</div>
+    </div>`;
 }
 
-// ── TOGGLE PERIOD MENU
-function togglePeriodMenu(e) {
-  e.stopPropagation();
-  const menu = document.getElementById('period-menu');
-  if (!menu) return;
-  if (menu.style.display === 'none') {
-    const cont = document.getElementById('pm-periods');
-    if (cont) cont.innerHTML = ALL_PER.map((p,i) =>
-      `<div onclick="pmSelectPeriod(${i})" style="padding:6px 14px;font-size:12px;cursor:pointer;color:var(--tx);hover:background:var(--bg2)">${p}</div>`
-    ).join('');
-    menu.style.display = 'block';
-  } else {
-    menu.style.display = 'none';
-  }
-}
-function pmQuick(n, btn) {
-  const menu = document.getElementById('period-menu');
-  if (menu) menu.style.display = 'none';
-  const total = ALL_PER.length;
-  const count = n > 0 ? Math.min(n, total) : total;
-  const startI = total - count;
-  rsA = startI; rsB = total - 1;
-  if (typeof paintRangeBar === 'function') paintRangeBar();
-  // Restore current period PACING when switching to overview
-  if (window._PACING_ORIG) PACING = JSON.parse(JSON.stringify(window._PACING_ORIG));
-  mkFunnel(); mkKpiCards(); if (typeof mkTasas === 'function') mkTasas();
-  const btn2 = document.getElementById('badge-per-btn');
-  if (btn2) btn2.textContent = (n===0 ? 'Todo el histórico' : 'Últimos '+count+' períodos') + ' ▾';
-}
-function pmSelectPeriod(i) {
-  const menu = document.getElementById('period-menu');
-  if (menu) menu.style.display = 'none';
-  const btn = document.getElementById('badge-per-btn');
-  if (btn) btn.textContent = ALL_PER[i] + ' ▾';
-  // Update page data for selected period
-  const l = ALL_D.leads[i] || 0;
-  const a = ALL_D.appts[i] || 0;
-  const d = ALL_D.deals[i] || 0;
-  // Clone PACING with selected period values
-  PACING = PACING.map((p, idx) => ({
-    ...p,
-    actual: [l, a, d][idx] || 0,
-    expected: [l, a, d][idx] || 0  // past period = achieved
-  }));
-  mkFunnel();
-  mkKpiCards();
-  if (typeof mkTasas === 'function') mkTasas();
-  // Highlight selected period in period list
-  document.querySelectorAll('#pm-periods div').forEach((el, j) => {
-    el.style.background = j === i ? 'var(--pril)' : '';
-    el.style.fontWeight = j === i ? '700' : '';
-    el.style.color = j === i ? 'var(--pri)' : 'var(--tx)';
-  });
-}
-document.addEventListener('click', () => {
-  const m = document.getElementById('period-menu');
-  if (m) m.style.display = 'none';
-});
-
-// ── ZERO → DASH helper
-function fmtNum(v, decimals) {
-  if (v === null || v === undefined || v === 0 || v === '0' || v === 0.0) return '—';
-  return decimals !== undefined ? parseFloat(v).toFixed(decimals) : String(v);
-}
-function fmtPct(v) {
-  if (!v || parseFloat(v) === 0) return '—';
-  return v + '%';
+function renderCapa2(d){
+  const row=document.getElementById('c2-kpis'); if(!row)return;
+  const lds=d.funnel?.leads||0, total=d.total_leads||0, spend=d.meta?.spend||0, clks=d.meta?.clicks||0;
+  const excl=Math.max(0,total-lds);
+  const cpl=lds>0?spend/lds:null, rate=clks>0?pct(lds,clks):null;
+  row.innerHTML=`
+    <div class="kpi k-c2">
+      <div class="kpi-top"><span class="kpi-lbl">Leads Operativos</span><span class="delta d-neu">Filtrado</span></div>
+      <div class="kpi-val">${fmtN(lds)}</div>
+      <div class="kpi-sub">de ${fmtN(total)} totales · ${fmtN(excl)} excluidos (DNC, OOR, Unreachable)</div>
+      ${progBlock(lds,total,'var(--c2)',total>0?fmtPct(pct(lds,total))+'% del total son operativos':'—')}
+    </div>
+    <div class="kpi k-c2">
+      <div class="kpi-top"><span class="kpi-lbl">CPL Real</span><span class="delta d-neu">key KPI</span></div>
+      <div class="kpi-val">${cpl!=null?fmtCPR(cpl):'—'}</div>
+      <div class="kpi-sub">Inversión / leads operativos</div>
+    </div>
+    <div class="kpi k-c2">
+      <div class="kpi-top"><span class="kpi-lbl">Tasa Clic → Lead Op.</span><span class="delta d-neu">—</span></div>
+      <div class="kpi-val">${rate!=null?fmtPct(rate):'—'}</div>
+      <div class="kpi-sub">leads op. / clics</div>
+    </div>`;
 }
 
-// ── PRODUCTO ESTRELLA & GEO BARS
-function mkCatBars(containerId, data) {
-  const el = document.getElementById(containerId);
-  if (!el || !data || !data.length) return;
-  const maxL = Math.max(...data.map(d => d.leads || 0)) || 1;
-  const maxD = Math.max(...data.map(d => d.deals || 0)) || 1;
-  const totL = data.reduce((s, d) => s + (d.leads || 0), 0) || 1;
-  const totD = data.reduce((s, d) => s + (d.deals || 0), 0) || 1;
-  const starL = data.reduce((best, d) => d.leads > best.leads ? d : best, data[0]).label;
-  const starD = data.reduce((best, d) => d.deals > best.deals ? d : best, data[0]).label;
-  el.innerHTML = data.map(item => {
-    const lPct  = totL > 0 ? Math.round(item.leads / totL * 100) : 0;
-    const dPct  = totD > 0 ? Math.round(item.deals / totD * 100) : 0;
-    const lFill = Math.round((item.leads || 0) / maxL * 100);
-    const dFill = Math.round((item.deals || 0) / maxD * 100);
-    const badges = [
-      item.label === starL ? '<span style="font-size:9px;background:var(--pril);color:var(--pri);padding:1px 6px;border-radius:8px;font-weight:700;">⭐ Leads</span>' : '',
-      item.label === starD ? '<span style="font-size:9px;background:#DCFCE7;color:#059669;padding:1px 6px;border-radius:8px;font-weight:700;">⭐ Deals</span>' : '',
-    ].join(' ');
-    return `<div style="margin-bottom:18px;">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-        <span style="font-size:13px;font-weight:700;color:var(--tx);">${item.label}</span>${badges}
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-        <div>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);margin-bottom:3px;">
-            <span>Leads</span><span style="font-weight:600;color:var(--pri);">${(item.leads||0).toLocaleString()} · ${lPct}%</span>
-          </div>
-          <div style="height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;">
-            <div style="width:${lFill}%;height:100%;background:var(--pri);border-radius:4px;transition:width .4s;"></div>
-          </div>
-        </div>
-        <div>
-          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--txd);margin-bottom:3px;">
-            <span>Deals</span><span style="font-weight:600;color:#059669;">${(item.deals||0)} · ${dPct}%</span>
-          </div>
-          <div style="height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;">
-            <div style="width:${dFill}%;height:100%;background:#059669;border-radius:4px;transition:width .4s;"></div>
-          </div>
-        </div>
-      </div>
+function renderProduct(d){
+  const el=document.getElementById('product-cards'); if(!el)return;
+  const prods=d.product||[{label:'Roofing',leads:0,deals:0},{label:'Windows',leads:0,deals:0}];
+  const totalLds=(d.total_leads||0)||prods.reduce((s,p)=>s+p.leads,0)||1;
+  const badgeCls={'Roofing':'pb-roof','Windows':'pb-win'};
+  el.innerHTML=prods.slice(0,2).map(p=>{
+    const cls=badgeCls[p.label]||'pb-roof';
+    const w=Math.round(p.leads/totalLds*100);
+    return `<div class="prod-card">
+      <div class="prod-header"><span class="prod-name">${p.label}</span><span class="prod-badge ${cls}">${fmtN(p.leads)} leads</span></div>
+      <div class="prod-row"><span class="prod-metric">Leads</span><span class="prod-val">${fmtN(p.leads)||'—'}</span></div>
+      <div class="prod-row"><span class="prod-metric">Deals</span><span class="prod-val">${fmtN(p.deals)||'—'}</span></div>
+      <div class="prod-row"><span class="prod-metric">CPL ${p.label}</span><span class="prod-val dim">—</span></div>
+      <div class="mini-bar-outer"><div style="width:${w}%;background:var(--c2);height:100%;border-radius:2px;"></div></div>
     </div>`;
   }).join('');
 }
 
-// ── META KPI CARDS (Tab 2)
-function mkMetaKpis() {
-  const m = window._META;
-  if (!m || !m.spend) return;
-  const deals  = PACING[2].actual || 0;
-  const rev    = window._REVENUE_TOTAL || (deals * 12000);
-  const roas   = m.spend > 0 && rev > 0 ? (rev / m.spend).toFixed(1) : null;
-  const cpd    = m.spend > 0 && deals > 0 ? Math.round(m.spend / deals) : 0;
-  const setEl  = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
-  const setDelta = (id, txt, good) => {
-    const e = document.getElementById(id);
-    if (!e) return;
-    e.textContent = txt;
-    e.className = 'delta ' + (good ? 'up' : 'dn');
-    e.style.background = ''; e.style.color = '';
-  };
-  setEl('meta-inv',       m.spend   > 0 ? '$' + Math.round(m.spend).toLocaleString()   : '—');
-  setEl('meta-inv-proj',  m.cpr > 0 ? 'CPR: $' + m.cpr.toFixed(2) + ' · ' + (m.clicks||0).toLocaleString() + ' clicks' : '—');
-  setEl('meta-res',       m.results > 0 ? Math.round(m.results).toLocaleString() : '—');
-  setEl('meta-res-proj',  m.results > 0 && deals > 0 ? Math.round(m.results/deals) + ' resultados / deal' : deals > 0 ? '— resultados/deal' : '—');
-  setEl('meta-roas',      roas ? roas + 'x' : '—');
-  setEl('meta-roas-proj', roas ? 'Referencia: $12,000 USD / deal' : 'Sin revenue o sin inversión');
-  setEl('meta-cpd',       cpd  > 0 ? '$' + cpd.toLocaleString() : '—');
-  setEl('meta-cpd-proj',  cpd  > 0 ? 'Inversión total / deals cerrados' : 'Sin deals cerrados');
-  if (roas) setDelta('meta-roas-delta', roas + 'x ROAS', parseFloat(roas) >= 5);
-  if (cpd)  setDelta('meta-cpd-delta',  cpd <= 3000 ? 'Bueno' : cpd <= 6000 ? 'Regular' : 'Alto', cpd <= 3000);
-  if (m.results > 0) setDelta('meta-res-delta', Math.round(m.results) + ' resultados', true);
-  if (m.spend > 0)   setDelta('meta-inv-delta',  '$' + Math.round(m.spend).toLocaleString(), true);
+function renderGeo(d){
+  const el=document.getElementById('geo-cards'); if(!el)return;
+  const geos=d.geo||[{label:'Florida',leads:0,deals:0},{label:'California',leads:0,deals:0}];
+  const totalLds=(d.total_leads||0)||geos.reduce((s,g)=>s+g.leads,0)||1;
+  const badgeCls={'Florida':'pb-fl','California':'pb-ca'};
+  const barClr={'Florida':'var(--c4)','California':'var(--ora)'};
+  el.innerHTML=geos.slice(0,2).map(g=>{
+    const cls=badgeCls[g.label]||'pb-fl', bc=barClr[g.label]||'var(--c4)';
+    const w=Math.round(g.leads/totalLds*100);
+    const conv=g.leads>0?fmtPct(pct(g.deals,g.leads)):'—';
+    return `<div class="prod-card">
+      <div class="prod-header"><span class="prod-name">${g.label}</span><span class="prod-badge ${cls}">${fmtN(g.leads)} leads</span></div>
+      <div class="prod-row"><span class="prod-metric">Leads</span><span class="prod-val">${fmtN(g.leads)||'—'}</span></div>
+      <div class="prod-row"><span class="prod-metric">Deals</span><span class="prod-val">${fmtN(g.deals)||'—'}</span></div>
+      <div class="prod-row"><span class="prod-metric">Conv. Rate</span><span class="prod-val">${conv}</span></div>
+      <div class="mini-bar-outer"><div style="width:${w}%;background:${bc};height:100%;border-radius:2px;"></div></div>
+    </div>`;
+  }).join('');
 }
 
-// ── INIT
-function initAll() {
-  // #9: inject current period PACING into last history index (replaces 0)
-  if (PACING[0] && ALL_D.leads.length > 0 && ALL_D.leads[ALL_D.leads.length-1] === 0) ALL_D.leads[ALL_D.leads.length-1] = PACING[0].actual;
-  if (PACING[1] && ALL_D.appts.length > 0 && ALL_D.appts[ALL_D.appts.length-1] === 0) ALL_D.appts[ALL_D.appts.length-1] = PACING[1].actual;
-  if (PACING[2] && ALL_D.deals.length > 0 && ALL_D.deals[ALL_D.deals.length-1] === 0) ALL_D.deals[ALL_D.deals.length-1] = PACING[2].actual;
-  mkSpark('sp0', ALL_D.leads, '#1D4ED8', 'rgba(29,78,216,.1)',  'tr0');
-  mkSpark('sp1', ALL_D.appts, '#0369A1', 'rgba(3,105,161,.1)', 'tr1');
-  mkSpark('sp2', ALL_D.deals, '#475569', 'rgba(71,85,105,.1)', 'tr2');
-  mkFunnel();
-  mkKpiCards();
-  mkTasas(); // #10/#11
-  mkPacing();
-  mkLeadStatus();
-  const confPct = APPTS_BREAKDOWN.total > 0 ? (APPTS_BREAKDOWN.confirmed / APPTS_BREAKDOWN.total * 100) : 66.7;
-  const cancPct = APPTS_BREAKDOWN.total > 0 ? (APPTS_BREAKDOWN.cancelled / APPTS_BREAKDOWN.total * 100) : 33.3;
-  mkDonut('donut1', confPct, '#0369A1');
-  mkDonut('donut2', cancPct, '#DC2626');
-  // #13/#14 dynamic appointments labels
-  const apptSub = document.getElementById('appt-sub');
-  if (apptSub) apptSub.textContent = APPTS_BREAKDOWN.total+' totales · '+APPTS_BREAKDOWN.confirmed+' confirmados · '+APPTS_BREAKDOWN.cancelled+' cancelados';
-  const d1lbl = document.getElementById('donut1-lbl'); if (d1lbl) d1lbl.textContent = confPct.toFixed(1)+'%';
-  const d2lbl = document.getElementById('donut2-lbl'); if (d2lbl) d2lbl.textContent = cancPct.toFixed(1)+'%';
-  const stageBody = document.getElementById('apptStageBody');
-  if (stageBody && APPTS_BREAKDOWN.stages) {
-    const ico = {Completed:'✅',Cancelled:'❌','Still Working':'🔄',Sale:'💰','Appt Set':'📅',Other:'📋',Pending:'⏳'};
-    const validCount = APPTS_BREAKDOWN.confirmed || 0;
-    const summaryRow = '<tr style="background:var(--pril);"><td><strong>✅ Total válidos</strong></td><td class="num hi"><strong>'+validCount+'</strong></td><td class="dim hi"><strong>'+(APPTS_BREAKDOWN.total>0?(validCount/APPTS_BREAKDOWN.total*100).toFixed(1):'—')+'%</strong></td></tr>';
-    stageBody.innerHTML = summaryRow + APPTS_BREAKDOWN.stages.map(s => {
-      const pct = APPTS_BREAKDOWN.total > 0 ? (s.count/APPTS_BREAKDOWN.total*100).toFixed(1) : '—';
-      const cls = s.label==='Completed'?'hi':s.label==='Still Working'?'hi':s.label==='Sale'?'hi':s.label==='Cancelled'?'lo':'';
-      return '<tr><td>'+(ico[s.label]||'•')+' '+s.label+'</td><td class="num '+cls+'">'+(s.count||'—')+'</td><td class="dim">'+pct+'%</td></tr>';
+function renderStatus(d){
+  const el=document.getElementById('status-grid'); if(!el)return;
+  const lbl=d.lead_status?.labels||[], val=d.lead_status?.values||[];
+  if(!lbl.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:16px;color:var(--txd);font-style:italic;font-size:12px;">Sin datos de pipeline</div>';return;}
+  const mx=Math.max(...val)||1;
+  const statusColor={'No Answer - Active Recall':'var(--c2)','Hot Follow-Up':'var(--ora)','Recall - Short':'var(--c3)','Recall - Long':'var(--txm)','Appointment Set':'var(--c4)','Lost - Not Interested':'var(--red)','Unreachable':'var(--red)','Do Not Call':'var(--txd)','Follow-Up Needed':'var(--ora)'};
+  el.innerHTML=lbl.map((l,i)=>`
+    <div class="status-item">
+      <div class="status-name">${l}</div>
+      <div class="status-val">${val[i]}</div>
+      <div class="status-bar"><div class="status-fill" style="width:${Math.round(val[i]/mx*100)}%;background:${statusColor[l]||'var(--c2)'}"></div></div>
+    </div>`).join('');
+}
+
+function renderCapa3(d){
+  const row=document.getElementById('c3-kpis'); if(!row)return;
+  const ab=d.appts_breakdown||{}, spend=d.meta?.spend||0, lds=d.funnel?.leads||0;
+  const tot=ab.total||0, conf=ab.confirmed||0, canc=ab.cancelled||0;
+  const goalAp=(d.pacing?.[1]?.goal)||0;
+  const effPct=tot>0?pct(conf,tot):null;
+  const cancPct=tot>0?pct(canc,tot):null;
+  const convLd=lds>0?pct(conf,lds):null;
+  const cpa=conf>0?spend/conf:null;
+  row.innerHTML=`
+    <div class="kpi k-c3">
+      <div class="kpi-top"><span class="kpi-lbl">Agendadas</span><span class="delta d-neu">Total</span></div>
+      <div class="kpi-val">${fmtN(tot)}</div>
+      <div class="kpi-sub">Creadas en el período</div>
+    </div>
+    <div class="kpi k-c3">
+      <div class="kpi-top"><span class="kpi-lbl">Citas Efectivas</span><span class="delta d-neu">${effPct!=null?fmtPct(effPct):'—'}</span></div>
+      <div class="kpi-val">${fmtN(conf)}</div>
+      <div class="kpi-sub">${effPct!=null?fmtPct(effPct):'—'}% de las agendadas</div>
+      ${progBlock(conf,goalAp,'var(--c3)',fmtN(conf)+' / '+fmtN(goalAp)+' meta período')}
+    </div>
+    <div class="kpi k-red">
+      <div class="kpi-top"><span class="kpi-lbl">Canceladas</span><span class="delta d-neu">${cancPct!=null?fmtPct(cancPct):'—'}</span></div>
+      <div class="kpi-val">${fmtN(canc)}</div>
+      <div class="kpi-sub">Tasa cancelación ${cancPct!=null?fmtPct(cancPct):'—'}</div>
+    </div>
+    <div class="kpi k-c3">
+      <div class="kpi-top"><span class="kpi-lbl">Lead Op. → Cita Ef.</span><span class="delta d-neu">—</span></div>
+      <div class="kpi-val">${convLd!=null?fmtPct(convLd):'—'}</div>
+      <div class="kpi-sub">${fmtN(conf)} ef. / ${fmtN(lds)} leads op.</div>
+    </div>
+    <div class="kpi k-c3">
+      <div class="kpi-top"><span class="kpi-lbl">Costo / Cita Ef.</span><span class="delta d-neu">—</span></div>
+      <div class="kpi-val">${cpa!=null?fmtCPR(cpa):'—'}</div>
+      <div class="kpi-sub">Inversión / citas efectivas</div>
+    </div>`;
+}
+
+function renderStages(d){
+  const el=document.getElementById('stage-list'); if(!el)return;
+  const stages=d.appts_breakdown?.stages||[];
+  const total=d.appts_breakdown?.total||1;
+  const EFFECTIVE=new Set(['Completed','Sale','Still Working']);
+  const stageColor={'Cancelled':'#DC2626','Completed':'#059669','Sale':'#10B981','Still Working':'#6366F1','Appointment Set':'#0369A1','Pending Confirmation':'#94A3B8','To Assign':'#D97706'};
+  if(!stages.length){el.innerHTML='<div style="padding:12px;color:var(--txd);font-style:italic;font-size:12px;">Sin datos de appointments</div>';return;}
+  el.innerHTML=stages.map(s=>{
+    const eff=EFFECTIVE.has(s.label)?'✓ efectiva':'';
+    const color=stageColor[s.label]||'#94A3B8';
+    const w=Math.round(s.count/total*100);
+    return `<div class="appt-stage-row">
+      <div class="appt-dot" style="background:${color}"></div>
+      <div class="appt-stage-name">${s.label}${eff?' <span style="color:'+color+';font-size:10px;">'+eff+'</span>':''}</div>
+      <div class="appt-bar-outer"><div class="appt-bar-fill" style="width:${w}%;background:${color}"></div></div>
+      <div class="appt-count">${s.count}</div>
+      <div class="appt-pct">${fmtPct(pct(s.count,total))}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderCapa4(d){
+  const pacRow=document.getElementById('pac-row');
+  if(pacRow){
+    const pac=d.pacing||[];
+    pacRow.innerHTML=pac.map(p=>{
+      const pcDone=p.expected>0?Math.round(p.actual/p.expected*100):0;
+      const behind=p.actual<p.expected;
+      return `<div class="pac-item">
+        <div class="pac-lbl"><span>${p.label}</span><span style="color:${p.color};font-size:11px;">${p.actual} / ${p.expected}</span></div>
+        <div class="pac-nums"><span class="pac-act" style="color:${p.color}">${p.actual}</span><span class="pac-goal">meta ${p.goal}</span></div>
+        <div class="pac-track"><div class="pac-fill" style="width:${Math.min(100,pcDone)}%;background:${p.color}"></div></div>
+        <div class="pac-note">${behind?'⚠ Por debajo del ritmo esperado':'✓ En ritmo'} · día ${d.period?.day||'—'}</div>
+      </div>`;
     }).join('');
   }
-  mkCatBars('productBars', PRODUCT);
-  mkCatBars('geoBars', GEO);
-  pmQuick(0, null);
-  mkMetaKpis();
-  mkCpdChart();
-  mkRoasCards();
-  mkMetaChart();
-  mkCampTable();
-  mkPodium();
-  mkSetterTable();
+  const kRow=document.getElementById('c4-kpis');
+  if(kRow){
+    const deals=d.funnel?.deals||0, spend=d.meta?.spend||0;
+    const rev=d.revenue_total||0, h=d.history||{}, n=(h.periods||[]).length;
+    const pd=h.deals?.[n-2]||0, exp=d.pacing?.[2]?.expected||0;
+    const cpd=deals>0?spend/deals:null, avg=deals>0?rev/deals:null;
+    kRow.innerHTML=`
+      <div class="kpi k-c4">
+        <div class="kpi-top"><span class="kpi-lbl">Deals</span>${deltaBadge(deals,pd)}</div>
+        <div class="kpi-val">${fmtN(deals)}</div>
+        <div class="kpi-sub">vs ${fmtN(exp)} esperados · día ${d.period?.day||'—'}</div>
+      </div>
+      <div class="kpi k-c4">
+        <div class="kpi-top"><span class="kpi-lbl">Costo / Deal</span><span class="delta d-neu">—</span></div>
+        <div class="kpi-val">${cpd!=null?fmt$(cpd):'—'}</div>
+        <div class="kpi-sub">Inversión / deals</div>
+      </div>
+      <div class="kpi k-c4">
+        <div class="kpi-top"><span class="kpi-lbl">Valor Promedio</span><span class="delta d-neu">amount</span></div>
+        <div class="kpi-val">${avg!=null?fmt$(avg):'—'}</div>
+        <div class="kpi-sub">Revenue / deals</div>
+      </div>`;
+  }
+  const pb=document.getElementById('profit-box');
+  if(pb){
+    const deals=d.funnel?.deals||0, rev=d.revenue_total||0, profit=d.profit_total||0;
+    const avg=deals>0?rev/deals:null;
+    pb.innerHTML=`
+      <div class="profit-lbl">Revenue Total del Período</div>
+      <div class="profit-val">${fmt$(rev)}</div>
+      <div class="profit-sub">Campo <code style="background:rgba(255,255,255,.15);padding:1px 5px;border-radius:4px;font-size:10px;">amount</code> · avg ${avg!=null?fmt$(avg):'—'} / deal</div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15);">
+        <div class="profit-lbl">Profit Total del Período</div>
+        <div style="font-size:24px;font-weight:800;color:${profit>0?'#fff':'rgba(255,255,255,.35)'};margin-top:4px;">${profit>0?fmt$(profit):'—'}</div>
+        <div class="profit-sub">${profit>0?('Promedio: '+fmt$(deals>0?profit/deals:0)+' / deal'):'Campo <code style="background:rgba(255,255,255,.1);padding:1px 5px;border-radius:4px;font-size:10px;">profit_per_deal</code> en sync n8n'}</div>
+      </div>`;
+  }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  fetch('./data.json?t=' + Date.now())
-    .then(r => { if (!r.ok) throw new Error('no data.json'); return r.json(); })
-    .then(d => applyData(d))
-    .catch(() => {})
-    .finally(() => initAll());
-});
+function renderSetters(d){
+  const setters=(d.setter_calls||[]).filter(s=>s.name&&s.name!=='TOTAL');
+  const sorted=[...setters].sort((a,b)=>b.appts-a.appts);
+  const avCls=['av1','av2','av3','av4','av5'];
+  const podium=document.getElementById('podium');
+  if(podium){
+    const top3=sorted.slice(0,3);
+    const order=[1,0,2]; // 2nd-1st-3rd visually
+    const blocks=['pd-2','pd-1','pd-3'], ranks=['🥈','🥇','🥉'], heights=[72,96,58];
+    podium.innerHTML=order.map(idx=>{
+      const s=top3[idx];
+      if(!s)return '';
+      const phase=setterPhase(s.appts,s.calls,s.meta_expected||1);
+      return `<div class="pd-item">
+        <div class="${blocks[order.indexOf(idx)]} pd-block" style="height:${heights[order.indexOf(idx)]}px;"><span class="pd-rank">${ranks[order.indexOf(idx)]}</span></div>
+        <div class="pd-name">${s.name}</div>
+        <div class="pd-val">${s.appts} citas ef.</div>
+        ${phase}
+      </div>`;
+    }).join('');
+  }
+  const tb=document.getElementById('setters-tbody');
+  if(tb){
+    const tot=d.setter_calls_total||{};
+    tb.innerHTML=sorted.map((s,i)=>{
+      const conv=s.leads>0?fmtPct(pct(s.appts,s.leads)):'—';
+      const phase=setterPhase(s.appts,s.calls,s.meta_expected||1);
+      const bonus=bonusEst(s.appts,s.calls,s.meta_expected||1,s.deals);
+      return `<tr>
+        <td><span style="display:flex;align-items:center;gap:8px;"><span class="av ${avCls[i%avCls.length]}">${s.name[0]}</span><strong>${s.name}</strong></span></td>
+        <td class="num">${fmtN(s.calls)}</td>
+        <td class="num">${fmtN(s.appts)}</td>
+        <td class="num">${fmtN(s.appts)}</td>
+        <td class="num dim">—</td>
+        <td class="num">${conv}</td>
+        <td class="num">${fmtN(s.deals)}</td>
+        <td>${phase}</td>
+        <td class="num">${bonus}</td>
+      </tr>`;
+    }).join('')+`<tr style="background:var(--bg2);font-weight:700;">
+      <td><strong>TOTAL</strong></td>
+      <td class="num">${fmtN(tot.calls)}</td>
+      <td class="num">${fmtN(tot.citas)}</td>
+      <td class="num">${fmtN(tot.citas)}</td>
+      <td class="num dim">—</td>
+      <td class="num dim">—</td>
+      <td class="num dim">—</td>
+      <td class="dim">—</td>
+      <td class="num dim">—</td>
+    </tr>`;
+  }
+}
+
+// ── Load ──
+async function loadDashboard(){
+  try {
+    const resp=await fetch('data.json?t='+Date.now());
+    if(!resp.ok){console.warn('data.json no encontrado');return;}
+    const d=await resp.json();
+    renderHeader(d);
+    renderExecBar(d);
+    renderFunnel(d);
+    renderSparklines(d);
+    renderCapa1(d);
+    renderCampaigns(d);
+    renderLpv(d);
+    renderCapa2(d);
+    renderProduct(d);
+    renderGeo(d);
+    renderStatus(d);
+    renderCapa3(d);
+    renderStages(d);
+    renderCapa4(d);
+    renderSetters(d);
+  } catch(e){console.error('Dashboard error:',e);}
+}
+window.addEventListener('load', loadDashboard);
+
+async function downloadPDF() {
+  const btn = document.getElementById('pdf-btn');
+  btn.textContent = '⏳ Generando…';
+  btn.disabled = true;
+  const activePaneId = document.querySelector('.pane.on')?.id;
+  document.querySelectorAll('.pane').forEach(p => { p.style.display = 'block'; });
+  const hdr = document.querySelector('.hdr');
+  hdr.style.position = 'relative';
+  await new Promise(r => setTimeout(r, 300));
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+    const canvas = await html2canvas(document.body, { scale: 1.5, useCORS: true, logging: false, scrollX: 0, scrollY: -window.scrollY });
+    const imgW = pageW;
+    const imgH = (canvas.height / canvas.width) * imgW;
+    const imgData = canvas.toDataURL('image/jpeg', 0.88);
+    let sliceY = 0;
+    while (sliceY < imgH) {
+      if (sliceY > 0) doc.addPage();
+      doc.addImage(imgData, 'JPEG', 0, -sliceY, imgW, imgH);
+      sliceY += pageH;
+    }
+    doc.save('HPG-Dashboard.pdf');
+  } catch (e) {
+    alert('Error al generar PDF: ' + e.message);
+  } finally {
+    document.querySelectorAll('.pane').forEach(p => { p.style.display = ''; });
+    if (activePaneId) document.getElementById(activePaneId).classList.add('on');
+    hdr.style.position = '';
+    btn.textContent = '⬇ Descargar PDF';
+    btn.disabled = false;
+  }
+}
 </script>
 </body>
 </html>
