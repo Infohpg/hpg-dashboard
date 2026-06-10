@@ -218,8 +218,25 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 .sp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;}
 .sp-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
 .sp-label.c1{color:var(--c1);}.sp-label.c2{color:var(--c2);}.sp-label.c3{color:var(--c3);}.sp-label.c4{color:var(--c4);}
-.sp-trend{font-size:9px;font-weight:700;}
+.sp-trend{font-size:13px;font-weight:700;}
 .sp-empty-state{flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--txd);font-style:italic;}
+
+/* PACING CHARTS */
+.pac-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.pac-v2{background:var(--bg);border:1px solid var(--brd);border-radius:var(--r);padding:22px 24px;box-shadow:var(--sdw);position:relative;overflow:hidden;}
+.pac-v2::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0;}
+.pac-v2-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.pac-v2-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;}
+.pac-v2-delta{font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;}
+.pac-v2-delta.up{background:var(--grnl);color:var(--grn);}
+.pac-v2-delta.dn{background:var(--redl);color:var(--red);}
+.pac-v2-num{font-size:36px;font-weight:800;line-height:1;margin-bottom:4px;}
+.pac-v2-sub{font-size:12px;color:var(--txm);margin-bottom:16px;}
+.pac-v2-sub strong{color:var(--tx);}
+.pac-v2-bar{position:relative;height:10px;background:var(--bg3);border-radius:5px;overflow:visible;margin-bottom:6px;}
+.pac-v2-fill{height:100%;border-radius:5px;}
+.pac-v2-mark{position:absolute;top:-4px;width:2px;height:18px;background:#94A3B8;border-radius:1px;transform:translateX(-50%);}
+.pac-v2-lbls{display:flex;justify-content:space-between;font-size:10px;color:var(--txd);margin-bottom:16px;}
 </style>
 </head>
 <body>
@@ -393,6 +410,17 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
     </div><!-- /funnel-layout -->
   </div><!-- /funnel-wrap -->
 
+  <!-- PACING vs META -->
+  <div id="pacing-section" class="sec">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--brd);">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;color:#fff;background:var(--c4);letter-spacing:.05em;">PACING</span>
+        <span style="font-size:13px;font-weight:700;">Pacing vs Meta — Período Actual</span>
+      </div>
+      <span id="pacing-subtitle" style="font-size:11px;color:var(--txd);">Día —/30 · —% esperado</span>
+    </div>
+    <div class="pac-grid" id="pac-v2-grid"></div>
+  </div>
 
   <!-- CAPA 1 — TRÁFICO PAGADO -->
   <div class="sec">
@@ -936,76 +964,102 @@ function renderFunnel(d){
       </div></div></div>`).join('')+'</div>';
 }
 
+let _sparkCharts=[], _pacingCharts=[];
+
+function renderPacing(d){
+  const sub=document.getElementById('pacing-subtitle');
+  const grid=document.getElementById('pac-v2-grid'); if(!grid)return;
+  _pacingCharts.forEach(c=>c.destroy()); _pacingCharts=[];
+  const pac=d.pacing||[], day=d.period?.day||0;
+  const pctDone=Math.round(day/30*100);
+  if(sub) sub.textContent=`Día ${day}/30 · Se esperaba el ${pctDone}% acumulado`;
+  grid.innerHTML='';
+  pac.forEach((p,i)=>{
+    const ahead=p.actual>=p.expected;
+    const fc=ahead?p.color:'#DC2626';
+    const pctA=p.goal>0?Math.min(100,(p.actual/p.goal)*100):0;
+    const pctE=p.goal>0?Math.min(99,(p.expected/p.goal)*100):0;
+    const diff=p.expected>0?Math.round(Math.abs(p.actual-p.expected)/p.expected*100):0;
+    const card=document.createElement('div');
+    card.className='pac-v2';
+    card.style.cssText=`--accent:${p.color}`;
+    card.style.setProperty('--before-bg',p.color);
+    card.innerHTML=`
+      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${p.color};border-radius:10px 10px 0 0;"></div>
+      <div class="pac-v2-hdr">
+        <span class="pac-v2-lbl" style="color:${fc}">${p.label}</span>
+        <span class="pac-v2-delta ${ahead?'up':'dn'}">${ahead?'↑ +':'↓ '}${diff}%</span>
+      </div>
+      <div class="pac-v2-num" style="color:${fc}">${p.actual}</div>
+      <div class="pac-v2-sub">de <strong>${p.expected}</strong> esperados · Meta: <strong>${p.goal}</strong></div>
+      <div class="pac-v2-bar">
+        <div class="pac-v2-fill" style="width:${pctA.toFixed(1)}%;background:${fc}"></div>
+        <div class="pac-v2-mark" style="left:${pctE.toFixed(1)}%"></div>
+      </div>
+      <div class="pac-v2-lbls"><span>0</span><span>Esp: ${p.expected}</span><span>Meta: ${p.goal}</span></div>
+      <div style="height:90px;position:relative;"><canvas id="pcv2-${i}"></canvas></div>`;
+    grid.appendChild(card);
+    if(typeof Chart==='undefined')return;
+    const cv=document.getElementById('pcv2-'+i); if(!cv)return;
+    const ch=new Chart(cv,{
+      type:'bar',
+      data:{labels:['Esperado','Actual','Meta'],datasets:[{
+        data:[p.expected,p.actual,p.goal],
+        backgroundColor:['rgba(148,163,184,.35)',ahead?p.color+'CC':'#DC2626CC','rgba(148,163,184,.15)'],
+        borderColor:['#94A3B8',ahead?p.color:'#DC2626','#CBD5E1'],
+        borderWidth:[1.5,2,1.5],borderRadius:5
+      }]},
+      options:{
+        responsive:true,maintainAspectRatio:false,animation:false,
+        plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(15,23,42,.9)',callbacks:{label:ctx=>' '+ctx.parsed.y}}},
+        scales:{x:{grid:{display:false},ticks:{font:{size:9},color:'#94A3B8'}},y:{display:false}}
+      }
+    });
+    _pacingCharts.push(ch);
+  });
+}
+
 let _sparkCharts=[];
 function renderSparklines(d){
   const col=document.getElementById('funnel-right'); if(!col)return;
   _sparkCharts.forEach(c=>c.destroy()); _sparkCharts=[];
   const h=d.history||{};
-  const allPer=h.periods||[], allLen=allPer.length;
-  // exclude current period (last = 0 placeholder), take last 8 complete
-  const per=allPer.slice(0,-1).slice(-8);
+  const per=(h.periods||[]).slice(0,-1).slice(-8);
   const items=[
-    {label:'LEADS OPERATIVOS',color:'#1D4ED8',vals:(h.leads||[]).slice(0,-1).slice(-8)},
-    {label:'CITAS EFECTIVAS',color:'#0369A1',vals:(h.appts||[]).slice(0,-1).slice(-8)},
-    {label:'DEALS',color:'#059669',vals:(h.deals||[]).slice(0,-1).slice(-8)},
-    {label:'CPR — COSTO / RESULTADO',color:'#334155',vals:(h.cpr||[]).slice(0,-1).slice(-8),isCPR:true},
+    {label:'LEADS OPERATIVOS',  color:'#1D4ED8',fill:'rgba(29,78,216,.22)', vals:(h.leads||[]).slice(0,-1).slice(-8)},
+    {label:'CITAS EFECTIVAS',   color:'#0284C7',fill:'rgba(2,132,199,.2)',  vals:(h.appts||[]).slice(0,-1).slice(-8)},
+    {label:'DEALS',             color:'#059669',fill:'rgba(5,150,105,.2)',  vals:(h.deals||[]).slice(0,-1).slice(-8)},
+    {label:'CPR — COSTO / RESULTADO',color:'#334155',fill:'rgba(51,65,85,.15)',vals:(h.cpr||[]).slice(0,-1).slice(-8),isCPR:true},
   ];
   col.innerHTML='<div class="fn-col-title">Tendencia histórica · últimos períodos</div><div class="sp-rows">'
     +items.map((it,i)=>{
       const v=it.vals, len=v.length;
       const cur=v[len-1]||0, prev=v[len-2]||0, tr=cur-prev;
-      const tCls=tr>0?'hi':tr<0?'lo':'dim';
-      const trFmt=it.isCPR?(tr>0?'+':'')+tr.toFixed(2):(tr>0?'+':'')+Math.round(tr);
-      return `<div class="sp-row"><div class="sp-card" style="display:flex;flex-direction:column;gap:2px;padding:8px 12px 6px;">
-        <div class="sp-top"><span style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:${it.color};">${it.label}</span><span class="sp-trend ${tCls}">${trFmt}</span></div>
+      const tColor=tr>0?'#059669':tr<0?'#DC2626':'#94A3B8';
+      const trFmt=it.isCPR?(tr>=0?'+':'')+tr.toFixed(2):(tr>=0?'+':'')+Math.round(tr);
+      return `<div class="sp-row"><div class="sp-card" style="background:var(--bg);border:1px solid var(--brd);border-radius:8px;box-shadow:var(--sdw);display:flex;flex-direction:column;padding:10px 14px 8px;">
+        <div class="sp-top"><span style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:${it.color};">${it.label}</span><span class="sp-trend" style="color:${tColor};font-size:13px;font-weight:700;">${trFmt}</span></div>
         <div style="flex:1;position:relative;min-height:0;"><canvas id="spch-${i}"></canvas></div>
       </div></div>`;
     }).join('')+'</div>';
   if(typeof Chart==='undefined')return;
   items.forEach((it,i)=>{
-    const cv=document.getElementById('spch-'+i);
-    if(!cv||!it.vals.length)return;
-    const hexA=it.color+'28';
+    const cv=document.getElementById('spch-'+i); if(!cv||!it.vals.length)return;
     const ch=new Chart(cv,{
       type:'line',
-      data:{
-        labels:per,
-        datasets:[{
-          data:it.vals,
-          borderColor:it.color,
-          backgroundColor:hexA,
-          fill:true,
-          tension:0.4,
-          pointRadius:3,
-          pointHoverRadius:6,
-          pointBackgroundColor:it.color,
-          pointBorderColor:'#fff',
-          pointBorderWidth:1.5,
-          borderWidth:2
-        }]
-      },
+      data:{labels:per,datasets:[{
+        data:it.vals,borderColor:it.color,backgroundColor:it.fill,fill:true,tension:0.4,
+        pointRadius:3.5,pointHoverRadius:6,pointBackgroundColor:it.color,
+        pointBorderColor:'#fff',pointBorderWidth:1.5,borderWidth:2.5
+      }]},
       options:{
-        responsive:true,
-        maintainAspectRatio:false,
-        animation:false,
-        plugins:{
-          legend:{display:false},
-          tooltip:{
-            backgroundColor:'rgba(15,23,42,.9)',
-            titleColor:'#fff',
-            bodyColor:'rgba(255,255,255,.8)',
-            padding:8,
-            callbacks:{
-              label:ctx=>it.isCPR?`CPR: $${ctx.parsed.y.toFixed(2)}`:`${it.label}: ${ctx.parsed.y}`
-            }
-          }
-        },
+        responsive:true,maintainAspectRatio:false,animation:false,
+        plugins:{legend:{display:false},tooltip:{
+          backgroundColor:'rgba(15,23,42,.9)',titleColor:'#fff',bodyColor:'rgba(255,255,255,.8)',padding:8,
+          callbacks:{label:ctx=>it.isCPR?`CPR: $${ctx.parsed.y.toFixed(2)}`:`${ctx.dataset.label||it.label}: ${ctx.parsed.y}`}
+        }},
         scales:{
-          x:{
-            grid:{display:false},
-            border:{display:false},
-            ticks:{font:{size:8},color:'#94A3B8',maxRotation:45,autoSkip:true,maxTicksLimit:6}
-          },
+          x:{grid:{display:false},border:{display:false},ticks:{font:{size:8},color:'#94A3B8',maxRotation:45,autoSkip:true,maxTicksLimit:6}},
           y:{display:false,beginAtZero:false}
         }
       }
@@ -1327,6 +1381,7 @@ async function loadDashboard(){
     renderExecBar(d);
     renderFunnel(d);
     renderSparklines(d);
+    renderPacing(d);
     renderCapa1(d);
     renderCampaigns(d);
     renderLpv(d);
