@@ -1,7 +1,7 @@
 {
-  "updated": "2026-06-10 11:06",
+  "updated": "2026-06-10 11:53",
   "currentKey": "2026-05",
-  "total_leads": 564,
+  "total_leads": 567,
   "profit_total": 14120.5,
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -13,7 +13,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 450,
+      "actual": 455,
       "expected": 477,
       "goal": 550,
       "color": "#1D4ED8"
@@ -34,7 +34,7 @@
     }
   ],
   "funnel": {
-    "leads": 450,
+    "leads": 455,
     "appts": 35,
     "deals": 7,
     "period": "May-Jun"
@@ -50,7 +50,7 @@
       "May-Jun"
     ],
     "leads": [
-      30,
+      29,
       263,
       667,
       456,
@@ -118,21 +118,21 @@
       "No Answer - Active Recall",
       "Out of Range",
       "Lost - Not Interested",
-      "Future Buyer",
       "Duplicate",
+      "Future Buyer",
       "Unreachable",
       "Not Qualified",
-      "Other company sold"
+      "Recall - Short"
     ],
     "values": [
-      190,
-      47,
-      38,
-      33,
-      33,
-      30,
+      196,
+      48,
+      39,
+      34,
+      34,
+      32,
       29,
-      25
+      26
     ]
   },
   "appts_breakdown": {
@@ -174,7 +174,7 @@
   "product": [
     {
       "label": "Roofing",
-      "leads": 518,
+      "leads": 521,
       "deals": 0
     },
     {
@@ -186,7 +186,7 @@
   "geo": [
     {
       "label": "Florida",
-      "leads": 525,
+      "leads": 528,
       "deals": 0
     },
     {
@@ -203,7 +203,7 @@
       "deals": 2,
       "meta": 3300,
       "meta_expected": 2860,
-      "leads": 67
+      "leads": 70
     },
     {
       "name": "Silvia",
@@ -212,7 +212,7 @@
       "deals": 1,
       "meta": 6600,
       "meta_expected": 5720,
-      "leads": 102
+      "leads": 100
     },
     {
       "name": "Emmanuel",
@@ -221,7 +221,7 @@
       "deals": 2,
       "meta": 6600,
       "meta_expected": 5720,
-      "leads": 54
+      "leads": 60
     },
     {
       "name": "Pablo",
