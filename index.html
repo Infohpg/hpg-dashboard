@@ -261,7 +261,7 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
 <div class="fbar">
   <span class="fl">Filtros</span><div class="fsep"></div>
   <span class="fl">Período</span>
-  <div class="fsel"><select><option>Período HPG (16–15)</option><option>Esta semana</option><option>Este mes</option><option>Rango custom…</option></select></div>
+  <div class="fsel"><select id="period-sel" onchange="renderView(this.value)"><option value="current">Cargando…</option></select></div>
 </div>
 
 <!-- TABS -->
@@ -900,7 +900,8 @@ function renderHeader(d){
 function renderExecBar(d){
   const bar=document.getElementById('exec-bar'); if(!bar)return;
   const h=d.history||{}, n=(h.periods||[]).length;
-  const ps=h.spend?.[n-2]||0, pd=h.deals?.[n-2]||0;
+  const prevIdx=d._prevIdx!=null?d._prevIdx:n-2;
+  const ps=h.spend?.[prevIdx]||0, pd=h.deals?.[prevIdx]||0;
   const spend=d.meta?.spend||0, deals=d.funnel?.deals||0;
   const cpd=deals>0?spend/deals:null, pCpd=pd>0?ps/pd:null;
   const rev=d.revenue_total||0, avg=deals>0?rev/deals:null;
@@ -933,9 +934,12 @@ function renderExecBar(d){
 
 function renderFunnel(d){
   const col=document.getElementById('funnel-left'); if(!col)return;
+  const fh=document.querySelector('.funnel-header');
+  if(fh) fh.childNodes[0].textContent=d._isHistorical?`Embudo de Conversión — ${d.period?.short||'—'}`:'Embudo de Conversión — Período actual';
   const h=d.history||{}, n=(h.periods||[]).length;
-  const pClk=h.clicks?.[n-2]||0, pLd=h.leads?.[n-2]||0;
-  const pAp=h.appts?.[n-2]||0, pDl=h.deals?.[n-2]||0;
+  const prevIdx=d._prevIdx!=null?d._prevIdx:n-2;
+  const pClk=h.clicks?.[prevIdx]||0, pLd=h.leads?.[prevIdx]||0;
+  const pAp=h.appts?.[prevIdx]||0, pDl=h.deals?.[prevIdx]||0;
   const clk=d.meta?.clicks||0, lds=d.funnel?.leads||0;
   const apt=d.funnel?.appts||0, dls=d.funnel?.deals||0;
   const steps=[
@@ -1061,7 +1065,8 @@ function renderSparklines(d){
 function renderCapa1(d){
   const row=document.getElementById('c1-kpis'); if(!row)return;
   const m=d.meta||{}, h=d.history||{}, n=(h.periods||[]).length;
-  const ps=h.spend?.[n-2]||0, pc=h.cpr?.[n-2]||0;
+  const prevIdx=d._prevIdx!=null?d._prevIdx:n-2;
+  const ps=h.spend?.[prevIdx]||0, pc=h.cpr?.[prevIdx]||0;
   const ctr=m.impressions>0?pct(m.clicks,m.impressions):0;
   row.innerHTML=`
     <div class="kpi k-c1">
@@ -1273,7 +1278,8 @@ function renderCapa4(d){
   if(kRow){
     const deals=d.funnel?.deals||0, spend=d.meta?.spend||0;
     const rev=d.revenue_total||0, h=d.history||{}, n=(h.periods||[]).length;
-    const pd=h.deals?.[n-2]||0, exp=d.pacing?.[2]?.expected||0;
+    const prevIdx=d._prevIdx!=null?d._prevIdx:n-2;
+    const pd=h.deals?.[prevIdx]||0, exp=d.pacing?.[2]?.expected||0;
     const cpd=deals>0?spend/deals:null, avg=deals>0?rev/deals:null;
     kRow.innerHTML=`
       <div class="kpi k-c4">
@@ -1361,28 +1367,138 @@ function renderSetters(d){
   }
 }
 
+// ── Period filter ──
+let D = null;
+
+function buildView(d, spec) {
+  const h = d.history||{}, periods = h.periods||[], n = periods.length;
+  if (!spec || spec.type === 'current') return d;
+
+  if (spec.type === 'period') {
+    const idx = spec.idx;
+    if (idx >= n-1) return d;
+    const setters = h.setters?.[idx]||[];
+    return {
+      ...d,
+      period: { label:`Período ${periods[idx]}`, short:periods[idx], day:30, total_days:30, pct:100 },
+      funnel: { leads:h.leads?.[idx]||0, appts:h.appts?.[idx]||0, deals:h.deals?.[idx]||0, period:periods[idx] },
+      meta: { spend:h.spend?.[idx]||0, cpr:h.cpr?.[idx]||0, clicks:h.clicks?.[idx]||0, lpv:h.lpv?.[idx]||0, results:0, impressions:0 },
+      lead_status: h.lead_status?.[idx]||d.lead_status,
+      appts_breakdown: h.appts_breakdown?.[idx]||d.appts_breakdown,
+      setter_calls: setters,
+      setter_calls_total: { calls:setters.reduce((s,x)=>s+(x.calls||0),0), citas:setters.reduce((s,x)=>s+(x.appts||0),0), meta_total:0, meta_expected:0 },
+      product: h.product?.[idx]||d.product,
+      geo: h.geo?.[idx]||d.geo,
+      pacing: null,
+      total_leads: h.leads?.[idx]||0,
+      revenue_total: 0, profit_total: 0,
+      _prevIdx: idx > 0 ? idx-1 : 0,
+      _isHistorical: true
+    };
+  }
+
+  let indices = [];
+  if (spec.type === 'last') {
+    const last = n-2, start = Math.max(0, last-spec.n+1);
+    indices = Array.from({length: last-start+1}, (_,i)=>start+i);
+  } else {
+    indices = Array.from({length: n-1}, (_,i)=>i);
+  }
+  if (!indices.length) return d;
+
+  const sumH = k => indices.reduce((s,i)=>s+(h[k]?.[i]||0),0);
+  const totalLeads=sumH('leads'), totalAppts=sumH('appts'), totalDeals=sumH('deals');
+  const totalSpend=sumH('spend'), totalClicks=sumH('clicks'), totalLpv=sumH('lpv');
+
+  const lsMap={};
+  indices.forEach(i=>{ const ls=h.lead_status?.[i]||{}; (ls.labels||[]).forEach((l,j)=>{lsMap[l]=(lsMap[l]||0)+(ls.values?.[j]||0);}); });
+  const lsSorted=Object.entries(lsMap).sort((a,b)=>b[1]-a[1]).slice(0,8);
+
+  let abTot=0, abConf=0, abCanc=0; const abSt={};
+  indices.forEach(i=>{ const ab=h.appts_breakdown?.[i]||{}; abTot+=ab.total||0; abConf+=ab.confirmed||0; abCanc+=ab.cancelled||0; (ab.stages||[]).forEach(s=>{abSt[s.label]=(abSt[s.label]||0)+s.count;}); });
+
+  const stMap={};
+  indices.forEach(i=>{ (h.setters?.[i]||[]).forEach(s=>{ if(!stMap[s.name]) stMap[s.name]={name:s.name,calls:0,appts:0,deals:0,leads:0}; stMap[s.name].calls+=s.calls||0; stMap[s.name].appts+=s.appts||0; stMap[s.name].deals+=s.deals||0; stMap[s.name].leads+=s.leads||0; }); });
+  const mergedSt=Object.values(stMap).sort((a,b)=>b.leads-a.leads);
+
+  const pMap={}, gMap={};
+  indices.forEach(i=>{ (h.product?.[i]||[]).forEach(p=>{if(!pMap[p.label]) pMap[p.label]={label:p.label,leads:0,deals:0}; pMap[p.label].leads+=p.leads||0; pMap[p.label].deals+=p.deals||0;}); (h.geo?.[i]||[]).forEach(g=>{if(!gMap[g.label]) gMap[g.label]={label:g.label,leads:0,deals:0}; gMap[g.label].leads+=g.leads||0; gMap[g.label].deals+=g.deals||0;}); });
+
+  const label=`${periods[indices[0]]||'—'} – ${periods[indices[indices.length-1]]||'—'}`;
+  return {
+    ...d,
+    period: { label, short:label, day:30, total_days:30, pct:100 },
+    funnel: { leads:totalLeads, appts:totalAppts, deals:totalDeals, period:label },
+    meta: { spend:totalSpend, cpr:totalLeads>0?totalSpend/totalLeads:0, clicks:totalClicks, lpv:totalLpv, results:0, impressions:0 },
+    lead_status: { labels:lsSorted.map(e=>e[0]), values:lsSorted.map(e=>e[1]) },
+    appts_breakdown: { total:abTot, confirmed:abConf, cancelled:abCanc, stages:Object.entries(abSt).sort((a,b)=>b[1]-a[1]).map(([label,count])=>({label,count})) },
+    setter_calls: mergedSt,
+    setter_calls_total: { calls:mergedSt.reduce((s,x)=>s+x.calls,0), citas:mergedSt.reduce((s,x)=>s+x.appts,0), meta_total:0, meta_expected:0 },
+    product: Object.values(pMap).sort((a,b)=>b.leads-a.leads),
+    geo: Object.values(gMap).sort((a,b)=>b.leads-a.leads),
+    pacing: null,
+    total_leads: totalLeads,
+    revenue_total: 0, profit_total: 0,
+    _prevIdx: null,
+    _isHistorical: true
+  };
+}
+
+function parseSpec(val) {
+  if (!val || val === 'current') return {type:'current'};
+  if (val.startsWith('period:')) return {type:'period', idx:parseInt(val.split(':')[1])};
+  if (val.startsWith('last:')) return {type:'last', n:parseInt(val.split(':')[1])};
+  if (val === 'year') return {type:'year'};
+  return {type:'current'};
+}
+
+function populatePeriodSel(d) {
+  const sel = document.getElementById('period-sel');
+  if (!sel) return;
+  const periods = (d.history?.periods||[]);
+  const n = periods.length;
+  if (!n) return;
+  let html = `<option value="current">${periods[n-1]} ← Actual</option>`;
+  for (let i = n-2; i >= 0; i--) html += `<option value="period:${i}">${periods[i]}</option>`;
+  html += `<option value="" disabled>──────────</option>`;
+  if (n > 4) html += `<option value="last:3">Últimos 3 períodos</option>`;
+  if (n > 7) html += `<option value="last:6">Últimos 6 períodos</option>`;
+  html += `<option value="year">Todo el año</option>`;
+  sel.innerHTML = html;
+  sel.value = 'current';
+}
+
+function renderView(spec) {
+  if (!D) return;
+  const v = buildView(D, parseSpec(spec));
+  const pacSec = document.getElementById('pacing-section');
+  if (pacSec) pacSec.style.display = v.pacing === null ? 'none' : '';
+  renderHeader(v);
+  renderExecBar(v);
+  renderFunnel(v);
+  renderPacing(v);
+  renderCapa1(v);
+  renderCampaigns(v);
+  renderLpv(v);
+  renderCapa2(v);
+  renderProduct(v);
+  renderGeo(v);
+  renderStatus(v);
+  renderCapa3(v);
+  renderStages(v);
+  renderCapa4(v);
+  renderSetters(v);
+}
+
 // ── Load ──
 async function loadDashboard(){
   try {
     const resp=await fetch('data.json?t='+Date.now());
     if(!resp.ok){console.warn('data.json no encontrado');return;}
-    const d=await resp.json();
-    renderHeader(d);
-    renderExecBar(d);
-    renderFunnel(d);
-    renderSparklines(d);
-    renderPacing(d);
-    renderCapa1(d);
-    renderCampaigns(d);
-    renderLpv(d);
-    renderCapa2(d);
-    renderProduct(d);
-    renderGeo(d);
-    renderStatus(d);
-    renderCapa3(d);
-    renderStages(d);
-    renderCapa4(d);
-    renderSetters(d);
+    D=await resp.json();
+    populatePeriodSel(D);
+    renderSparklines(D);   // sparklines never change
+    renderView('current'); // renders everything else
   } catch(e){console.error('Dashboard error:',e);}
 }
 window.addEventListener('load', loadDashboard);
