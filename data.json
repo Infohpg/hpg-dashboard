@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-10 06:24",
+  "updated": "2026-06-10 07:01",
   "currentKey": "2026-05",
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -11,7 +11,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 558,
+      "actual": 564,
       "expected": 477,
       "goal": 550,
       "color": "#1D4ED8"
@@ -25,16 +25,16 @@
     },
     {
       "label": "Deals Confirmados",
-      "actual": 6,
+      "actual": 7,
       "expected": 10,
       "goal": 11,
       "color": "#475569"
     }
   ],
   "funnel": {
-    "leads": 558,
+    "leads": 564,
     "appts": 33,
-    "deals": 6,
+    "deals": 7,
     "period": "May-Jun"
   },
   "history": {
@@ -48,7 +48,7 @@
       "May-Jun"
     ],
     "leads": [
-      64,
+      58,
       600,
       1575,
       670,
@@ -66,7 +66,7 @@
       0
     ],
     "deals": [
-      3,
+      2,
       2,
       11,
       7,
@@ -98,21 +98,21 @@
       "No Answer - Active Recall",
       "Out of Range",
       "Lost - Not Interested",
+      "Future Buyer",
       "Duplicate",
       "Unreachable",
-      "Future Buyer",
       "Not Qualified",
-      "Recall - Short"
+      "Other company sold"
     ],
     "values": [
       190,
       47,
       38,
       33,
-      30,
+      33,
       30,
       29,
-      26
+      25
     ]
   },
   "appts_breakdown": {
@@ -150,11 +150,11 @@
       }
     ]
   },
-  "revenue_total": 180750,
+  "revenue_total": 197200,
   "product": [
     {
       "label": "Roofing",
-      "leads": 512,
+      "leads": 518,
       "deals": 0
     },
     {
@@ -166,7 +166,7 @@
   "geo": [
     {
       "label": "Florida",
-      "leads": 519,
+      "leads": 525,
       "deals": 0
     },
     {
@@ -183,7 +183,7 @@
       "deals": 2,
       "meta": 3300,
       "meta_expected": 2750,
-      "leads": 62
+      "leads": 67
     },
     {
       "name": "Silvia",
@@ -210,7 +210,7 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5500,
-      "leads": 86
+      "leads": 87
     },
     {
       "name": "Daniela",
