@@ -986,10 +986,10 @@ function renderPacing(d){
     card.innerHTML=`
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${p.color};border-radius:10px 10px 0 0;"></div>
       <div class="pac-v2-hdr">
-        <span class="pac-v2-lbl" style="color:${fc}">${p.label}</span>
+        <span class="pac-v2-lbl" style="color:var(--tx)">${p.label}</span>
         <span class="pac-v2-delta ${ahead?'up':'dn'}">${ahead?'↑ +':'↓ '}${diff}%</span>
       </div>
-      <div class="pac-v2-num" style="color:${fc}">${p.actual}</div>
+      <div class="pac-v2-num" style="color:var(--tx)">${p.actual}</div>
       <div class="pac-v2-sub">de <strong>${p.expected}</strong> esperados · Meta: <strong>${p.goal}</strong></div>
       <div class="pac-v2-bar">
         <div class="pac-v2-fill" style="width:${pctA.toFixed(1)}%;background:${fc}"></div>
@@ -1022,24 +1022,22 @@ function renderSparklines(d){
   const col=document.getElementById('funnel-right'); if(!col)return;
   _sparkCharts.forEach(c=>c.destroy()); _sparkCharts=[];
   const h=d.history||{};
-  const per=(h.periods||[]).slice(0,-1).slice(-8);
+  // Include current period: replace 0 placeholder with real current values
+  const leadsArr=[...(h.leads||[])]; if(leadsArr.length) leadsArr[leadsArr.length-1]=d.funnel?.leads||0;
+  const apptsArr=[...(h.appts||[])]; if(apptsArr.length) apptsArr[apptsArr.length-1]=d.funnel?.appts||0;
+  const dealsArr=[...(h.deals||[])]; if(dealsArr.length) dealsArr[dealsArr.length-1]=d.funnel?.deals||0;
+  const per=(h.periods||[]).slice(-8);
   const items=[
-    {label:'LEADS OPERATIVOS',  color:'#1D4ED8',fill:'rgba(29,78,216,.22)', vals:(h.leads||[]).slice(0,-1).slice(-8)},
-    {label:'CITAS EFECTIVAS',   color:'#0284C7',fill:'rgba(2,132,199,.2)',  vals:(h.appts||[]).slice(0,-1).slice(-8)},
-    {label:'DEALS',             color:'#059669',fill:'rgba(5,150,105,.2)',  vals:(h.deals||[]).slice(0,-1).slice(-8)},
-    {label:'CPR — COSTO / RESULTADO',color:'#334155',fill:'rgba(51,65,85,.15)',vals:(h.cpr||[]).slice(0,-1).slice(-8),isCPR:true},
+    {label:'LEADS OPERATIVOS',  color:'#1D4ED8',fill:'rgba(29,78,216,.22)', vals:leadsArr.slice(-8)},
+    {label:'CITAS EFECTIVAS',   color:'#0284C7',fill:'rgba(2,132,199,.2)',  vals:apptsArr.slice(-8)},
+    {label:'DEALS',             color:'#059669',fill:'rgba(5,150,105,.2)',  vals:dealsArr.slice(-8)},
+    {label:'CPR — COSTO / RESULTADO',color:'#334155',fill:'rgba(51,65,85,.15)',vals:(h.cpr||[]).slice(-8),isCPR:true},
   ];
   col.innerHTML='<div class="fn-col-title">Tendencia histórica · últimos períodos</div><div class="sp-rows">'
-    +items.map((it,i)=>{
-      const v=it.vals, len=v.length;
-      const cur=v[len-1]||0, prev=v[len-2]||0, tr=cur-prev;
-      const trendCls=tr>0?(it.isCPR?'dn':'up'):tr<0?(it.isCPR?'up':'dn'):'neu';
-      const trFmt=it.isCPR?(tr>=0?'+':'')+tr.toFixed(2):(tr>=0?'+':'')+Math.round(tr);
-      return `<div class="sp-row"><div class="sp-card" style="background:var(--bg);border:1px solid var(--brd);border-radius:8px;box-shadow:var(--sdw);display:flex;flex-direction:column;padding:10px 14px 8px;">
-        <div class="sp-top"><span style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:${it.color};">${it.label}</span><span class="fn-mom ${trendCls}" style="font-size:11px;font-weight:700;">${trFmt}</span></div>
+    +items.map((it,i)=>`<div class="sp-row"><div class="sp-card" style="background:var(--bg);border:1px solid var(--brd);border-radius:8px;box-shadow:var(--sdw);display:flex;flex-direction:column;padding:10px 14px 8px;">
+        <div class="sp-top"><span style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:${it.color};">${it.label}</span></div>
         <div style="flex:1;position:relative;min-height:0;"><canvas id="spch-${i}"></canvas></div>
-      </div></div>`;
-    }).join('')+'</div>';
+      </div></div>`).join('')+'</div>';
   if(typeof Chart==='undefined')return;
   items.forEach((it,i)=>{
     const cv=document.getElementById('spch-'+i); if(!cv||!it.vals.length)return;
