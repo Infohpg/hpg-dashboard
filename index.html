@@ -814,9 +814,6 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
           </tr>
         </tbody>
       </table>
-      <div style="margin-top:12px;padding:8px 12px;background:var(--oral);border-radius:7px;font-size:11px;color:var(--ora);">
-        ⚠ <strong>Deals por setter</strong> pendiente — depende de workflow que popule <code>appointment_setter_attribution</code> en deals
-      </div>
     </div>
 
     <div class="card">
@@ -1307,7 +1304,7 @@ function renderCapa4(d){
   if(pb){
     const deals=d.funnel?.deals||0, rev=d.revenue_total||0, profit=d.profit_total||0;
     const avg=deals>0?rev/deals:null;
-    pb.innerHTML=(d._isHistorical?`<div class="hist-note" style="margin-bottom:14px;">📌 Revenue solo disponible para el período actual · no aplica a la selección de período</div>`:'')+`
+    pb.innerHTML=`
       <div class="profit-lbl">Revenue Total del Período</div>
       <div class="profit-val">${fmt$(rev)}</div>
       <div class="profit-sub">Campo <code style="background:rgba(255,255,255,.15);padding:1px 5px;border-radius:4px;font-size:10px;">amount</code> · avg ${avg!=null?fmt$(avg):'—'} / deal</div>
