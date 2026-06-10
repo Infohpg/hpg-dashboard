@@ -1,6 +1,8 @@
 {
-  "updated": "2026-06-10 09:03",
+  "updated": "2026-06-10 09:45",
   "currentKey": "2026-05",
+  "total_leads": 564,
+  "profit_total": 14120.5,
   "period": {
     "label": "16 mayo – 15 junio 2026",
     "short": "May-Jun",
@@ -11,7 +13,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 564,
+      "actual": 450,
       "expected": 477,
       "goal": 550,
       "color": "#1D4ED8"
@@ -32,7 +34,7 @@
     }
   ],
   "funnel": {
-    "leads": 564,
+    "leads": 450,
     "appts": 35,
     "deals": 7,
     "period": "May-Jun"
@@ -48,12 +50,12 @@
       "May-Jun"
     ],
     "leads": [
-      58,
-      600,
-      1575,
-      670,
-      767,
-      766,
+      30,
+      263,
+      667,
+      456,
+      528,
+      475,
       0
     ],
     "appts": [
@@ -91,6 +93,24 @@
       5.44,
       9.13,
       22.99
+    ],
+    "clicks": [
+      1784,
+      3655,
+      8246,
+      4728,
+      4560,
+      5629,
+      2533
+    ],
+    "lpv": [
+      1117,
+      2224,
+      4286,
+      2568,
+      2521,
+      3368,
+      1508
     ]
   },
   "lead_status": {
@@ -242,7 +262,8 @@
     "results": 273,
     "cpr": 22.99,
     "clicks": 2533,
-    "impressions": 248442
+    "impressions": 248442,
+    "lpv": 1508
   },
   "campaigns": [
     {
