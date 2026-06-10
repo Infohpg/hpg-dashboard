@@ -1,7 +1,7 @@
 {
-  "updated": "2026-06-10 12:15",
+  "updated": "2026-06-10 12:31",
   "currentKey": "2026-05",
-  "total_leads": 567,
+  "total_leads": 593,
   "profit_total": 14120.5,
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -13,7 +13,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 455,
+      "actual": 475,
       "expected": 477,
       "goal": 550,
       "color": "#1D4ED8"
@@ -34,7 +34,7 @@
     }
   ],
   "funnel": {
-    "leads": 455,
+    "leads": 475,
     "appts": 37,
     "deals": 7,
     "period": "May-Jun"
@@ -50,12 +50,12 @@
       "May-Jun"
     ],
     "leads": [
-      29,
-      263,
-      666,
-      482,
-      546,
-      476,
+      17,
+      268,
+      660,
+      468,
+      557,
+      472,
       0
     ],
     "appts": [
@@ -70,8 +70,8 @@
     "deals": [
       2,
       2,
-      11,
-      7,
+      10,
+      8,
       8,
       9,
       0
@@ -118,21 +118,21 @@
       "No Answer - Active Recall",
       "Out of Range",
       "Lost - Not Interested",
-      "Duplicate",
       "Future Buyer",
       "Unreachable",
+      "Duplicate",
       "Not Qualified",
-      "Other company sold"
+      "Recall - Short"
     ],
     "values": [
-      196,
-      48,
-      39,
+      208,
+      52,
+      40,
+      36,
       34,
       34,
-      32,
       29,
-      26
+      27
     ]
   },
   "appts_breakdown": {
@@ -174,7 +174,7 @@
   "product": [
     {
       "label": "Roofing",
-      "leads": 521,
+      "leads": 547,
       "deals": 0
     },
     {
@@ -186,12 +186,12 @@
   "geo": [
     {
       "label": "Florida",
-      "leads": 528,
+      "leads": 551,
       "deals": 0
     },
     {
       "label": "California",
-      "leads": 34,
+      "leads": 37,
       "deals": 0
     }
   ],
@@ -203,7 +203,7 @@
       "deals": 2,
       "meta": 3300,
       "meta_expected": 2860,
-      "leads": 70
+      "leads": 76
     },
     {
       "name": "Silvia",
@@ -230,7 +230,7 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5720,
-      "leads": 88
+      "leads": 99
     },
     {
       "name": "Daniela",
