@@ -18,7 +18,7 @@
     },
     {
       "label": "Appts Confirmados",
-      "actual": 33,
+      "actual": 34,
       "expected": 52,
       "goal": 60,
       "color": "#0369A1"
@@ -33,7 +33,7 @@
   ],
   "funnel": {
     "leads": 564,
-    "appts": 33,
+    "appts": 34,
     "deals": 7,
     "period": "May-Jun"
   },
@@ -81,7 +81,7 @@
       4265.01,
       6428.06,
       7720.41,
-      6103.96
+      6248.69
     ],
     "cpr": [
       7.21,
@@ -90,7 +90,7 @@
       5.58,
       5.44,
       9.13,
-      22.78
+      22.89
     ]
   },
   "lead_status": {
@@ -117,7 +117,7 @@
   },
   "appts_breakdown": {
     "total": 74,
-    "confirmed": 33,
+    "confirmed": 34,
     "cancelled": 32,
     "stages": [
       {
@@ -134,15 +134,15 @@
       },
       {
         "label": "Still Working",
-        "count": 6
-      },
-      {
-        "label": "Pending Confirmation",
-        "count": 4
+        "count": 7
       },
       {
         "label": "Appointment Set",
         "count": 4
+      },
+      {
+        "label": "Pending Confirmation",
+        "count": 3
       },
       {
         "label": "Unknown",
@@ -178,20 +178,20 @@
   "setter_calls": [
     {
       "name": "Oliver",
-      "calls": 2439,
+      "calls": 2559,
       "appts": 9,
       "deals": 2,
       "meta": 3300,
-      "meta_expected": 2750,
+      "meta_expected": 2860,
       "leads": 67
     },
     {
       "name": "Silvia",
-      "calls": 4503,
+      "calls": 4581,
       "appts": 8,
       "deals": 1,
       "meta": 6600,
-      "meta_expected": 5500,
+      "meta_expected": 5720,
       "leads": 102
     },
     {
@@ -200,49 +200,49 @@
       "appts": 9,
       "deals": 2,
       "meta": 6600,
-      "meta_expected": 5500,
+      "meta_expected": 5720,
       "leads": 54
     },
     {
       "name": "Pablo",
-      "calls": 4009,
+      "calls": 4080,
       "appts": 7,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 5500,
+      "meta_expected": 5720,
       "leads": 87
     },
     {
       "name": "Daniela",
-      "calls": 1170,
+      "calls": 1297,
       "appts": 0,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 5500,
+      "meta_expected": 5720,
       "leads": 10
     },
     {
       "name": "Alejandro",
-      "calls": 713,
-      "appts": 0,
+      "calls": 781,
+      "appts": 1,
       "deals": 0,
       "meta": 3300,
-      "meta_expected": 2750,
+      "meta_expected": 2860,
       "leads": 11
     }
   ],
   "setter_calls_total": {
-    "calls": 15096,
-    "citas": 33,
+    "calls": 15560,
+    "citas": 34,
     "meta_total": 33000,
-    "meta_expected": 27500
+    "meta_expected": 28600
   },
   "meta": {
-    "spend": 6103.96,
-    "results": 268,
-    "cpr": 22.78,
-    "clicks": 2475,
-    "impressions": 241588
+    "spend": 6248.69,
+    "results": 273,
+    "cpr": 22.89,
+    "clicks": 2524,
+    "impressions": 247477
   },
   "campaigns": [
     {
@@ -319,14 +319,14 @@
     },
     {
       "name": "FL || Roofing / Website / Esp / Friction Free",
-      "spend": 3653.73,
-      "res": 176,
-      "cpr": 20.75982955,
+      "spend": 3761.98,
+      "res": 179,
+      "cpr": 21.01664804,
       "crm": 0,
       "appts": 0,
       "eff": 0,
-      "deals": 0,
-      "clicks": 1538,
+      "deals": 2,
+      "clicks": 1575,
       "st": "amb"
     },
     {
@@ -355,14 +355,14 @@
     },
     {
       "name": "FL || Roofing / Website / Esp / Retargeting Friction Free",
-      "spend": 594.87,
-      "res": 41,
-      "cpr": 14.50902439,
+      "spend": 605.03,
+      "res": 43,
+      "cpr": 14.07046512,
       "crm": 0,
       "appts": 0,
       "eff": 0,
       "deals": 0,
-      "clicks": 300,
+      "clicks": 303,
       "st": "amb"
     },
     {
@@ -391,14 +391,14 @@
     },
     {
       "name": "FL || Windows | Friction Free | Leads | Website | Esp",
-      "spend": 809.25,
+      "spend": 825.72,
       "res": 15,
-      "cpr": 53.95,
+      "cpr": 55.048,
       "crm": 0,
       "appts": 0,
       "eff": 0,
       "deals": 0,
-      "clicks": 218,
+      "clicks": 224,
       "st": "amb"
     },
     {
@@ -439,14 +439,14 @@
     },
     {
       "name": "FL [10/Dic] || Roofing / Friction Free / Clientes Potenciales / Website / Esp",
-      "spend": 655,
+      "spend": 664.85,
       "res": 26,
-      "cpr": 25.19230769,
+      "cpr": 25.57115385,
       "crm": 0,
       "appts": 0,
       "eff": 0,
       "deals": 0,
-      "clicks": 181,
+      "clicks": 184,
       "st": "amb"
     },
     {
