@@ -1322,15 +1322,19 @@ function renderCapa4(d){
   const kRow=document.getElementById('c4-kpis');
   if(kRow){
     const deals=d.funnel?.deals||0, spend=d.meta?.spend||0;
-    const rev=d.revenue_total||0, h=d.history||{}, n=(h.periods||[]).length;
+    const rev=d.revenue_total||0, profit=d.profit_total||0;
+    const h=d.history||{}, n=(h.periods||[]).length;
     const prevIdx=d._prevIdx!=null?d._prevIdx:n-2;
-    const pd=h.deals?.[prevIdx]||0, exp=d.pacing?.[2]?.expected||0;
+    const prevProfit=h.profit?.[prevIdx]||0, prevSpend=h.spend?.[prevIdx]||0;
+    const exp=d.pacing?.[2]?.expected||0;
     const cpd=deals>0?spend/deals:null, avg=deals>0?rev/deals:null;
+    const curRoas=spend>0&&profit>0?profit/spend:null;
+    const prevRoas=prevSpend>0&&prevProfit>0?prevProfit/prevSpend:null;
     kRow.innerHTML=`
       <div class="kpi k-c4">
-        <div class="kpi-top"><span class="kpi-lbl">Deals</span>${deltaBadge(deals,pd)}</div>
-        <div class="kpi-val">${fmtN(deals)}</div>
-        <div class="kpi-sub">vs ${fmtN(exp)} esperados · día ${d.period?.day||'—'}</div>
+        <div class="kpi-top"><span class="kpi-lbl">ROAS de Profit</span>${curRoas!=null&&prevRoas!=null?deltaBadge(curRoas,prevRoas,true):'<span class="delta d-neu">—</span>'}</div>
+        <div class="kpi-val">${curRoas!=null?curRoas.toFixed(2)+'x':'—'}</div>
+        <div class="kpi-sub">${profit>0?fmt$(profit)+' profit · '+fmt$(spend)+' invertido':'Sin datos de profit'}</div>
       </div>
       <div class="kpi k-c4">
         <div class="kpi-top"><span class="kpi-lbl">Costo / Deal</span><span class="delta d-neu">—</span></div>
@@ -1345,33 +1349,16 @@ function renderCapa4(d){
   }
   const pb=document.getElementById('profit-box');
   if(pb){
-    const deals=d.funnel?.deals||0, spend=d.meta?.spend||0;
-    const rev=d.revenue_total||0, profit=d.profit_total||0;
-    const h2=d.history||{}, n2=(h2.periods||[]).length;
-    const pi2=d._prevIdx!=null?d._prevIdx:n2-2;
-    const prevProfit=h2.profit?.[pi2]||0, prevSpend=h2.spend?.[pi2]||0;
-    const curRoas=spend>0&&profit>0?profit/spend:null;
-    const prevRoas=prevSpend>0&&prevProfit>0?prevProfit/prevSpend:null;
-    const roasDiff=curRoas!=null&&prevRoas!=null&&prevRoas>0?((curRoas-prevRoas)/prevRoas*100):null;
-    const roasAhead=roasDiff==null||roasDiff>=0;
+    const deals=d.funnel?.deals||0, rev=d.revenue_total||0, profit=d.profit_total||0;
+    const avg=deals>0?rev/deals:null;
     pb.innerHTML=`
-      <div class="profit-lbl">ROAS DE PROFIT</div>
-      <div class="profit-val">${curRoas!=null?curRoas.toFixed(2)+'x':'—'}</div>
-      <div class="profit-sub">${fmt$(profit)} profit · ${fmt$(spend)} invertido</div>
-      ${roasDiff!=null?`<div style="margin-top:6px;"><span style="font-size:12px;font-weight:700;padding:3px 10px;border-radius:12px;background:rgba(255,255,255,.15);color:#fff;">${roasAhead?'↑ +':'↓ '}${Math.abs(roasDiff).toFixed(1)}% vs período anterior</span></div>`:''}
+      <div class="profit-lbl">Revenue Total del Período</div>
+      <div class="profit-val">${fmt$(rev)}</div>
+      <div class="profit-sub">Campo <code style="background:rgba(255,255,255,.15);padding:1px 5px;border-radius:4px;font-size:10px;">amount</code> · avg ${avg!=null?fmt$(avg):'—'} / deal</div>
       <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15);">
-        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
-          <div>
-            <div class="profit-lbl">Revenue</div>
-            <div style="font-size:20px;font-weight:800;color:#fff;margin-top:2px;">${fmt$(rev)}</div>
-            <div class="profit-sub">avg ${deals>0?fmt$(rev/deals):'—'} / deal</div>
-          </div>
-          <div>
-            <div class="profit-lbl">Profit</div>
-            <div style="font-size:20px;font-weight:800;color:${profit>0?'#fff':'rgba(255,255,255,.35)'};margin-top:2px;">${profit>0?fmt$(profit):'—'}</div>
-            <div class="profit-sub">${profit>0&&deals>0?'avg '+fmt$(profit/deals)+' / deal':'profit_per_deal pendiente'}</div>
-          </div>
-        </div>
+        <div class="profit-lbl">Profit Total del Período</div>
+        <div style="font-size:24px;font-weight:800;color:${profit>0?'#fff':'rgba(255,255,255,.35)'};margin-top:4px;">${profit>0?fmt$(profit):'—'}</div>
+        <div class="profit-sub">${profit>0?('Promedio: '+fmt$(deals>0?profit/deals:0)+' / deal'):'Campo <code style="background:rgba(255,255,255,.1);padding:1px 5px;border-radius:4px;font-size:10px;">profit_per_deal</code> en sync n8n'}</div>
       </div>`;
   }
 }
