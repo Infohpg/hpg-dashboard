@@ -383,20 +383,20 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
         <div class="fn-col-title">Tendencia histórica · 7 períodos</div>
         <div class="sp-rows">
           <div class="sp-row"><div class="sp-card">
+            <div class="sp-top"><span class="sp-label c1">Clics en Anuncios</span><span class="sp-trend dim">—</span></div>
+            <div class="sp-empty-state">Cargando...</div>
+          </div></div>
+          <div class="sp-row"><div class="sp-card">
             <div class="sp-top"><span class="sp-label c2">Leads Operativos</span><span class="sp-trend dim">—</span></div>
-            <div class="sp-empty-state">Sin datos · pendiente de conexión</div>
+            <div class="sp-empty-state">Cargando...</div>
           </div></div>
           <div class="sp-row"><div class="sp-card">
             <div class="sp-top"><span class="sp-label c3">Citas Efectivas</span><span class="sp-trend dim">—</span></div>
-            <div class="sp-empty-state">Sin datos · pendiente de conexión</div>
+            <div class="sp-empty-state">Cargando...</div>
           </div></div>
           <div class="sp-row"><div class="sp-card">
             <div class="sp-top"><span class="sp-label c4">Deals</span><span class="sp-trend dim">—</span></div>
-            <div class="sp-empty-state">Sin datos · pendiente de conexión</div>
-          </div></div>
-          <div class="sp-row"><div class="sp-card">
-            <div class="sp-top"><span class="sp-label c1">CPR — Costo / Resultado</span><span class="sp-trend dim">—</span></div>
-            <div class="sp-empty-state">Sin datos · pendiente de conexión</div>
+            <div class="sp-empty-state">Cargando...</div>
           </div></div>
         </div>
       </div><!-- /col-r -->
@@ -468,9 +468,9 @@ body{background:var(--bg2);color:var(--tx);font-family:-apple-system,BlinkMacSys
           <div class="kpi-sub">Requiere GA4 / Meta Landing Views</div>
         </div>
         <div class="kpi k-gray dim" style="flex:1;">
-          <div class="kpi-top"><span class="kpi-lbl">ROAS por Ad Set</span></div>
+          <div class="kpi-top"><span class="kpi-lbl">ROAS Estimado</span></div>
           <div class="kpi-val">—</div>
-          <div class="kpi-sub">Requiere ad_set_id en sync n8n</div>
+          <div class="kpi-sub">Cargando...</div>
         </div>
       </div>
     </div>
@@ -1060,15 +1060,16 @@ function renderSparklines(d){
   _sparkCharts.forEach(c=>c.destroy()); _sparkCharts=[];
   const h=d.history||{};
   // Include current period: replace 0 placeholder with real current values
+  const clicksArr=[...(h.clicks||[])]; if(clicksArr.length) clicksArr[clicksArr.length-1]=d.meta?.clicks||0;
   const leadsArr=[...(h.leads||[])]; if(leadsArr.length) leadsArr[leadsArr.length-1]=d.funnel?.leads||0;
   const apptsArr=[...(h.appts||[])]; if(apptsArr.length) apptsArr[apptsArr.length-1]=d.funnel?.appts||0;
   const dealsArr=[...(h.deals||[])]; if(dealsArr.length) dealsArr[dealsArr.length-1]=d.funnel?.deals||0;
   const per=(h.periods||[]).slice(-8);
   const items=[
-    {label:'LEADS OPERATIVOS',  color:'#1D4ED8',fill:'rgba(29,78,216,.22)', vals:leadsArr.slice(-8)},
-    {label:'CITAS EFECTIVAS',   color:'#0284C7',fill:'rgba(2,132,199,.2)',  vals:apptsArr.slice(-8)},
-    {label:'DEALS',             color:'#059669',fill:'rgba(5,150,105,.2)',  vals:dealsArr.slice(-8)},
-    {label:'CPR — COSTO / RESULTADO',color:'#334155',fill:'rgba(51,65,85,.15)',vals:(h.cpr||[]).slice(-8),isCPR:true},
+    {label:'CLICS EN ANUNCIOS',  color:'#0C2340',fill:'rgba(12,35,64,.18)',  vals:clicksArr.slice(-8)},
+    {label:'LEADS OPERATIVOS',   color:'#1D4ED8',fill:'rgba(29,78,216,.22)', vals:leadsArr.slice(-8)},
+    {label:'CITAS EFECTIVAS',    color:'#0284C7',fill:'rgba(2,132,199,.2)',  vals:apptsArr.slice(-8)},
+    {label:'DEALS',              color:'#059669',fill:'rgba(5,150,105,.2)',  vals:dealsArr.slice(-8)},
   ];
   col.innerHTML='<div class="fn-col-title">Tendencia histórica · últimos períodos</div><div class="sp-rows">'
     +items.map((it,i)=>`<div class="sp-row"><div class="sp-card" style="background:var(--bg);border:1px solid var(--brd);border-radius:8px;box-shadow:var(--sdw);display:flex;flex-direction:column;padding:10px 14px 8px;">
@@ -1089,7 +1090,7 @@ function renderSparklines(d){
         responsive:true,maintainAspectRatio:false,animation:false,
         plugins:{legend:{display:false},tooltip:{
           backgroundColor:'rgba(15,23,42,.9)',titleColor:'#fff',bodyColor:'rgba(255,255,255,.8)',padding:8,
-          callbacks:{label:ctx=>it.isCPR?`CPR: $${ctx.parsed.y.toFixed(2)}`:`${ctx.dataset.label||it.label}: ${ctx.parsed.y}`}
+          callbacks:{label:ctx=>`${it.label}: ${ctx.parsed.y.toLocaleString()}`}
         }},
         scales:{
           x:{grid:{display:false},border:{display:false},ticks:{font:{size:8},color:'#94A3B8',maxRotation:45,autoSkip:true,maxTicksLimit:6}},
@@ -1152,16 +1153,20 @@ function renderLpv(d){
   const area=document.getElementById('lpv-area'); if(!area)return;
   const lpv=d.meta?.lpv||0;
   const isEmpty=!lpv;
+  const spend=d.meta?.spend||0;
+  const rev=d.revenue_total||0;
+  const roas=spend>0&&rev>0?rev/spend:null;
+  const hasRoas=roas!=null;
   area.innerHTML=`
     <div class="kpi ${isEmpty?'k-gray dim':'k-c1'}" style="flex:1;">
       <div class="kpi-top"><span class="kpi-lbl">Visitas al Landing</span></div>
       <div class="kpi-val">${fmtN(lpv)||'—'}</div>
       <div class="kpi-sub">Meta Landing Page Views</div>
     </div>
-    <div class="kpi k-gray dim" style="flex:1;">
-      <div class="kpi-top"><span class="kpi-lbl">ROAS por Ad Set</span></div>
-      <div class="kpi-val">—</div>
-      <div class="kpi-sub">Requiere ad_set_id en sync n8n</div>
+    <div class="kpi ${hasRoas?'k-c1':'k-gray dim'}" style="flex:1;">
+      <div class="kpi-top"><span class="kpi-lbl">ROAS Estimado</span><span class="delta d-neu">período</span></div>
+      <div class="kpi-val">${hasRoas?roas.toFixed(1)+'x':'—'}</div>
+      <div class="kpi-sub">${hasRoas?'$'+fmt$(rev)+' ingresos · $'+fmt$(spend)+' invertido':'Sin datos de ingresos'}</div>
     </div>`;
 }
 
