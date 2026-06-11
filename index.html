@@ -1011,7 +1011,8 @@ function renderPacing(d){
   if(sub) sub.textContent=`Día ${day}/30 · Se esperaba el ${pctDone}% acumulado`;
   grid.innerHTML='';
   pac.forEach((p,i)=>{
-    // Standard pacing card
+    const card=document.createElement('div');
+    card.className='pac-v2';
     const ahead=p.actual>=p.expected;
     const fc=ahead?p.color:'#DC2626';
     const pctA=p.goal>0?Math.min(100,(p.actual/p.goal)*100):0;
