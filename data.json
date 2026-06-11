@@ -675,11 +675,11 @@
       [
         {
           "name": "Oliver",
-          "calls": 2681,
+          "calls": 2684,
           "appts": 9,
           "deals": 2,
           "meta": 3300,
-          "meta_expected": 2860,
+          "meta_expected": 2970,
           "leads": 75
         },
         {
@@ -688,7 +688,7 @@
           "appts": 9,
           "deals": 1,
           "meta": 6600,
-          "meta_expected": 5720,
+          "meta_expected": 5940,
           "leads": 101
         },
         {
@@ -697,34 +697,34 @@
           "appts": 10,
           "deals": 2,
           "meta": 6600,
-          "meta_expected": 5720,
+          "meta_expected": 5940,
           "leads": 64
         },
         {
           "name": "Pablo",
-          "calls": 4392,
+          "calls": 4489,
           "appts": 7,
           "deals": 0,
           "meta": 6600,
-          "meta_expected": 5720,
+          "meta_expected": 5940,
           "leads": 99
         },
         {
           "name": "Daniela",
-          "calls": 1542,
+          "calls": 1613,
           "appts": 0,
           "deals": 0,
           "meta": 6600,
-          "meta_expected": 5720,
+          "meta_expected": 5940,
           "leads": 10
         },
         {
           "name": "Alejandro",
-          "calls": 953,
+          "calls": 963,
           "appts": 1,
           "deals": 0,
           "meta": 3300,
-          "meta_expected": 2860,
+          "meta_expected": 2970,
           "leads": 12
         }
       ]
@@ -897,7 +897,7 @@
       23163,
       23586,
       25579,
-      22837
+      23018
     ],
     "calls_outbound": [
       3037,
@@ -906,7 +906,7 @@
       19194,
       18324,
       20919,
-      16885
+      17066
     ],
     "calls_blank": [
       3264,
@@ -1003,11 +1003,11 @@
   "setter_calls": [
     {
       "name": "Oliver",
-      "calls": 2681,
+      "calls": 2684,
       "appts": 9,
       "deals": 2,
       "meta": 3300,
-      "meta_expected": 2860,
+      "meta_expected": 2970,
       "leads": 75
     },
     {
@@ -1016,7 +1016,7 @@
       "appts": 9,
       "deals": 1,
       "meta": 6600,
-      "meta_expected": 5720,
+      "meta_expected": 5940,
       "leads": 101
     },
     {
@@ -1025,44 +1025,44 @@
       "appts": 10,
       "deals": 2,
       "meta": 6600,
-      "meta_expected": 5720,
+      "meta_expected": 5940,
       "leads": 64
     },
     {
       "name": "Pablo",
-      "calls": 4392,
+      "calls": 4489,
       "appts": 7,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 5720,
+      "meta_expected": 5940,
       "leads": 99
     },
     {
       "name": "Daniela",
-      "calls": 1542,
+      "calls": 1613,
       "appts": 0,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 5720,
+      "meta_expected": 5940,
       "leads": 10
     },
     {
       "name": "Alejandro",
-      "calls": 953,
+      "calls": 963,
       "appts": 1,
       "deals": 0,
       "meta": 3300,
-      "meta_expected": 2860,
+      "meta_expected": 2970,
       "leads": 12
     }
   ],
   "setter_calls_total": {
-    "calls": 22837,
-    "calls_outbound": 16885,
+    "calls": 23018,
+    "calls_outbound": 17066,
     "calls_blank": 5952,
     "citas": 36,
     "meta_total": 33000,
-    "meta_expected": 28600
+    "meta_expected": 29700
   },
   "meta": {
     "spend": 6369.07,
