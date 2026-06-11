@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-10 22:17",
+  "updated": "2026-06-10 22:49",
   "currentKey": "2026-05",
   "total_leads": 608,
   "profit_total": 14120.5,
@@ -733,65 +733,55 @@
       [
         {
           "label": "Roofing",
-          "leads": 33,
+          "leads": 16,
           "deals": 0
         }
       ],
       [
         {
           "label": "Roofing",
-          "leads": 472,
+          "leads": 219,
           "deals": 1
         },
         {
           "label": "Windows",
-          "leads": 129,
+          "leads": 49,
           "deals": 1
         }
       ],
       [
         {
           "label": "Roofing",
-          "leads": 677,
+          "leads": 300,
           "deals": 8
         },
         {
           "label": "Windows",
-          "leads": 98,
+          "leads": 34,
           "deals": 1
         }
       ],
       [
         {
           "label": "Roofing",
-          "leads": 610,
+          "leads": 413,
           "deals": 7
         },
         {
           "label": "Windows",
-          "leads": 2,
+          "leads": 1,
           "deals": 1
-        },
-        {
-          "label": "Kitchen",
-          "leads": 1,
-          "deals": 0
-        },
-        {
-          "label": "Doors",
-          "leads": 1,
-          "deals": 0
         }
       ],
       [
         {
           "label": "Roofing",
-          "leads": 754,
+          "leads": 521,
           "deals": 8
         },
         {
           "label": "Windows",
-          "leads": 16,
+          "leads": 9,
           "deals": 0
         },
         {
@@ -808,24 +798,24 @@
       [
         {
           "label": "Roofing",
-          "leads": 736,
+          "leads": 455,
           "deals": 7
         },
         {
           "label": "Windows",
-          "leads": 27,
+          "leads": 16,
           "deals": 2
         }
       ],
       [
         {
           "label": "Roofing",
-          "leads": 562,
+          "leads": 447,
           "deals": 7
         },
         {
           "label": "Windows",
-          "leads": 33,
+          "leads": 27,
           "deals": 0
         }
       ]
@@ -845,12 +835,12 @@
       [
         {
           "label": "Florida",
-          "leads": 229,
+          "leads": 159,
           "deals": 1
         },
         {
           "label": "California",
-          "leads": 108,
+          "leads": 32,
           "deals": 0
         },
         {
@@ -862,12 +852,12 @@
       [
         {
           "label": "Florida",
-          "leads": 566,
+          "leads": 461,
           "deals": 6
         },
         {
           "label": "California",
-          "leads": 37,
+          "leads": 21,
           "deals": 0
         }
       ]
@@ -979,24 +969,24 @@
   "product": [
     {
       "label": "Roofing",
-      "leads": 562,
+      "leads": 447,
       "deals": 7
     },
     {
       "label": "Windows",
-      "leads": 33,
+      "leads": 27,
       "deals": 0
     }
   ],
   "geo": [
     {
       "label": "Florida",
-      "leads": 566,
+      "leads": 461,
       "deals": 6
     },
     {
       "label": "California",
-      "leads": 37,
+      "leads": 21,
       "deals": 0
     }
   ],
