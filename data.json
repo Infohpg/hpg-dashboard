@@ -1,27 +1,27 @@
 {
-  "updated": "2026-06-10 22:49",
+  "updated": "2026-06-11 06:35",
   "currentKey": "2026-05",
   "total_leads": 608,
   "profit_total": 14120.5,
   "period": {
     "label": "16 mayo – 15 junio 2026",
     "short": "May-Jun",
-    "day": 26,
+    "day": 27,
     "total_days": 30,
-    "pct": 87
+    "pct": 90
   },
   "pacing": [
     {
       "label": "Leads",
       "actual": 487,
-      "expected": 477,
+      "expected": 495,
       "goal": 550,
       "color": "#1D4ED8"
     },
     {
       "label": "Appts Confirmados",
       "actual": 37,
-      "expected": 52,
+      "expected": 54,
       "goal": 60,
       "color": "#0369A1"
     },
