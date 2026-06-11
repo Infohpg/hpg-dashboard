@@ -1398,12 +1398,14 @@ function renderSetters(d){
       const conv=s.leads>0?fmtPct(pct(s.appts,s.leads)):'—';
       const phase=setterPhase(s.appts,s.calls,s.meta_expected||1);
       const bonus=bonusEst(s.appts,s.calls,s.meta_expected||1,s.deals);
+      const agend=s.appts_total||s.appts;
+      const canc=s.appts_cancelled>0?fmtN(s.appts_cancelled):'—';
       return `<tr>
         <td><span style="display:flex;align-items:center;gap:8px;"><span class="av ${avCls[i%avCls.length]}">${s.name[0]}</span><strong>${s.name}</strong></span></td>
         <td class="num">${fmtN(s.calls)}</td>
+        <td class="num">${fmtN(agend)}</td>
         <td class="num">${fmtN(s.appts)}</td>
-        <td class="num">${fmtN(s.appts)}</td>
-        <td class="num dim">—</td>
+        <td class="num">${canc}</td>
         <td class="num">${conv}</td>
         <td class="num">${fmtN(s.deals)}</td>
         <td>${phase}</td>
