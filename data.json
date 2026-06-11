@@ -675,7 +675,7 @@
       [
         {
           "name": "Oliver",
-          "calls": 2684,
+          "calls": 2685,
           "appts": 9,
           "deals": 2,
           "meta": 3300,
@@ -684,8 +684,8 @@
         },
         {
           "name": "Silvia",
-          "calls": 4858,
-          "appts": 9,
+          "calls": 4866,
+          "appts": 11,
           "deals": 1,
           "meta": 6600,
           "meta_expected": 5940,
@@ -693,7 +693,7 @@
         },
         {
           "name": "Emmanuel",
-          "calls": 2459,
+          "calls": 2475,
           "appts": 10,
           "deals": 2,
           "meta": 6600,
@@ -702,7 +702,7 @@
         },
         {
           "name": "Pablo",
-          "calls": 4489,
+          "calls": 4524,
           "appts": 7,
           "deals": 0,
           "meta": 6600,
@@ -993,7 +993,7 @@
   "setter_calls": [
     {
       "name": "Oliver",
-      "calls": 2684,
+      "calls": 2685,
       "appts": 9,
       "deals": 2,
       "meta": 3300,
@@ -1002,8 +1002,8 @@
     },
     {
       "name": "Silvia",
-      "calls": 4858,
-      "appts": 9,
+      "calls": 4866,
+      "appts": 11,
       "deals": 1,
       "meta": 6600,
       "meta_expected": 5940,
@@ -1011,7 +1011,7 @@
     },
     {
       "name": "Emmanuel",
-      "calls": 2459,
+      "calls": 2475,
       "appts": 10,
       "deals": 2,
       "meta": 6600,
@@ -1020,7 +1020,7 @@
     },
     {
       "name": "Pablo",
-      "calls": 4489,
+      "calls": 4524,
       "appts": 7,
       "deals": 0,
       "meta": 6600,
@@ -1050,7 +1050,7 @@
     "calls": 23498,
     "calls_outbound": 17501,
     "calls_blank": 5997,
-    "citas": 36,
+    "citas": 38,
     "meta_total": 33000,
     "meta_expected": 29700
   },
