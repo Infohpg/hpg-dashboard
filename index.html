@@ -1010,16 +1010,69 @@ function renderPacing(d){
   const pctDone=Math.round(day/30*100);
   if(sub) sub.textContent=`Día ${day}/30 · Se esperaba el ${pctDone}% acumulado`;
   grid.innerHTML='';
+  // Pre-compute ROAS profit for use in the Deals slot
+  const _spend=d.meta?.spend||0, _profit=d.profit_total||0;
+  const _h=d.history||{}, _n=(_h.periods||[]).length;
+  const _prevIdx=d._prevIdx!=null?d._prevIdx:_n-2;
+  const _prevProfit=_h.profit?.[_prevIdx]||0, _prevSpend=_h.spend?.[_prevIdx]||0;
+  const _curRoas=_spend>0?_profit/_spend:null;
+  const _prevRoas=_prevSpend>0?_prevProfit/_prevSpend:null;
+
   pac.forEach((p,i)=>{
+    const isDeals=p.label&&p.label.toLowerCase().includes('deal');
+    const card=document.createElement('div');
+    card.className='pac-v2';
+
+    if(isDeals&&_curRoas!=null){
+      // Replace Deals card with ROAS de Profit card
+      const color='#059669';
+      const roasGoal=3; // 3x target
+      const pctA=Math.min(100,(_curRoas/roasGoal)*100);
+      const roasDiff=_prevRoas&&_prevRoas>0?Math.abs(_curRoas-_prevRoas)/_prevRoas*100:0;
+      const ahead=_prevRoas==null||_curRoas>=_prevRoas;
+      card.style.cssText=`--accent:${color}`;
+      card.innerHTML=`
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${color};border-radius:10px 10px 0 0;"></div>
+        <div class="pac-v2-hdr">
+          <span class="pac-v2-lbl" style="color:var(--tx)">ROAS de Profit</span>
+          <span class="pac-v2-delta ${ahead?'up':'dn'}">${ahead?'↑ +':'↓ '}${roasDiff.toFixed(1)}% vs ant.</span>
+        </div>
+        <div class="pac-v2-num" style="color:var(--tx)">${_curRoas.toFixed(2)}x</div>
+        <div class="pac-v2-sub"><strong>${fmt$(_profit)}</strong> profit · <strong>${fmt$(_spend)}</strong> invertido</div>
+        <div class="pac-v2-bar">
+          <div class="pac-v2-fill" style="width:${pctA.toFixed(1)}%;background:${_curRoas>=2?color:'#DC2626'}"></div>
+        </div>
+        <div class="pac-v2-lbls"><span>0x</span><span>Actual: ${_curRoas.toFixed(1)}x</span><span>Meta: ${roasGoal}x</span></div>
+        <div style="height:90px;position:relative;"><canvas id="pcv2-${i}"></canvas>`;
+      grid.appendChild(card);
+      if(typeof Chart==='undefined')return;
+      const cv=document.getElementById('pcv2-'+i); if(!cv)return;
+      // Bar: prev ROAS / actual ROAS / goal
+      const ch=new Chart(cv,{
+        type:'bar',
+        data:{labels:['Anterior','Actual','Meta'],datasets:[{
+          data:[_prevRoas?parseFloat(_prevRoas.toFixed(2)):0, parseFloat(_curRoas.toFixed(2)), roasGoal],
+          backgroundColor:['rgba(148,163,184,.35)',(_curRoas>=2?color:'#DC2626')+'CC','rgba(148,163,184,.15)'],
+          borderColor:['#94A3B8',_curRoas>=2?color:'#DC2626','#CBD5E1'],
+          borderWidth:[1.5,2,1.5],borderRadius:5
+        }]},
+        options:{
+          responsive:true,maintainAspectRatio:false,animation:false,
+          plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(15,23,42,.9)',callbacks:{label:ctx=>` ${ctx.parsed.y.toFixed(2)}x`}}},
+          scales:{x:{grid:{display:false},ticks:{font:{size:9},color:'#94A3B8'}},y:{display:false}}
+        }
+      });
+      _pacingCharts.push(ch);
+      return;
+    }
+
+    // Standard pacing card
     const ahead=p.actual>=p.expected;
     const fc=ahead?p.color:'#DC2626';
     const pctA=p.goal>0?Math.min(100,(p.actual/p.goal)*100):0;
     const pctE=p.goal>0?Math.min(99,(p.expected/p.goal)*100):0;
     const diff=p.expected>0?Math.round(Math.abs(p.actual-p.expected)/p.expected*100):0;
-    const card=document.createElement('div');
-    card.className='pac-v2';
     card.style.cssText=`--accent:${p.color}`;
-    card.style.setProperty('--before-bg',p.color);
     card.innerHTML=`
       <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${p.color};border-radius:10px 10px 0 0;"></div>
       <div class="pac-v2-hdr">
