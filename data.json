@@ -1,7 +1,7 @@
 {
-  "updated": "2026-06-10 16:36",
+  "updated": "2026-06-10 22:10",
   "currentKey": "2026-05",
-  "total_leads": 599,
+  "total_leads": 608,
   "profit_total": 14120.5,
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -13,7 +13,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 480,
+      "actual": 487,
       "expected": 477,
       "goal": 550,
       "color": "#1D4ED8"
@@ -34,7 +34,7 @@
     }
   ],
   "funnel": {
-    "leads": 480,
+    "leads": 487,
     "appts": 37,
     "deals": 7,
     "period": "May-Jun"
@@ -52,7 +52,7 @@
     "leads": [
       16,
       268,
-      660,
+      659,
       468,
       557,
       472,
@@ -126,7 +126,7 @@
         "values": [
           10,
           9,
-          6,
+          5,
           4,
           3,
           1,
@@ -233,14 +233,14 @@
           "Lost - Not Interested"
         ],
         "values": [
-          162,
+          159,
           147,
           85,
           84,
           53,
           52,
           43,
-          29
+          30
         ]
       },
       {
@@ -255,7 +255,7 @@
           "Other company sold"
         ],
         "values": [
-          199,
+          201,
           52,
           49,
           37,
@@ -680,7 +680,7 @@
           "deals": 2,
           "meta": 3300,
           "meta_expected": 2860,
-          "leads": 74
+          "leads": 75
         },
         {
           "name": "Silvia",
@@ -733,7 +733,7 @@
       [
         {
           "label": "Roofing",
-          "leads": 34,
+          "leads": 33,
           "deals": 0
         }
       ],
@@ -741,36 +741,36 @@
         {
           "label": "Roofing",
           "leads": 472,
-          "deals": 0
+          "deals": 1
         },
         {
           "label": "Windows",
           "leads": 129,
-          "deals": 0
+          "deals": 1
         }
       ],
       [
         {
           "label": "Roofing",
           "leads": 677,
-          "deals": 0
+          "deals": 8
         },
         {
           "label": "Windows",
           "leads": 98,
-          "deals": 0
+          "deals": 1
         }
       ],
       [
         {
           "label": "Roofing",
           "leads": 610,
-          "deals": 0
+          "deals": 7
         },
         {
           "label": "Windows",
           "leads": 2,
-          "deals": 0
+          "deals": 1
         },
         {
           "label": "Kitchen",
@@ -787,7 +787,7 @@
         {
           "label": "Roofing",
           "leads": 754,
-          "deals": 0
+          "deals": 8
         },
         {
           "label": "Windows",
@@ -809,19 +809,19 @@
         {
           "label": "Roofing",
           "leads": 736,
-          "deals": 0
+          "deals": 7
         },
         {
           "label": "Windows",
           "leads": 27,
-          "deals": 0
+          "deals": 2
         }
       ],
       [
         {
           "label": "Roofing",
-          "leads": 553,
-          "deals": 0
+          "leads": 562,
+          "deals": 7
         },
         {
           "label": "Windows",
@@ -846,19 +846,24 @@
         {
           "label": "Florida",
           "leads": 229,
-          "deals": 0
+          "deals": 1
         },
         {
           "label": "California",
           "leads": 108,
           "deals": 0
+        },
+        {
+          "label": "30+ days",
+          "leads": 0,
+          "deals": 1
         }
       ],
       [
         {
           "label": "Florida",
-          "leads": 557,
-          "deals": 0
+          "leads": 566,
+          "deals": 6
         },
         {
           "label": "California",
@@ -925,7 +930,7 @@
       "Other company sold"
     ],
     "values": [
-      199,
+      201,
       52,
       49,
       37,
@@ -974,8 +979,8 @@
   "product": [
     {
       "label": "Roofing",
-      "leads": 553,
-      "deals": 0
+      "leads": 562,
+      "deals": 7
     },
     {
       "label": "Windows",
@@ -986,8 +991,8 @@
   "geo": [
     {
       "label": "Florida",
-      "leads": 557,
-      "deals": 0
+      "leads": 566,
+      "deals": 6
     },
     {
       "label": "California",
@@ -1003,7 +1008,7 @@
       "deals": 2,
       "meta": 3300,
       "meta_expected": 2860,
-      "leads": 74
+      "leads": 75
     },
     {
       "name": "Silvia",
