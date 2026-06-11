@@ -1389,6 +1389,11 @@ function renderSetters(d){
   const tb=document.getElementById('setters-tbody');
   if(tb){
     const tot=d.setter_calls_total||{};
+    const ab=d.appts_breakdown||{};
+    const totDeals=sorted.reduce((s,x)=>s+(x.deals||0),0);
+    const totLeads=sorted.reduce((s,x)=>s+(x.leads||0),0);
+    const totConv=totLeads>0?fmtPct(pct(totDeals,totLeads)):'—';
+    const totBonus=sorted.reduce((s,x)=>{const b=bonusEst(x.appts,x.calls,x.meta_expected||1,x.deals);return s+(b||0);},0);
     tb.innerHTML=sorted.map((s,i)=>{
       const conv=s.leads>0?fmtPct(pct(s.appts,s.leads)):'—';
       const phase=setterPhase(s.appts,s.calls,s.meta_expected||1);
@@ -1407,13 +1412,13 @@ function renderSetters(d){
     }).join('')+`<tr style="background:var(--bg2);font-weight:700;">
       <td><strong>TOTAL</strong></td>
       <td class="num">${fmtN(tot.calls)}</td>
-      <td class="num">${fmtN(tot.citas)}</td>
-      <td class="num">${fmtN(tot.citas)}</td>
-      <td class="num dim">—</td>
-      <td class="num dim">—</td>
-      <td class="num dim">—</td>
+      <td class="num">${ab.total!=null?fmtN(ab.total):'—'}</td>
+      <td class="num">${ab.confirmed!=null?fmtN(ab.confirmed):'—'}</td>
+      <td class="num">${ab.cancelled!=null?fmtN(ab.cancelled):'—'}</td>
+      <td class="num">${totConv}</td>
+      <td class="num">${fmtN(totDeals)}</td>
       <td class="dim">—</td>
-      <td class="num dim">—</td>
+      <td class="num">${totBonus>0?'$'+totBonus.toLocaleString():'—'}</td>
     </tr>`;
   }
 
