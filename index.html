@@ -1205,7 +1205,7 @@ function renderProduct(d){
       <div class="prod-header"><span class="prod-name">${p.label}</span><span class="prod-badge ${cls}">${fmtN(p.leads)} leads</span></div>
       <div class="prod-row"><span class="prod-metric">Leads</span><span class="prod-val">${fmtN(p.leads)||'—'}</span></div>
       <div class="prod-row"><span class="prod-metric">Deals</span><span class="prod-val">${fmtN(p.deals)||'—'}</span></div>
-      <div class="prod-row"><span class="prod-metric">CPL ${p.label}</span><span class="prod-val dim">—</span></div>
+      <div class="prod-row"><span class="prod-metric">Conv. Rate</span><span class="prod-val">${p.leads>0?fmtPct(pct(p.deals,p.leads)):'—'}</span></div>
       <div class="mini-bar-outer"><div style="width:${w}%;background:var(--c2);height:100%;border-radius:2px;"></div></div>
     </div>`;
   }).join('');
