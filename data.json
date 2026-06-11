@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-11 11:19",
+  "updated": "2026-06-11 11:27",
   "currentKey": "2026-05",
   "total_leads": 614,
   "profit_total": 17298.5,
@@ -680,7 +680,9 @@
           "deals": 2,
           "meta": 3300,
           "meta_expected": 2970,
-          "leads": 76
+          "leads": 76,
+          "appts_total": 20,
+          "appts_cancelled": 9
         },
         {
           "name": "Silvia",
@@ -689,7 +691,9 @@
           "deals": 1,
           "meta": 6600,
           "meta_expected": 5940,
-          "leads": 101
+          "leads": 101,
+          "appts_total": 19,
+          "appts_cancelled": 7
         },
         {
           "name": "Emmanuel",
@@ -698,7 +702,9 @@
           "deals": 2,
           "meta": 6600,
           "meta_expected": 5940,
-          "leads": 71
+          "leads": 71,
+          "appts_total": 16,
+          "appts_cancelled": 5
         },
         {
           "name": "Pablo",
@@ -707,7 +713,9 @@
           "deals": 0,
           "meta": 6600,
           "meta_expected": 5940,
-          "leads": 104
+          "leads": 104,
+          "appts_total": 14,
+          "appts_cancelled": 6
         },
         {
           "name": "Daniela",
@@ -716,7 +724,9 @@
           "deals": 0,
           "meta": 6600,
           "meta_expected": 5940,
-          "leads": 10
+          "leads": 10,
+          "appts_total": 1,
+          "appts_cancelled": 0
         },
         {
           "name": "Alejandro",
@@ -725,7 +735,9 @@
           "deals": 0,
           "meta": 3300,
           "meta_expected": 2970,
-          "leads": 12
+          "leads": 12,
+          "appts_total": 3,
+          "appts_cancelled": 0
         }
       ]
     ],
@@ -998,7 +1010,9 @@
       "deals": 2,
       "meta": 3300,
       "meta_expected": 2970,
-      "leads": 76
+      "leads": 76,
+      "appts_total": 20,
+      "appts_cancelled": 9
     },
     {
       "name": "Silvia",
@@ -1007,7 +1021,9 @@
       "deals": 1,
       "meta": 6600,
       "meta_expected": 5940,
-      "leads": 101
+      "leads": 101,
+      "appts_total": 19,
+      "appts_cancelled": 7
     },
     {
       "name": "Emmanuel",
@@ -1016,7 +1032,9 @@
       "deals": 2,
       "meta": 6600,
       "meta_expected": 5940,
-      "leads": 71
+      "leads": 71,
+      "appts_total": 16,
+      "appts_cancelled": 5
     },
     {
       "name": "Pablo",
@@ -1025,7 +1043,9 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5940,
-      "leads": 104
+      "leads": 104,
+      "appts_total": 14,
+      "appts_cancelled": 6
     },
     {
       "name": "Daniela",
@@ -1034,7 +1054,9 @@
       "deals": 0,
       "meta": 6600,
       "meta_expected": 5940,
-      "leads": 10
+      "leads": 10,
+      "appts_total": 1,
+      "appts_cancelled": 0
     },
     {
       "name": "Alejandro",
@@ -1043,7 +1065,9 @@
       "deals": 0,
       "meta": 3300,
       "meta_expected": 2970,
-      "leads": 12
+      "leads": 12,
+      "appts_total": 3,
+      "appts_cancelled": 0
     }
   ],
   "setter_calls_total": {
