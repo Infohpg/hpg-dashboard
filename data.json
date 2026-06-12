@@ -60,7 +60,7 @@
     ],
     "appts": [
       0,
-      19,
+      21,
       54,
       28,
       50,
@@ -274,17 +274,17 @@
         "stages": []
       },
       {
-        "total": 29,
-        "confirmed": 19,
-        "cancelled": 10,
+        "total": 36,
+        "confirmed": 21,
+        "cancelled": 15,
         "stages": [
           {
             "label": "Completed",
-            "count": 15
+            "count": 17
           },
           {
             "label": "Cancelled",
-            "count": 10
+            "count": 15
           },
           {
             "label": "Still Working",
