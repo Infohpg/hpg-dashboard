@@ -20,7 +20,7 @@
     },
     {
       "label": "Appts Confirmados",
-      "actual": 38,
+      "actual": 41,
       "expected": 58,
       "goal": 60,
       "color": "#0369A1"
@@ -35,7 +35,7 @@
   ],
   "funnel": {
     "leads": 507,
-    "appts": 38,
+    "appts": 41,
     "deals": 9,
     "period": "May-Jun"
   },
@@ -60,7 +60,7 @@
     ],
     "appts": [
       0,
-      21,
+      23,
       54,
       28,
       50,
@@ -270,17 +270,17 @@
         "stages": []
       },
       {
-        "total": 36,
-        "confirmed": 21,
-        "cancelled": 15,
+        "total": 39,
+        "confirmed": 23,
+        "cancelled": 16,
         "stages": [
           {
             "label": "Completed",
-            "count": 17
+            "count": 19
           },
           {
             "label": "Cancelled",
-            "count": 15
+            "count": 16
           },
           {
             "label": "Still Working",
@@ -397,8 +397,8 @@
         ]
       },
       {
-        "total": 82,
-        "confirmed": 38,
+        "total": 79,
+        "confirmed": 41,
         "cancelled": 32,
         "stages": [
           {
@@ -407,7 +407,7 @@
           },
           {
             "label": "Completed",
-            "count": 15
+            "count": 18
           },
           {
             "label": "Sale",
@@ -418,12 +418,12 @@
             "count": 9
           },
           {
-            "label": "Pending Confirmation",
-            "count": 7
+            "label": "Appointment Set",
+            "count": 3
           },
           {
-            "label": "Appointment Set",
-            "count": 4
+            "label": "Pending Confirmation",
+            "count": 2
           },
           {
             "label": "Unknown",
@@ -967,8 +967,8 @@
     ]
   },
   "appts_breakdown": {
-    "total": 82,
-    "confirmed": 38,
+    "total": 79,
+    "confirmed": 41,
     "cancelled": 32,
     "stages": [
       {
@@ -977,7 +977,7 @@
       },
       {
         "label": "Completed",
-        "count": 15
+        "count": 18
       },
       {
         "label": "Sale",
@@ -988,12 +988,12 @@
         "count": 9
       },
       {
-        "label": "Pending Confirmation",
-        "count": 7
+        "label": "Appointment Set",
+        "count": 3
       },
       {
-        "label": "Appointment Set",
-        "count": 4
+        "label": "Pending Confirmation",
+        "count": 2
       },
       {
         "label": "Unknown",
