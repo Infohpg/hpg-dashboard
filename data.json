@@ -1,7 +1,7 @@
 {
-  "updated": "2026-06-14 06:36",
+  "updated": "2026-06-14 07:01",
   "currentKey": "2026-05",
-  "total_leads": 637,
+  "total_leads": 653,
   "profit_total": 17298.5,
   "period": {
     "label": "16 mayo – 15 junio 2026",
@@ -13,7 +13,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 507,
+      "actual": 520,
       "expected": 550,
       "goal": 550,
       "color": "#1D4ED8"
@@ -34,7 +34,7 @@
     }
   ],
   "funnel": {
-    "leads": 507,
+    "leads": 520,
     "appts": 41,
     "deals": 9,
     "period": "May-Jun"
@@ -50,8 +50,8 @@
       "May-Jun"
     ],
     "leads": [
-      5,
-      267,
+      1,
+      263,
       659,
       468,
       557,
@@ -117,15 +117,11 @@
         "labels": [
           "Do Not Call",
           "Not Qualified",
-          "No Answer - Active Recall",
-          "Unreachable",
-          "Out of Range"
+          "Unreachable"
         ],
         "values": [
-          3,
-          3,
-          2,
-          2,
+          1,
+          1,
           1
         ]
       },
@@ -141,11 +137,11 @@
           "Future Buyer"
         ],
         "values": [
-          200,
-          101,
-          92,
-          55,
-          47,
+          197,
+          99,
+          91,
+          54,
+          46,
           36,
           31,
           13
@@ -251,12 +247,12 @@
           "Not Qualified"
         ],
         "values": [
-          202,
+          207,
           56,
           52,
-          42,
+          43,
           39,
-          35,
+          37,
           29,
           29
         ]
@@ -454,7 +450,7 @@
           "calls": 0,
           "appts": 0,
           "deals": 0,
-          "leads": 7
+          "leads": 6
         },
         {
           "name": "Pablo",
@@ -704,7 +700,7 @@
           "deals": 2,
           "meta": 3300,
           "meta_expected": 3190,
-          "leads": 88,
+          "leads": 97,
           "appts_total": 20,
           "appts_cancelled": 9
         },
@@ -769,14 +765,14 @@
       [
         {
           "label": "Roofing",
-          "leads": 5,
+          "leads": 1,
           "deals": 0
         }
       ],
       [
         {
           "label": "Roofing",
-          "leads": 219,
+          "leads": 215,
           "deals": 1
         },
         {
@@ -846,7 +842,7 @@
       [
         {
           "label": "Roofing",
-          "leads": 465,
+          "leads": 478,
           "deals": 9
         },
         {
@@ -888,7 +884,7 @@
       [
         {
           "label": "Florida",
-          "leads": 480,
+          "leads": 493,
           "deals": 8
         },
         {
@@ -956,12 +952,12 @@
       "Not Qualified"
     ],
     "values": [
-      202,
+      207,
       56,
       52,
-      42,
+      43,
       39,
-      35,
+      37,
       29,
       29
     ]
@@ -1005,7 +1001,7 @@
   "product": [
     {
       "label": "Roofing",
-      "leads": 465,
+      "leads": 478,
       "deals": 9
     },
     {
@@ -1017,7 +1013,7 @@
   "geo": [
     {
       "label": "Florida",
-      "leads": 480,
+      "leads": 493,
       "deals": 8
     },
     {
@@ -1034,7 +1030,7 @@
       "deals": 2,
       "meta": 3300,
       "meta_expected": 3190,
-      "leads": 88,
+      "leads": 97,
       "appts_total": 20,
       "appts_cancelled": 9
     },
