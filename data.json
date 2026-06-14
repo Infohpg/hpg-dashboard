@@ -699,7 +699,7 @@
           "appts": 11,
           "deals": 2,
           "meta": 3300,
-          "meta_expected": 3190,
+          "meta_expected": 3300,
           "leads": 97,
           "appts_total": 20,
           "appts_cancelled": 9
@@ -710,7 +710,7 @@
           "appts": 11,
           "deals": 1,
           "meta": 6600,
-          "meta_expected": 6380,
+          "meta_expected": 6600,
           "leads": 103,
           "appts_total": 20,
           "appts_cancelled": 7
@@ -721,7 +721,7 @@
           "appts": 10,
           "deals": 2,
           "meta": 6600,
-          "meta_expected": 6380,
+          "meta_expected": 6600,
           "leads": 75,
           "appts_total": 17,
           "appts_cancelled": 6
@@ -732,7 +732,7 @@
           "appts": 7,
           "deals": 0,
           "meta": 6600,
-          "meta_expected": 6380,
+          "meta_expected": 6600,
           "leads": 107,
           "appts_total": 14,
           "appts_cancelled": 6
@@ -743,18 +743,18 @@
           "appts": 0,
           "deals": 0,
           "meta": 6600,
-          "meta_expected": 6380,
+          "meta_expected": 6600,
           "leads": 10,
           "appts_total": 1,
           "appts_cancelled": 0
         },
         {
           "name": "Alejandro",
-          "calls": 1148,
-          "appts": 2,
+          "calls": 1173,
+          "appts": 3,
           "deals": 0,
           "meta": 3300,
-          "meta_expected": 3190,
+          "meta_expected": 3300,
           "leads": 11,
           "appts_total": 3,
           "appts_cancelled": 0
@@ -1029,7 +1029,7 @@
       "appts": 11,
       "deals": 2,
       "meta": 3300,
-      "meta_expected": 3190,
+      "meta_expected": 3300,
       "leads": 97,
       "appts_total": 20,
       "appts_cancelled": 9
@@ -1040,7 +1040,7 @@
       "appts": 11,
       "deals": 1,
       "meta": 6600,
-      "meta_expected": 6380,
+      "meta_expected": 6600,
       "leads": 103,
       "appts_total": 20,
       "appts_cancelled": 7
@@ -1051,7 +1051,7 @@
       "appts": 10,
       "deals": 2,
       "meta": 6600,
-      "meta_expected": 6380,
+      "meta_expected": 6600,
       "leads": 75,
       "appts_total": 17,
       "appts_cancelled": 6
@@ -1062,7 +1062,7 @@
       "appts": 7,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 6380,
+      "meta_expected": 6600,
       "leads": 107,
       "appts_total": 14,
       "appts_cancelled": 6
@@ -1073,18 +1073,18 @@
       "appts": 0,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 6380,
+      "meta_expected": 6600,
       "leads": 10,
       "appts_total": 1,
       "appts_cancelled": 0
     },
     {
       "name": "Alejandro",
-      "calls": 1148,
-      "appts": 2,
+      "calls": 1173,
+      "appts": 3,
       "deals": 0,
       "meta": 3300,
-      "meta_expected": 3190,
+      "meta_expected": 3300,
       "leads": 11,
       "appts_total": 3,
       "appts_cancelled": 0
@@ -1094,9 +1094,9 @@
     "calls": 26043,
     "calls_outbound": 19513,
     "calls_blank": 6530,
-    "citas": 41,
+    "citas": 42,
     "meta_total": 33000,
-    "meta_expected": 31900
+    "meta_expected": 33000
   },
   "meta": {
     "spend": 6892.84,
