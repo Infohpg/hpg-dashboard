@@ -1,8 +1,8 @@
 {
-  "updated": "2026-06-15 06:36",
+  "updated": "2026-06-15 07:01",
   "currentKey": "2026-05",
-  "total_leads": 653,
-  "profit_total": 17298.5,
+  "total_leads": 681,
+  "profit_total": 18616,
   "period": {
     "label": "16 mayo – 15 junio 2026",
     "short": "May-Jun",
@@ -13,7 +13,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 520,
+      "actual": 547,
       "expected": 568,
       "goal": 550,
       "color": "#1D4ED8"
@@ -27,21 +27,20 @@
     },
     {
       "label": "Deals Confirmados",
-      "actual": 9,
+      "actual": 10,
       "expected": 11,
       "goal": 11,
       "color": "#475569"
     }
   ],
   "funnel": {
-    "leads": 520,
+    "leads": 547,
     "appts": 42,
-    "deals": 9,
+    "deals": 10,
     "period": "May-Jun"
   },
   "history": {
     "periods": [
-      "Nov-Dic",
       "Dic-Ene",
       "Ene-Feb",
       "Feb-Mar",
@@ -50,16 +49,14 @@
       "May-Jun"
     ],
     "leads": [
-      1,
-      263,
-      659,
+      253,
+      657,
       468,
       557,
       472,
       0
     ],
     "appts": [
-      0,
       23,
       54,
       28,
@@ -69,7 +66,6 @@
     ],
     "deals": [
       2,
-      2,
       10,
       8,
       8,
@@ -77,7 +73,6 @@
       0
     ],
     "spend": [
-      2776.98,
       5623.3,
       5927.51,
       4265.01,
@@ -86,7 +81,6 @@
       7063.83
     ],
     "cpr": [
-      7.21,
       7.75,
       5.56,
       5.58,
@@ -95,7 +89,6 @@
       22.64
     ],
     "clicks": [
-      1784,
       3655,
       8246,
       4728,
@@ -104,7 +97,6 @@
       2795
     ],
     "lpv": [
-      1117,
       2224,
       4286,
       2568,
@@ -113,18 +105,6 @@
       1650
     ],
     "lead_status": [
-      {
-        "labels": [
-          "Do Not Call",
-          "Not Qualified",
-          "Unreachable"
-        ],
-        "values": [
-          1,
-          1,
-          1
-        ]
-      },
       {
         "labels": [
           "Unreachable",
@@ -137,12 +117,12 @@
           "Future Buyer"
         ],
         "values": [
-          197,
-          99,
+          192,
+          94,
           91,
-          54,
-          46,
-          36,
+          52,
+          44,
+          35,
           31,
           13
         ]
@@ -164,8 +144,8 @@
           98,
           80,
           52,
-          38,
-          29,
+          37,
+          30,
           28
         ]
       },
@@ -240,31 +220,25 @@
           "No Answer - Active Recall",
           "Out of Range",
           "Lost - Not Interested",
+          "New",
           "Future Buyer",
           "Duplicate",
           "Unreachable",
-          "Other company sold",
-          "Not Qualified"
+          "Other company sold"
         ],
         "values": [
           207,
-          56,
+          57,
           52,
+          45,
           43,
           39,
-          37,
-          29,
+          38,
           29
         ]
       }
     ],
     "appts_breakdown": [
-      {
-        "total": 0,
-        "confirmed": 0,
-        "cancelled": 0,
-        "stages": []
-      },
       {
         "total": 39,
         "confirmed": 23,
@@ -429,7 +403,6 @@
       }
     ],
     "setters": [
-      [],
       [
         {
           "name": "Oliver",
@@ -765,14 +738,7 @@
       [
         {
           "label": "Roofing",
-          "leads": 1,
-          "deals": 0
-        }
-      ],
-      [
-        {
-          "label": "Roofing",
-          "leads": 215,
+          "leads": 205,
           "deals": 1
         },
         {
@@ -784,7 +750,7 @@
       [
         {
           "label": "Roofing",
-          "leads": 300,
+          "leads": 299,
           "deals": 8
         },
         {
@@ -842,8 +808,8 @@
       [
         {
           "label": "Roofing",
-          "leads": 478,
-          "deals": 9
+          "leads": 505,
+          "deals": 10
         },
         {
           "label": "Windows",
@@ -853,7 +819,6 @@
       ]
     ],
     "geo": [
-      [],
       [],
       [
         {
@@ -884,8 +849,8 @@
       [
         {
           "label": "Florida",
-          "leads": 493,
-          "deals": 8
+          "leads": 520,
+          "deals": 9
         },
         {
           "label": "California",
@@ -895,25 +860,22 @@
       ]
     ],
     "revenue": [
-      48926,
       55974,
       234600,
       178157,
       188672,
       207411,
-      234300
+      247475
     ],
     "profit": [
-      6360.41738,
       5280.54,
       20362.25,
       16081.08632,
       12256.49,
       19419.579999999998,
-      17298.5
+      18616
     ],
     "calls_total": [
-      6301,
       11638,
       22573,
       23163,
@@ -922,7 +884,6 @@
       26076
     ],
     "calls_outbound": [
-      3037,
       8156,
       18236,
       19194,
@@ -931,7 +892,6 @@
       19538
     ],
     "calls_blank": [
-      3264,
       3482,
       4337,
       3969,
@@ -945,20 +905,20 @@
       "No Answer - Active Recall",
       "Out of Range",
       "Lost - Not Interested",
+      "New",
       "Future Buyer",
       "Duplicate",
       "Unreachable",
-      "Other company sold",
-      "Not Qualified"
+      "Other company sold"
     ],
     "values": [
       207,
-      56,
+      57,
       52,
+      45,
       43,
       39,
-      37,
-      29,
+      38,
       29
     ]
   },
@@ -997,12 +957,12 @@
       }
     ]
   },
-  "revenue_total": 234300,
+  "revenue_total": 247475,
   "product": [
     {
       "label": "Roofing",
-      "leads": 478,
-      "deals": 9
+      "leads": 505,
+      "deals": 10
     },
     {
       "label": "Windows",
@@ -1013,8 +973,8 @@
   "geo": [
     {
       "label": "Florida",
-      "leads": 493,
-      "deals": 8
+      "leads": 520,
+      "deals": 9
     },
     {
       "label": "California",
