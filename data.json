@@ -972,7 +972,7 @@
       23586,
       25579,
       27814,
-      17
+      46
     ],
     "calls_outbound": [
       8156,
@@ -981,7 +981,7 @@
       18324,
       20919,
       20829,
-      13
+      33
     ],
     "calls_blank": [
       3482,
@@ -990,7 +990,7 @@
       5262,
       4660,
       6985,
-      4
+      13
     ]
   },
   "lead_status": {
@@ -1100,9 +1100,9 @@
     }
   ],
   "setter_calls_total": {
-    "calls": 17,
-    "calls_outbound": 13,
-    "calls_blank": 4,
+    "calls": 46,
+    "calls_outbound": 33,
+    "calls_blank": 13,
     "citas": 0,
     "meta_total": 33000,
     "meta_expected": 1100
