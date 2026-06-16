@@ -1,7 +1,7 @@
 {
-  "updated": "2026-06-16 11:01",
+  "updated": "2026-06-16 12:21",
   "currentKey": "2026-06",
-  "total_leads": 8,
+  "total_leads": 12,
   "profit_total": 0,
   "period": {
     "label": "16 junio – 15 julio 2026",
@@ -13,7 +13,7 @@
   "pacing": [
     {
       "label": "Leads",
-      "actual": 5,
+      "actual": 10,
       "expected": 18,
       "goal": 550,
       "color": "#1D4ED8"
@@ -34,7 +34,7 @@
     }
   ],
   "funnel": {
-    "leads": 5,
+    "leads": 10,
     "appts": 0,
     "deals": 0,
     "period": "Jun-Jul"
@@ -51,11 +51,11 @@
     ],
     "leads": [
       249,
-      655,
+      654,
       468,
       557,
       472,
-      549,
+      553,
       0
     ],
     "appts": [
@@ -175,7 +175,7 @@
           50,
           46,
           34,
-          24,
+          25,
           23
         ]
       },
@@ -228,19 +228,19 @@
           "No Answer - Active Recall",
           "Out of Range",
           "Lost - Not Interested",
-          "Future Buyer",
           "Duplicate",
+          "Future Buyer",
           "Unreachable",
           "Not Qualified",
           "Other company sold"
         ],
         "values": [
-          222,
-          63,
+          225,
+          64,
           58,
           45,
-          44,
-          40,
+          45,
+          41,
           30,
           29
         ]
@@ -248,11 +248,13 @@
       {
         "labels": [
           "New",
-          "Research Pending"
+          "Research Pending",
+          "Recall - Short"
         ],
         "values": [
-          5,
-          3
+          9,
+          2,
+          1
         ]
       }
     ],
@@ -699,14 +701,14 @@
           "name": "Pablo",
           "calls": 0,
           "appts": 0,
-          "deals": 0,
-          "leads": 117
+          "deals": 1,
+          "leads": 121
         },
         {
           "name": "Silvia",
           "calls": 0,
           "appts": 0,
-          "deals": 1,
+          "deals": 3,
           "leads": 106
         },
         {
@@ -720,14 +722,14 @@
           "name": "Emmanuel",
           "calls": 0,
           "appts": 0,
-          "deals": 2,
+          "deals": 4,
           "leads": 86
         },
         {
           "name": "Alejandro",
           "calls": 0,
           "appts": 0,
-          "deals": 0,
+          "deals": 1,
           "leads": 23
         },
         {
@@ -735,7 +737,7 @@
           "calls": 0,
           "appts": 0,
           "deals": 0,
-          "leads": 18
+          "leads": 20
         },
         {
           "name": "Daniela",
@@ -753,7 +755,7 @@
           "deals": 0,
           "meta": 3300,
           "meta_expected": 110,
-          "leads": 0,
+          "leads": 1,
           "appts_total": 0,
           "appts_cancelled": 0
         },
@@ -781,13 +783,13 @@
         },
         {
           "name": "Pablo",
-          "calls": 0,
+          "calls": 20,
           "appts": 0,
           "deals": 0,
           "meta": 6600,
           "meta_expected": 220,
-          "leads": 0,
-          "appts_total": 4,
+          "leads": 3,
+          "appts_total": 3,
           "appts_cancelled": 0
         },
         {
@@ -888,7 +890,7 @@
       [
         {
           "label": "Roofing",
-          "leads": 507,
+          "leads": 511,
           "deals": 11
         },
         {
@@ -900,7 +902,7 @@
       [
         {
           "label": "Roofing",
-          "leads": 5,
+          "leads": 10,
           "deals": 0
         }
       ]
@@ -936,7 +938,7 @@
       [
         {
           "label": "Florida",
-          "leads": 522,
+          "leads": 526,
           "deals": 10
         },
         {
@@ -948,7 +950,7 @@
       [
         {
           "label": "Florida",
-          "leads": 5,
+          "leads": 10,
           "deals": 0
         }
       ]
@@ -1002,11 +1004,13 @@
   "lead_status": {
     "labels": [
       "New",
-      "Research Pending"
+      "Research Pending",
+      "Recall - Short"
     ],
     "values": [
-      5,
-      3
+      9,
+      2,
+      1
     ]
   },
   "appts_breakdown": {
@@ -1028,14 +1032,14 @@
   "product": [
     {
       "label": "Roofing",
-      "leads": 5,
+      "leads": 10,
       "deals": 0
     }
   ],
   "geo": [
     {
       "label": "Florida",
-      "leads": 5,
+      "leads": 10,
       "deals": 0
     }
   ],
@@ -1047,7 +1051,7 @@
       "deals": 0,
       "meta": 3300,
       "meta_expected": 110,
-      "leads": 0,
+      "leads": 1,
       "appts_total": 0,
       "appts_cancelled": 0
     },
@@ -1075,13 +1079,13 @@
     },
     {
       "name": "Pablo",
-      "calls": 0,
+      "calls": 20,
       "appts": 0,
       "deals": 0,
       "meta": 6600,
       "meta_expected": 220,
-      "leads": 0,
-      "appts_total": 4,
+      "leads": 3,
+      "appts_total": 3,
       "appts_cancelled": 0
     },
     {
