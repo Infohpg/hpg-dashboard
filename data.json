@@ -268,17 +268,17 @@
     ],
     "appts_breakdown": [
       {
-        "total": 36,
+        "total": 34,
         "confirmed": 20,
-        "cancelled": 16,
+        "cancelled": 14,
         "stages": [
-          {
-            "label": "Cancelled",
-            "count": 16
-          },
           {
             "label": "Completed",
             "count": 16
+          },
+          {
+            "label": "Cancelled",
+            "count": 14
           },
           {
             "label": "Still Working",
@@ -422,13 +422,17 @@
         ]
       },
       {
-        "total": 5,
+        "total": 7,
         "confirmed": 0,
         "cancelled": 0,
         "stages": [
           {
             "label": "Pending Confirmation",
-            "count": 5
+            "count": 6
+          },
+          {
+            "label": "To Assign",
+            "count": 1
           }
         ]
       }
@@ -1022,13 +1026,17 @@
     ]
   },
   "appts_breakdown": {
-    "total": 5,
+    "total": 7,
     "confirmed": 0,
     "cancelled": 0,
     "stages": [
       {
         "label": "Pending Confirmation",
-        "count": 5
+        "count": 6
+      },
+      {
+        "label": "To Assign",
+        "count": 1
       }
     ]
   },
