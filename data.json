@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-18 06:00",
+  "updated": "2026-06-18 06:01",
   "currentKey": "2026-06",
   "total_leads": 35,
   "profit_total": 0,
@@ -990,7 +990,7 @@
       23586,
       25579,
       27813,
-      1111
+      2489
     ],
     "calls_outbound": [
       8156,
@@ -999,7 +999,7 @@
       18324,
       20919,
       20828,
-      877
+      1914
     ],
     "calls_blank": [
       3482,
@@ -1008,7 +1008,7 @@
       5262,
       4660,
       6985,
-      234
+      575
     ]
   },
   "lead_status": {
@@ -1136,9 +1136,9 @@
     }
   ],
   "setter_calls_total": {
-    "calls": 1111,
-    "calls_outbound": 877,
-    "calls_blank": 234,
+    "calls": 2489,
+    "calls_outbound": 1914,
+    "calls_blank": 575,
     "citas": 0,
     "meta_total": 33000,
     "meta_expected": 3300
