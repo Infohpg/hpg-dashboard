@@ -1,7 +1,7 @@
 {
-  "updated": "2026-06-18 06:36",
+  "updated": "2026-06-18 08:09",
   "currentKey": "2026-06",
-  "total_leads": 35,
+  "total_leads": 37,
   "profit_total": 0,
   "period": {
     "label": "16 junio – 15 julio 2026",
@@ -250,20 +250,20 @@
           "No Answer - Active Recall",
           "Research Pending",
           "Recall - Short",
-          "New",
           "Out of Range",
           "Not Qualified",
           "Appointment Set",
-          "Duplicate"
+          "Duplicate",
+          "Unreachable"
         ],
         "values": [
+          12,
           11,
-          8,
           6,
           2,
           2,
           2,
-          2,
+          1,
           1
         ]
       }
@@ -782,12 +782,12 @@
         },
         {
           "name": "Emmanuel",
-          "calls": 114,
+          "calls": 120,
           "appts": 0,
           "deals": 0,
           "meta": 6600,
           "meta_expected": 660,
-          "leads": 2,
+          "leads": 3,
           "appts_total": 1,
           "appts_cancelled": 0
         },
@@ -1016,20 +1016,20 @@
       "No Answer - Active Recall",
       "Research Pending",
       "Recall - Short",
-      "New",
       "Out of Range",
       "Not Qualified",
       "Appointment Set",
-      "Duplicate"
+      "Duplicate",
+      "Unreachable"
     ],
     "values": [
+      12,
       11,
-      8,
       6,
       2,
       2,
       2,
-      2,
+      1,
       1
     ]
   },
@@ -1092,12 +1092,12 @@
     },
     {
       "name": "Emmanuel",
-      "calls": 114,
+      "calls": 120,
       "appts": 0,
       "deals": 0,
       "meta": 6600,
       "meta_expected": 660,
-      "leads": 2,
+      "leads": 3,
       "appts_total": 1,
       "appts_cancelled": 0
     },
