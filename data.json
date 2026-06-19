@@ -20,7 +20,7 @@
     },
     {
       "label": "Appts Confirmados",
-      "actual": 0,
+      "actual": 2,
       "expected": 8,
       "goal": 60,
       "color": "#0369A1"
@@ -35,7 +35,7 @@
   ],
   "funnel": {
     "leads": 44,
-    "appts": 0,
+    "appts": 2,
     "deals": 0,
     "period": "Jun-Jul"
   },
@@ -425,16 +425,20 @@
       },
       {
         "total": 10,
-        "confirmed": 0,
+        "confirmed": 2,
         "cancelled": 1,
         "stages": [
           {
             "label": "Pending Confirmation",
-            "count": 5
+            "count": 4
           },
           {
             "label": "Appointment Set",
-            "count": 4
+            "count": 3
+          },
+          {
+            "label": "Sale",
+            "count": 2
           },
           {
             "label": "Cancelled",
@@ -1035,16 +1039,20 @@
   },
   "appts_breakdown": {
     "total": 10,
-    "confirmed": 0,
+    "confirmed": 2,
     "cancelled": 1,
     "stages": [
       {
         "label": "Pending Confirmation",
-        "count": 5
+        "count": 4
       },
       {
         "label": "Appointment Set",
-        "count": 4
+        "count": 3
+      },
+      {
+        "label": "Sale",
+        "count": 2
       },
       {
         "label": "Cancelled",
