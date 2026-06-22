@@ -83,7 +83,7 @@
       6428.06,
       7720.41,
       7485.45,
-      982.17
+      1219.79
     ],
     "cpr": [
       7.75,
@@ -92,7 +92,7 @@
       5.44,
       9.13,
       22.68,
-      26.55
+      29.75
     ],
     "clicks": [
       3655,
@@ -101,7 +101,7 @@
       4560,
       5629,
       2947,
-      323
+      402
     ],
     "lpv": [
       2224,
@@ -110,7 +110,7 @@
       2521,
       3368,
       1738,
-      188
+      233
     ],
     "lead_status": [
       {
@@ -1168,12 +1168,12 @@
     "meta_expected": 7700
   },
   "meta": {
-    "spend": 982.17,
-    "results": 37,
-    "cpr": 26.55,
-    "clicks": 323,
-    "impressions": 33467,
-    "lpv": 188
+    "spend": 1219.79,
+    "results": 41,
+    "cpr": 29.75,
+    "clicks": 402,
+    "impressions": 40414,
+    "lpv": 233
   },
   "campaigns": [
     {
@@ -1250,14 +1250,14 @@
     },
     {
       "name": "FL || Roofing / Website / Esp / Friction Free",
-      "spend": 814.47,
-      "res": 30,
-      "cpr": 27.149,
+      "spend": 1009.63,
+      "res": 33,
+      "cpr": 30.59484848,
       "crm": 0,
       "appts": 0,
       "eff": 0,
       "deals": 0,
-      "clicks": 268,
+      "clicks": 333,
       "st": "amb"
     },
     {
@@ -1286,14 +1286,14 @@
     },
     {
       "name": "FL || Roofing / Website / Esp / Retargeting Friction Free",
-      "spend": 117.27,
-      "res": 6,
-      "cpr": 19.545,
+      "spend": 159.73,
+      "res": 7,
+      "cpr": 22.81857143,
       "crm": 0,
       "appts": 0,
       "eff": 0,
       "deals": 0,
-      "clicks": 46,
+      "clicks": 60,
       "st": "amb"
     },
     {
