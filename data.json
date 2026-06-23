@@ -20,7 +20,7 @@
     },
     {
       "label": "Appts Confirmados",
-      "actual": 7,
+      "actual": 8,
       "expected": 16,
       "goal": 60,
       "color": "#0369A1"
@@ -35,7 +35,7 @@
   ],
   "funnel": {
     "leads": 83,
-    "appts": 7,
+    "appts": 8,
     "deals": 2,
     "period": "Jun-Jul"
   },
@@ -270,9 +270,9 @@
     ],
     "appts_breakdown": [
       {
-        "total": 28,
+        "total": 25,
         "confirmed": 18,
-        "cancelled": 10,
+        "cancelled": 7,
         "stages": [
           {
             "label": "Completed",
@@ -280,7 +280,7 @@
           },
           {
             "label": "Cancelled",
-            "count": 10
+            "count": 7
           },
           {
             "label": "Still Working",
@@ -424,17 +424,21 @@
         ]
       },
       {
-        "total": 15,
-        "confirmed": 7,
+        "total": 21,
+        "confirmed": 8,
         "cancelled": 3,
         "stages": [
           {
-            "label": "Pending Confirmation",
-            "count": 4
+            "label": "Appointment Set",
+            "count": 7
           },
           {
             "label": "Sale",
-            "count": 4
+            "count": 5
+          },
+          {
+            "label": "Pending Confirmation",
+            "count": 3
           },
           {
             "label": "Cancelled",
@@ -443,10 +447,6 @@
           {
             "label": "Still Working",
             "count": 2
-          },
-          {
-            "label": "To Assign",
-            "count": 1
           },
           {
             "label": "Completed",
@@ -1046,17 +1046,21 @@
     ]
   },
   "appts_breakdown": {
-    "total": 15,
-    "confirmed": 7,
+    "total": 21,
+    "confirmed": 8,
     "cancelled": 3,
     "stages": [
       {
-        "label": "Pending Confirmation",
-        "count": 4
+        "label": "Appointment Set",
+        "count": 7
       },
       {
         "label": "Sale",
-        "count": 4
+        "count": 5
+      },
+      {
+        "label": "Pending Confirmation",
+        "count": 3
       },
       {
         "label": "Cancelled",
@@ -1065,10 +1069,6 @@
       {
         "label": "Still Working",
         "count": 2
-      },
-      {
-        "label": "To Assign",
-        "count": 1
       },
       {
         "label": "Completed",
