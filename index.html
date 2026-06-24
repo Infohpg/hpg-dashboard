@@ -979,8 +979,9 @@ function renderFunnel(d){
   if(fh) fh.childNodes[0].textContent=d._isHistorical?`Embudo de Conversión — ${d.period?.short||'—'}`:'Embudo de Conversión — Período actual';
   const h=d.history||{}, n=(h.periods||[]).length;
   const prevIdx=d._prevIdx!=null?d._prevIdx:n-2;
-  const pClk=h.clicks?.[prevIdx]||0, pLd=h.leads?.[prevIdx]||0;
-  const pAp=h.appts?.[prevIdx]||0, pDl=h.deals?.[prevIdx]||0;
+  const _dp=(d.period?.day||30)/(d.period?.total_days||30);
+  const pClk=(h.clicks?.[prevIdx]||0)*_dp, pLd=(h.leads?.[prevIdx]||0)*_dp;
+  const pAp=(h.appts?.[prevIdx]||0)*_dp, pDl=(h.deals?.[prevIdx]||0)*_dp;
   const clk=d.meta?.clicks||0, lds=d.funnel?.leads||0;
   const apt=d.funnel?.appts||0, dls=d.funnel?.deals||0;
   const steps=[
@@ -1105,7 +1106,8 @@ function renderCapa1(d){
   const row=document.getElementById('c1-kpis'); if(!row)return;
   const m=d.meta||{}, h=d.history||{}, n=(h.periods||[]).length;
   const prevIdx=d._prevIdx!=null?d._prevIdx:n-2;
-  const ps=h.spend?.[prevIdx]||0, pc=h.cpr?.[prevIdx]||0;
+  const _dp=(d.period?.day||30)/(d.period?.total_days||30);
+  const ps=(h.spend?.[prevIdx]||0)*_dp, pc=h.cpr?.[prevIdx]||0;
   const ctr=m.impressions>0?pct(m.clicks,m.impressions):0;
   row.innerHTML=`
     <div class="kpi k-c1">
@@ -1195,7 +1197,8 @@ function renderCapa2(d){
 
 function renderProduct(d){
   const el=document.getElementById('product-cards'); if(!el)return;
-  const prods=d.product||[{label:'Roofing',leads:0,deals:0},{label:'Windows',leads:0,deals:0}];
+  const _prodDef=[{label:'Roofing',leads:0,deals:0},{label:'Windows',leads:0,deals:0}];
+  const prods=_prodDef.map(def=>(d.product||[]).find(p=>p.label===def.label)||def);
   const totalLds=(d.total_leads||0)||prods.reduce((s,p)=>s+p.leads,0)||1;
   const badgeCls={'Roofing':'pb-roof','Windows':'pb-win'};
   el.innerHTML=prods.slice(0,2).map(p=>{
