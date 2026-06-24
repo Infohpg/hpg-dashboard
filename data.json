@@ -20,7 +20,7 @@
     },
     {
       "label": "Appts Confirmados",
-      "actual": 8,
+      "actual": 12,
       "expected": 18,
       "goal": 60,
       "color": "#0369A1"
@@ -35,7 +35,7 @@
   ],
   "funnel": {
     "leads": 86,
-    "appts": 8,
+    "appts": 12,
     "deals": 3,
     "period": "Jun-Jul"
   },
@@ -424,33 +424,33 @@
         ]
       },
       {
-        "total": 21,
-        "confirmed": 8,
+        "total": 22,
+        "confirmed": 12,
         "cancelled": 3,
         "stages": [
           {
-            "label": "Appointment Set",
-            "count": 7
+            "label": "Sale",
+            "count": 6
           },
           {
-            "label": "Sale",
-            "count": 5
+            "label": "Appointment Set",
+            "count": 4
           },
           {
             "label": "Pending Confirmation",
             "count": 3
           },
           {
-            "label": "Cancelled",
+            "label": "Still Working",
             "count": 3
           },
           {
-            "label": "Still Working",
-            "count": 2
+            "label": "Completed",
+            "count": 3
           },
           {
-            "label": "Completed",
-            "count": 1
+            "label": "Cancelled",
+            "count": 3
           }
         ]
       }
@@ -772,66 +772,66 @@
       [
         {
           "name": "Oliver",
-          "calls": 452,
+          "calls": 604,
           "appts": 0,
           "deals": 0,
           "meta": 3300,
-          "meta_expected": 880,
+          "meta_expected": 990,
           "leads": 16,
           "appts_total": 0,
           "appts_cancelled": 0
         },
         {
           "name": "Silvia",
-          "calls": 1427,
-          "appts": 3,
+          "calls": 1762,
+          "appts": 5,
           "deals": 1,
           "meta": 6600,
-          "meta_expected": 1760,
+          "meta_expected": 1980,
           "leads": 17,
-          "appts_total": 6,
+          "appts_total": 7,
           "appts_cancelled": 0
         },
         {
           "name": "Emmanuel",
-          "calls": 599,
-          "appts": 2,
+          "calls": 901,
+          "appts": 3,
           "deals": 0,
           "meta": 6600,
-          "meta_expected": 1760,
+          "meta_expected": 1980,
           "leads": 48,
-          "appts_total": 4,
+          "appts_total": 5,
           "appts_cancelled": 0
         },
         {
           "name": "Pablo",
-          "calls": 1470,
+          "calls": 1806,
           "appts": 1,
           "deals": 1,
           "meta": 6600,
-          "meta_expected": 1760,
+          "meta_expected": 1980,
           "leads": 5,
           "appts_total": 4,
           "appts_cancelled": 2
         },
         {
           "name": "Daniela",
-          "calls": 933,
+          "calls": 1255,
           "appts": 0,
           "deals": 0,
           "meta": 6600,
-          "meta_expected": 1760,
+          "meta_expected": 1980,
           "leads": 0,
           "appts_total": 1,
           "appts_cancelled": 1
         },
         {
           "name": "Alejandro",
-          "calls": 800,
-          "appts": 0,
-          "deals": 0,
+          "calls": 949,
+          "appts": 2,
+          "deals": 1,
           "meta": 3300,
-          "meta_expected": 880,
+          "meta_expected": 990,
           "leads": 8,
           "appts_total": 4,
           "appts_cancelled": 0
@@ -1046,33 +1046,33 @@
     ]
   },
   "appts_breakdown": {
-    "total": 21,
-    "confirmed": 8,
+    "total": 22,
+    "confirmed": 12,
     "cancelled": 3,
     "stages": [
       {
-        "label": "Appointment Set",
-        "count": 7
+        "label": "Sale",
+        "count": 6
       },
       {
-        "label": "Sale",
-        "count": 5
+        "label": "Appointment Set",
+        "count": 4
       },
       {
         "label": "Pending Confirmation",
         "count": 3
       },
       {
-        "label": "Cancelled",
+        "label": "Still Working",
         "count": 3
       },
       {
-        "label": "Still Working",
-        "count": 2
+        "label": "Completed",
+        "count": 3
       },
       {
-        "label": "Completed",
-        "count": 1
+        "label": "Cancelled",
+        "count": 3
       }
     ]
   },
@@ -1094,66 +1094,66 @@
   "setter_calls": [
     {
       "name": "Oliver",
-      "calls": 452,
+      "calls": 604,
       "appts": 0,
       "deals": 0,
       "meta": 3300,
-      "meta_expected": 880,
+      "meta_expected": 990,
       "leads": 16,
       "appts_total": 0,
       "appts_cancelled": 0
     },
     {
       "name": "Silvia",
-      "calls": 1427,
-      "appts": 3,
+      "calls": 1762,
+      "appts": 5,
       "deals": 1,
       "meta": 6600,
-      "meta_expected": 1760,
+      "meta_expected": 1980,
       "leads": 17,
-      "appts_total": 6,
+      "appts_total": 7,
       "appts_cancelled": 0
     },
     {
       "name": "Emmanuel",
-      "calls": 599,
-      "appts": 2,
+      "calls": 901,
+      "appts": 3,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 1760,
+      "meta_expected": 1980,
       "leads": 48,
-      "appts_total": 4,
+      "appts_total": 5,
       "appts_cancelled": 0
     },
     {
       "name": "Pablo",
-      "calls": 1470,
+      "calls": 1806,
       "appts": 1,
       "deals": 1,
       "meta": 6600,
-      "meta_expected": 1760,
+      "meta_expected": 1980,
       "leads": 5,
       "appts_total": 4,
       "appts_cancelled": 2
     },
     {
       "name": "Daniela",
-      "calls": 933,
+      "calls": 1255,
       "appts": 0,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 1760,
+      "meta_expected": 1980,
       "leads": 0,
       "appts_total": 1,
       "appts_cancelled": 1
     },
     {
       "name": "Alejandro",
-      "calls": 800,
-      "appts": 0,
-      "deals": 0,
+      "calls": 949,
+      "appts": 2,
+      "deals": 1,
       "meta": 3300,
-      "meta_expected": 880,
+      "meta_expected": 990,
       "leads": 8,
       "appts_total": 4,
       "appts_cancelled": 0
@@ -1163,9 +1163,9 @@
     "calls": 7332,
     "calls_outbound": 5682,
     "calls_blank": 1650,
-    "citas": 6,
+    "citas": 11,
     "meta_total": 33000,
-    "meta_expected": 8800
+    "meta_expected": 9900
   },
   "meta": {
     "spend": 1436.73,
