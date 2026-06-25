@@ -270,9 +270,9 @@
     ],
     "appts_breakdown": [
       {
-        "total": 25,
+        "total": 24,
         "confirmed": 18,
-        "cancelled": 7,
+        "cancelled": 6,
         "stages": [
           {
             "label": "Completed",
@@ -280,7 +280,7 @@
           },
           {
             "label": "Cancelled",
-            "count": 7
+            "count": 6
           },
           {
             "label": "Still Working",
@@ -407,15 +407,15 @@
           },
           {
             "label": "Completed",
-            "count": 23
-          },
-          {
-            "label": "Sale",
-            "count": 12
+            "count": 25
           },
           {
             "label": "Still Working",
             "count": 11
+          },
+          {
+            "label": "Sale",
+            "count": 10
           },
           {
             "label": "Unknown",
@@ -424,21 +424,21 @@
         ]
       },
       {
-        "total": 22,
+        "total": 26,
         "confirmed": 12,
-        "cancelled": 3,
+        "cancelled": 6,
         "stages": [
+          {
+            "label": "Cancelled",
+            "count": 6
+          },
           {
             "label": "Sale",
             "count": 6
           },
           {
-            "label": "Appointment Set",
-            "count": 4
-          },
-          {
             "label": "Pending Confirmation",
-            "count": 3
+            "count": 5
           },
           {
             "label": "Still Working",
@@ -449,8 +449,12 @@
             "count": 3
           },
           {
-            "label": "Cancelled",
-            "count": 3
+            "label": "Appointment Set",
+            "count": 2
+          },
+          {
+            "label": "To Assign",
+            "count": 1
           }
         ]
       }
@@ -772,69 +776,69 @@
       [
         {
           "name": "Oliver",
-          "calls": 604,
+          "calls": 769,
           "appts": 0,
           "deals": 0,
           "meta": 3300,
-          "meta_expected": 990,
+          "meta_expected": 1100,
           "leads": 15,
           "appts_total": 0,
           "appts_cancelled": 0
         },
         {
           "name": "Silvia",
-          "calls": 1762,
+          "calls": 1823,
           "appts": 5,
           "deals": 1,
           "meta": 6600,
-          "meta_expected": 1980,
+          "meta_expected": 2200,
           "leads": 18,
-          "appts_total": 7,
+          "appts_total": 8,
           "appts_cancelled": 0
         },
         {
           "name": "Emmanuel",
-          "calls": 901,
+          "calls": 1203,
           "appts": 3,
           "deals": 0,
           "meta": 6600,
-          "meta_expected": 1980,
+          "meta_expected": 2200,
           "leads": 56,
-          "appts_total": 5,
-          "appts_cancelled": 0
+          "appts_total": 7,
+          "appts_cancelled": 1
         },
         {
           "name": "Pablo",
-          "calls": 1806,
+          "calls": 2053,
           "appts": 1,
           "deals": 1,
           "meta": 6600,
-          "meta_expected": 1980,
+          "meta_expected": 2200,
           "leads": 6,
           "appts_total": 4,
           "appts_cancelled": 2
         },
         {
           "name": "Daniela",
-          "calls": 1255,
+          "calls": 1357,
           "appts": 0,
           "deals": 0,
           "meta": 6600,
-          "meta_expected": 1980,
+          "meta_expected": 2200,
           "leads": 0,
           "appts_total": 1,
           "appts_cancelled": 1
         },
         {
           "name": "Alejandro",
-          "calls": 949,
+          "calls": 1008,
           "appts": 2,
           "deals": 1,
           "meta": 3300,
-          "meta_expected": 990,
+          "meta_expected": 1100,
           "leads": 11,
-          "appts_total": 4,
-          "appts_cancelled": 0
+          "appts_total": 5,
+          "appts_cancelled": 2
         }
       ]
     ],
@@ -1046,21 +1050,21 @@
     ]
   },
   "appts_breakdown": {
-    "total": 22,
+    "total": 26,
     "confirmed": 12,
-    "cancelled": 3,
+    "cancelled": 6,
     "stages": [
+      {
+        "label": "Cancelled",
+        "count": 6
+      },
       {
         "label": "Sale",
         "count": 6
       },
       {
-        "label": "Appointment Set",
-        "count": 4
-      },
-      {
         "label": "Pending Confirmation",
-        "count": 3
+        "count": 5
       },
       {
         "label": "Still Working",
@@ -1071,8 +1075,12 @@
         "count": 3
       },
       {
-        "label": "Cancelled",
-        "count": 3
+        "label": "Appointment Set",
+        "count": 2
+      },
+      {
+        "label": "To Assign",
+        "count": 1
       }
     ]
   },
@@ -1094,69 +1102,69 @@
   "setter_calls": [
     {
       "name": "Oliver",
-      "calls": 604,
+      "calls": 769,
       "appts": 0,
       "deals": 0,
       "meta": 3300,
-      "meta_expected": 990,
+      "meta_expected": 1100,
       "leads": 15,
       "appts_total": 0,
       "appts_cancelled": 0
     },
     {
       "name": "Silvia",
-      "calls": 1762,
+      "calls": 1823,
       "appts": 5,
       "deals": 1,
       "meta": 6600,
-      "meta_expected": 1980,
+      "meta_expected": 2200,
       "leads": 18,
-      "appts_total": 7,
+      "appts_total": 8,
       "appts_cancelled": 0
     },
     {
       "name": "Emmanuel",
-      "calls": 901,
+      "calls": 1203,
       "appts": 3,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 1980,
+      "meta_expected": 2200,
       "leads": 56,
-      "appts_total": 5,
-      "appts_cancelled": 0
+      "appts_total": 7,
+      "appts_cancelled": 1
     },
     {
       "name": "Pablo",
-      "calls": 1806,
+      "calls": 2053,
       "appts": 1,
       "deals": 1,
       "meta": 6600,
-      "meta_expected": 1980,
+      "meta_expected": 2200,
       "leads": 6,
       "appts_total": 4,
       "appts_cancelled": 2
     },
     {
       "name": "Daniela",
-      "calls": 1255,
+      "calls": 1357,
       "appts": 0,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 1980,
+      "meta_expected": 2200,
       "leads": 0,
       "appts_total": 1,
       "appts_cancelled": 1
     },
     {
       "name": "Alejandro",
-      "calls": 949,
+      "calls": 1008,
       "appts": 2,
       "deals": 1,
       "meta": 3300,
-      "meta_expected": 990,
+      "meta_expected": 1100,
       "leads": 11,
-      "appts_total": 4,
-      "appts_cancelled": 0
+      "appts_total": 5,
+      "appts_cancelled": 2
     }
   ],
   "setter_calls_total": {
@@ -1165,7 +1173,7 @@
     "calls_blank": 1938,
     "citas": 11,
     "meta_total": 33000,
-    "meta_expected": 9900
+    "meta_expected": 11000
   },
   "meta": {
     "spend": 1641.94,
