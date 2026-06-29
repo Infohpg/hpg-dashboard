@@ -1,27 +1,27 @@
 {
-  "updated": "2026-06-28 15:03",
+  "updated": "2026-06-29 06:00",
   "currentKey": "2026-06",
-  "total_leads": 165,
+  "total_leads": 183,
   "profit_total": 6660,
   "period": {
     "label": "16 junio – 15 julio 2026",
     "short": "Jun-Jul",
-    "day": 13,
+    "day": 14,
     "total_days": 30,
-    "pct": 43
+    "pct": 47
   },
   "pacing": [
     {
       "label": "Leads",
-      "actual": 125,
-      "expected": 238,
+      "actual": 139,
+      "expected": 257,
       "goal": 550,
       "color": "#1D4ED8"
     },
     {
       "label": "Appts Confirmados",
       "actual": 15,
-      "expected": 26,
+      "expected": 28,
       "goal": 60,
       "color": "#0369A1"
     },
@@ -34,7 +34,7 @@
     }
   ],
   "funnel": {
-    "leads": 125,
+    "leads": 139,
     "appts": 15,
     "deals": 3,
     "period": "Jun-Jul"
@@ -50,7 +50,7 @@
       "Jun-Jul"
     ],
     "leads": [
-      201,
+      191,
       648,
       465,
       557,
@@ -125,12 +125,12 @@
           "Sale"
         ],
         "values": [
-          146,
-          75,
-          69,
-          40,
-          38,
-          31,
+          141,
+          72,
+          67,
+          39,
+          34,
+          29,
           23,
           9
         ]
@@ -191,7 +191,7 @@
           "Future Buyer"
         ],
         "values": [
-          224,
+          223,
           127,
           96,
           63,
@@ -248,22 +248,22 @@
       {
         "labels": [
           "No Answer - Active Recall",
+          "Lost - Not Interested",
           "Out of Range",
           "Unreachable",
-          "Lost - Not Interested",
           "Hot Follow-Up",
+          "Research Pending",
           "Recall - Short",
-          "Not Qualified",
-          "Future Buyer"
+          "Not Qualified"
         ],
         "values": [
-          48,
-          15,
+          52,
+          16,
+          16,
           14,
-          14,
-          11,
+          12,
           9,
-          8,
+          9,
           8
         ]
       }
@@ -483,17 +483,10 @@
           "calls": 0,
           "appts": 0,
           "deals": 0,
-          "leads": 3
+          "leads": 2
         },
         {
           "name": "77065157",
-          "calls": 0,
-          "appts": 0,
-          "deals": 0,
-          "leads": 1
-        },
-        {
-          "name": "Daniela",
           "calls": 0,
           "appts": 0,
           "deals": 0,
@@ -769,21 +762,21 @@
           "appts": 0,
           "deals": 0,
           "meta": 3300,
-          "meta_expected": 1430,
+          "meta_expected": 1540,
           "leads": 19,
           "appts_total": 1,
           "appts_cancelled": 0
         },
         {
           "name": "Silvia",
-          "calls": 2580,
+          "calls": 2590,
           "appts": 6,
           "deals": 1,
           "meta": 6600,
-          "meta_expected": 2860,
-          "leads": 31,
-          "appts_total": 9,
-          "appts_cancelled": 0
+          "meta_expected": 3080,
+          "leads": 33,
+          "appts_total": 11,
+          "appts_cancelled": 1
         },
         {
           "name": "Emmanuel",
@@ -791,7 +784,7 @@
           "appts": 4,
           "deals": 0,
           "meta": 6600,
-          "meta_expected": 2860,
+          "meta_expected": 3080,
           "leads": 57,
           "appts_total": 7,
           "appts_cancelled": 3
@@ -802,7 +795,7 @@
           "appts": 1,
           "deals": 1,
           "meta": 6600,
-          "meta_expected": 2860,
+          "meta_expected": 3080,
           "leads": 7,
           "appts_total": 5,
           "appts_cancelled": 3
@@ -813,18 +806,18 @@
           "appts": 0,
           "deals": 0,
           "meta": 6600,
-          "meta_expected": 2860,
+          "meta_expected": 3080,
           "leads": 0,
           "appts_total": 1,
           "appts_cancelled": 1
         },
         {
           "name": "Alejandro",
-          "calls": 1365,
+          "calls": 1368,
           "appts": 3,
           "deals": 1,
           "meta": 3300,
-          "meta_expected": 1430,
+          "meta_expected": 1540,
           "leads": 18,
           "appts_total": 6,
           "appts_cancelled": 3
@@ -835,12 +828,12 @@
       [
         {
           "label": "Roofing",
-          "leads": 164,
+          "leads": 156,
           "deals": 1
         },
         {
           "label": "Windows",
-          "leads": 37,
+          "leads": 35,
           "deals": 1
         }
       ],
@@ -917,12 +910,12 @@
       [
         {
           "label": "Roofing",
-          "leads": 117,
+          "leads": 130,
           "deals": 3
         },
         {
           "label": "Windows",
-          "leads": 2,
+          "leads": 3,
           "deals": 0
         },
         {
@@ -975,7 +968,7 @@
       [
         {
           "label": "Florida",
-          "leads": 119,
+          "leads": 133,
           "deals": 3
         }
       ]
@@ -1029,22 +1022,22 @@
   "lead_status": {
     "labels": [
       "No Answer - Active Recall",
+      "Lost - Not Interested",
       "Out of Range",
       "Unreachable",
-      "Lost - Not Interested",
       "Hot Follow-Up",
+      "Research Pending",
       "Recall - Short",
-      "Not Qualified",
-      "Future Buyer"
+      "Not Qualified"
     ],
     "values": [
-      48,
-      15,
+      52,
+      16,
+      16,
       14,
-      14,
-      11,
+      12,
       9,
-      8,
+      9,
       8
     ]
   },
@@ -1083,12 +1076,12 @@
   "product": [
     {
       "label": "Roofing",
-      "leads": 117,
+      "leads": 130,
       "deals": 3
     },
     {
       "label": "Windows",
-      "leads": 2,
+      "leads": 3,
       "deals": 0
     },
     {
@@ -1100,7 +1093,7 @@
   "geo": [
     {
       "label": "Florida",
-      "leads": 119,
+      "leads": 133,
       "deals": 3
     }
   ],
@@ -1111,21 +1104,21 @@
       "appts": 0,
       "deals": 0,
       "meta": 3300,
-      "meta_expected": 1430,
+      "meta_expected": 1540,
       "leads": 19,
       "appts_total": 1,
       "appts_cancelled": 0
     },
     {
       "name": "Silvia",
-      "calls": 2580,
+      "calls": 2590,
       "appts": 6,
       "deals": 1,
       "meta": 6600,
-      "meta_expected": 2860,
-      "leads": 31,
-      "appts_total": 9,
-      "appts_cancelled": 0
+      "meta_expected": 3080,
+      "leads": 33,
+      "appts_total": 11,
+      "appts_cancelled": 1
     },
     {
       "name": "Emmanuel",
@@ -1133,7 +1126,7 @@
       "appts": 4,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 2860,
+      "meta_expected": 3080,
       "leads": 57,
       "appts_total": 7,
       "appts_cancelled": 3
@@ -1144,7 +1137,7 @@
       "appts": 1,
       "deals": 1,
       "meta": 6600,
-      "meta_expected": 2860,
+      "meta_expected": 3080,
       "leads": 7,
       "appts_total": 5,
       "appts_cancelled": 3
@@ -1155,18 +1148,18 @@
       "appts": 0,
       "deals": 0,
       "meta": 6600,
-      "meta_expected": 2860,
+      "meta_expected": 3080,
       "leads": 0,
       "appts_total": 1,
       "appts_cancelled": 1
     },
     {
       "name": "Alejandro",
-      "calls": 1365,
+      "calls": 1368,
       "appts": 3,
       "deals": 1,
       "meta": 3300,
-      "meta_expected": 1430,
+      "meta_expected": 1540,
       "leads": 18,
       "appts_total": 6,
       "appts_cancelled": 3
@@ -1178,7 +1171,7 @@
     "calls_blank": 2610,
     "citas": 14,
     "meta_total": 33000,
-    "meta_expected": 14300
+    "meta_expected": 15400
   },
   "meta": {
     "spend": 2406.76,
