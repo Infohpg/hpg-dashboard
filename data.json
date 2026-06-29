@@ -59,7 +59,7 @@
       0
     ],
     "appts": [
-      17,
+      15,
       54,
       28,
       50,
@@ -270,13 +270,13 @@
     ],
     "appts_breakdown": [
       {
-        "total": 23,
-        "confirmed": 17,
+        "total": 21,
+        "confirmed": 15,
         "cancelled": 6,
         "stages": [
           {
             "label": "Completed",
-            "count": 13
+            "count": 12
           },
           {
             "label": "Cancelled",
@@ -284,7 +284,7 @@
           },
           {
             "label": "Still Working",
-            "count": 4
+            "count": 3
           }
         ]
       },
@@ -424,13 +424,13 @@
         ]
       },
       {
-        "total": 31,
+        "total": 34,
         "confirmed": 15,
-        "cancelled": 10,
+        "cancelled": 11,
         "stages": [
           {
             "label": "Cancelled",
-            "count": 10
+            "count": 11
           },
           {
             "label": "Sale",
@@ -438,18 +438,22 @@
           },
           {
             "label": "Pending Confirmation",
-            "count": 5
+            "count": 4
           },
           {
             "label": "Completed",
             "count": 4
           },
           {
+            "label": "Appointment Set",
+            "count": 3
+          },
+          {
             "label": "Still Working",
             "count": 3
           },
           {
-            "label": "Appointment Set",
+            "label": "2570221294",
             "count": 1
           }
         ]
@@ -1042,13 +1046,13 @@
     ]
   },
   "appts_breakdown": {
-    "total": 31,
+    "total": 34,
     "confirmed": 15,
-    "cancelled": 10,
+    "cancelled": 11,
     "stages": [
       {
         "label": "Cancelled",
-        "count": 10
+        "count": 11
       },
       {
         "label": "Sale",
@@ -1056,18 +1060,22 @@
       },
       {
         "label": "Pending Confirmation",
-        "count": 5
+        "count": 4
       },
       {
         "label": "Completed",
         "count": 4
       },
       {
+        "label": "Appointment Set",
+        "count": 3
+      },
+      {
         "label": "Still Working",
         "count": 3
       },
       {
-        "label": "Appointment Set",
+        "label": "2570221294",
         "count": 1
       }
     ]
