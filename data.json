@@ -424,28 +424,28 @@
         ]
       },
       {
-        "total": 34,
+        "total": 38,
         "confirmed": 15,
-        "cancelled": 11,
+        "cancelled": 13,
         "stages": [
           {
             "label": "Cancelled",
-            "count": 11
+            "count": 13
           },
           {
             "label": "Sale",
             "count": 8
           },
           {
-            "label": "Pending Confirmation",
-            "count": 4
+            "label": "Appointment Set",
+            "count": 6
           },
           {
             "label": "Completed",
             "count": 4
           },
           {
-            "label": "Appointment Set",
+            "label": "Pending Confirmation",
             "count": 3
           },
           {
@@ -1046,28 +1046,28 @@
     ]
   },
   "appts_breakdown": {
-    "total": 34,
+    "total": 38,
     "confirmed": 15,
-    "cancelled": 11,
+    "cancelled": 13,
     "stages": [
       {
         "label": "Cancelled",
-        "count": 11
+        "count": 13
       },
       {
         "label": "Sale",
         "count": 8
       },
       {
-        "label": "Pending Confirmation",
-        "count": 4
+        "label": "Appointment Set",
+        "count": 6
       },
       {
         "label": "Completed",
         "count": 4
       },
       {
-        "label": "Appointment Set",
+        "label": "Pending Confirmation",
         "count": 3
       },
       {
