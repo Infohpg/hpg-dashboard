@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01 06:00",
+  "updated": "2026-07-01 06:01",
   "currentKey": "2026-06",
   "total_leads": 200,
   "profit_total": 6660,
@@ -83,7 +83,7 @@
       6428.06,
       7720.41,
       7485.45,
-      2805.04
+      2939.78
     ],
     "cpr": [
       7.75,
@@ -92,7 +92,7 @@
       5.44,
       9.13,
       22.68,
-      33.39
+      33.41
     ],
     "clicks": [
       3655,
@@ -101,7 +101,7 @@
       4560,
       5629,
       2947,
-      1183
+      1224
     ],
     "lpv": [
       2224,
@@ -110,7 +110,7 @@
       2521,
       3368,
       1738,
-      687
+      710
     ],
     "lead_status": [
       {
@@ -970,7 +970,7 @@
       23586,
       25579,
       27813,
-      14155
+      15485
     ],
     "calls_outbound": [
       8156,
@@ -979,7 +979,7 @@
       18324,
       20919,
       20828,
-      11317
+      12408
     ],
     "calls_blank": [
       3482,
@@ -988,7 +988,7 @@
       5262,
       4660,
       6985,
-      2838
+      3077
     ]
   },
   "lead_status": {
@@ -1138,20 +1138,20 @@
     }
   ],
   "setter_calls_total": {
-    "calls": 14155,
-    "calls_outbound": 11317,
-    "calls_blank": 2838,
+    "calls": 15485,
+    "calls_outbound": 12408,
+    "calls_blank": 3077,
     "citas": 18,
     "meta_total": 33000,
     "meta_expected": 17600
   },
   "meta": {
-    "spend": 2805.04,
-    "results": 84,
-    "cpr": 33.39,
-    "clicks": 1183,
-    "impressions": 79936,
-    "lpv": 687
+    "spend": 2939.78,
+    "results": 88,
+    "cpr": 33.41,
+    "clicks": 1224,
+    "impressions": 83225,
+    "lpv": 710
   },
   "campaigns": [
     {
@@ -1456,26 +1456,26 @@
     },
     {
       "name": "FL || Roofing / Website / Esp / Friction Free — Jun24 Optimizada",
-      "spend": 549.52,
-      "res": 26,
-      "cpr": 21.13538462,
+      "spend": 621.29,
+      "res": 30,
+      "cpr": 20.70966667,
       "crm": 0,
       "appts": 0,
       "eff": 0,
       "deals": 0,
-      "clicks": 176,
+      "clicks": 202,
       "st": "amb"
     },
     {
       "name": "FL || Windows / Website / Esp / Friction Free — Jun26",
-      "spend": 228.07,
+      "spend": 291.04,
       "res": 1,
-      "cpr": 228.07,
+      "cpr": 291.04,
       "crm": 0,
       "appts": 0,
       "eff": 0,
       "deals": 0,
-      "clicks": 70,
+      "clicks": 85,
       "st": "amb"
     }
   ]
