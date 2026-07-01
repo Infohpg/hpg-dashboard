@@ -20,7 +20,7 @@
     },
     {
       "label": "Appts Confirmados",
-      "actual": 15,
+      "actual": 20,
       "expected": 32,
       "goal": 60,
       "color": "#0369A1"
@@ -35,7 +35,7 @@
   ],
   "funnel": {
     "leads": 153,
-    "appts": 15,
+    "appts": 20,
     "deals": 3,
     "period": "Jun-Jul"
   },
@@ -424,25 +424,25 @@
         ]
       },
       {
-        "total": 38,
-        "confirmed": 15,
-        "cancelled": 13,
+        "total": 40,
+        "confirmed": 20,
+        "cancelled": 14,
         "stages": [
           {
             "label": "Cancelled",
-            "count": 13
+            "count": 14
           },
           {
             "label": "Sale",
+            "count": 9
+          },
+          {
+            "label": "Completed",
             "count": 8
           },
           {
             "label": "Appointment Set",
-            "count": 6
-          },
-          {
-            "label": "Completed",
-            "count": 4
+            "count": 3
           },
           {
             "label": "Pending Confirmation",
@@ -451,10 +451,6 @@
           {
             "label": "Still Working",
             "count": 3
-          },
-          {
-            "label": "2570221294",
-            "count": 1
           }
         ]
       }
@@ -1018,25 +1014,25 @@
     ]
   },
   "appts_breakdown": {
-    "total": 38,
-    "confirmed": 15,
-    "cancelled": 13,
+    "total": 40,
+    "confirmed": 20,
+    "cancelled": 14,
     "stages": [
       {
         "label": "Cancelled",
-        "count": 13
+        "count": 14
       },
       {
         "label": "Sale",
+        "count": 9
+      },
+      {
+        "label": "Completed",
         "count": 8
       },
       {
         "label": "Appointment Set",
-        "count": 6
-      },
-      {
-        "label": "Completed",
-        "count": 4
+        "count": 3
       },
       {
         "label": "Pending Confirmation",
@@ -1045,10 +1041,6 @@
       {
         "label": "Still Working",
         "count": 3
-      },
-      {
-        "label": "2570221294",
-        "count": 1
       }
     ]
   },
